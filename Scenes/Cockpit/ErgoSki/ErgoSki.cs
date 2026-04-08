@@ -685,6 +685,8 @@ public partial class ErgoSki : Node2D
         string symbol
     );
 
+    private CameraFeed? _providedCameraFeed = null;
+
     private Label? _status;
     private CameraTexture? _cameraTexture;
     private ImageTexture? _processedTexture;
@@ -766,17 +768,21 @@ public partial class ErgoSki : Node2D
         _playerBSymbolTracker.Stop();
     }
 
+    public void SetCameraFeed(CameraFeed cameraFeed)
+    {
+        _providedCameraFeed = cameraFeed;
+    }
+
     public override void _Ready()
     {
         GetNode<Line2D>("Panel/Separator").Visible = false;
 
         _status = GetNode<Label>("Panel/Status");
         _status.Text = "Setting up...";
-        CameraServer.MonitoringFeeds = true;
 
-        GetNode<Timer>("SetUpTimer").Timeout += OnSetUpTimerTimeout;
-
-        _fireballScene = GD.Load<PackedScene>($"res://Scenes/Cockpit/ErgoSki/Fireball/Fireball.tscn");
+        _fireballScene = GD.Load<PackedScene>(
+            $"res://Scenes/Cockpit/ErgoSki/Fireball/Fireball.tscn"
+        );
 
         var coreColor = new Color(1.0f, 0.6f, 2.0f, 1.0f);
         var playerAColor = new Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -832,59 +838,29 @@ public partial class ErgoSki : Node2D
             )
         );
 
+        // We postpone the setting up of the model loading so that the scene can
+        // initialize properly first.
+        GetNode<Timer>("SetUpTimer").Timeout += OnSetUpTimerTimeout;
+        GetNode<Timer>("SetUpTimer").Start();
+
         GD.Print("_Ready done.");
     }
 
     private void OnSetUpTimerTimeout()
     {
         GD.Print("SetUpTimer timed out.");
-        if (CameraServer.GetFeedCount() == 0)
+        
+        if (_providedCameraFeed == null)
         {
-            _status!.Text = "No camera feeds found.";
-            return;
+            throw new InvalidOperationException(
+                "Camera feed must be set before ErgoSki is ready. " + 
+                "Call SetCameraFeed() first."
+            );
         }
-
-        if (_status != null)
-        {
-            _status.Text = $"Found {CameraServer.GetFeedCount()} camera feed(s).";
-        }
-
-        var feed = CameraServer.GetFeed(0);
-        var formats = feed.GetFormats();
-
-        var formatSet = false;
-        for (int i = 0; i < formats.Count; i++)
-        {
-            var format = (Godot.Collections.Dictionary)formats[i];
-
-            int width = (int)format["width"];
-            int height = (int)format["height"];
-            string pixelFormat = format["format"].ToString();
-
-            if (
-                width == 640
-                && height == 480
-                && pixelFormat.StartsWith("YUYV")
-            )
-            {
-                GD.Print($"Set format: {format}");
-                feed.SetFormat(i, new Godot.Collections.Dictionary());
-                formatSet = true;
-                break;
-            }
-        }
-
-        if (!formatSet)
-        {
-            _status!.Text = $"No 640x480 YUYV input found.";
-            return;
-        }
-
-        feed.FeedIsActive = true;
-
+        
         _cameraTexture = new CameraTexture
         {
-            CameraFeedId = feed.GetId(),
+            CameraFeedId = _providedCameraFeed.GetId(),
             CameraIsActive = true
         };
 
@@ -893,55 +869,7 @@ public partial class ErgoSki : Node2D
         _cameraPort = GetNode<TextureRect>("Panel/CameraPort");
         _cameraPort!.Texture = _processedTexture;
 
-        feed.FrameChanged += OnFrameChanged;
-        _status!.Visible = false;
-
-        GD.Print("Creating the inference session ...");
-        {
-            string path = $"res://Scenes/Cockpit/ErgoSki/model/end2end.onnx";
-
-            if (!FileAccess.FileExists(path))
-            {
-                GD.PushError($"File not found: {path}");
-                return;
-            }
-
-            // Open file
-            using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
-            if (file == null)
-            {
-                GD.PushError($"Failed to open file: {path}");
-                return;
-            }
-
-            // Read all bytes
-            byte[] data = file.GetBuffer((long)file.GetLength());
-
-            GD.Print($"Loaded ONNX file, size: {data.Length / 1024.0 / 1024.0:F2} Mb");
-
-            _inferenceSession = new InferenceSession(data);
-
-            // NOTE (mristin):
-            // We pre-allocate the buffers and images to avoid the GC pressure.
-
-            _inputDataBuffer = new float[1 * 3 * _inputHeight * _inputWidth];
-            _inputTensorBuffer = new DenseTensor<float>(
-                _inputDataBuffer,
-                new[] { 1, 3, _inputHeight, _inputWidth }
-            );
-
-            // NOTE (mristin):
-            // We will resize this image later as necessary.
-            _resizedDisplayImage = Image.CreateEmpty(
-                1, 1, false, Image.Format.Rgb8
-            );
-
-            _resizedInputImage = Image.CreateEmpty(
-                _inputWidth, _inputHeight, false, Image.Format.Rgb8
-            );
-
-            GD.Print("Inference session created.");
-        }
+        _providedCameraFeed.FrameChanged += OnFrameChanged;
 
         GD.Print("Starting the inference thread...");
         {
@@ -1109,7 +1037,56 @@ public partial class ErgoSki : Node2D
     }
 
     private void InferenceLoop()
-    {
+    {        
+        GD.Print("Creating the inference session ...");
+        {
+            string path = $"res://Scenes/Cockpit/ErgoSki/model/end2end.onnx";
+
+            if (!FileAccess.FileExists(path))
+            {
+                GD.PushError($"File not found: {path}");
+                return;
+            }
+
+            // Open file
+            using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+            if (file == null)
+            {
+                GD.PushError($"Failed to open file: {path}");
+                return;
+            }
+
+            // Read all bytes
+            byte[] data = file.GetBuffer((long)file.GetLength());
+
+            GD.Print($"Loaded ONNX file, size: {data.Length / 1024.0 / 1024.0:F2} Mb");
+
+            _inferenceSession = new InferenceSession(data);
+
+            // NOTE (mristin):
+            // We pre-allocate the buffers and images to avoid the GC pressure.
+
+            _inputDataBuffer = new float[1 * 3 * _inputHeight * _inputWidth];
+            _inputTensorBuffer = new DenseTensor<float>(
+                _inputDataBuffer,
+                new[] { 1, 3, _inputHeight, _inputWidth }
+            );
+
+            // NOTE (mristin):
+            // We will resize this image later as necessary.
+            _resizedDisplayImage = Image.CreateEmpty(
+                1, 1, false, Image.Format.Rgb8
+            );
+
+            _resizedInputImage = Image.CreateEmpty(
+                _inputWidth, _inputHeight, false, Image.Format.Rgb8
+            );
+
+            GD.Print("Inference session created.");
+        }
+        
+        _status!.Visible = false;
+       
         GD.Print("Inference loop started.");
         while (_inferenceRunning)
         {

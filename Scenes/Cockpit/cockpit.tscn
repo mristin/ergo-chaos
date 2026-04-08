@@ -28,4 +28,5 @@ position = Vector2(1838, 60)
 needle_color = Color(0.3137255, 0, 1, 1)
 
 [node name="Screen" type="Node2D" parent="." unique_id=1668238661]
+z_index = -1
 position = Vector2(245, 10)

@@ -13,8 +13,18 @@ signal player_b_right_speed_updated(normalized_speed: float)
 
 @onready var screen: Node2D = $Screen
 
+var _camera_feed: CameraFeed = null
+
+func set_camera_feed(feed: CameraFeed) -> void:
+    _camera_feed = feed
+
 func _ready() -> void:
     ergo_ski.PlayerSpeedUpdated.connect(_on_player_speed_updated)
+
+    if _camera_feed == null:
+        push_error("Camera feed must be set before call to _ready on Cockpit.")
+    
+    ergo_ski.set_camera_feed(_camera_feed)
 
     set_game("res://Scenes/Playground/playground.tscn")
 
