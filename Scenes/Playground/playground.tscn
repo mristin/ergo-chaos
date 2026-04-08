@@ -17,9 +17,47 @@ offset_bottom = 417.0
 polygon = PackedVector2Array(-6, 0, 565, -2, 567, 418, 4, 416, -1, 179, -26, 179, -20, 444, 633, 445, 619, -53, -37, -45, -28, 173, -1, 174)
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
-position = Vector2(279, 118)
+position = Vector2(57, 71)
 texture = ExtResource("2_dbwwm")
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
-position = Vector2(337, 239)
+position = Vector2(495, 350)
 texture = ExtResource("3_uvwl6")
+
+[node name="Wall" type="ColorRect" parent="." unique_id=538891616]
+offset_left = -42.0
+offset_top = -41.0
+offset_right = 618.0
+offset_bottom = -1.0
+color = Color(0, 0, 0, 1)
+
+[node name="Wall" type="ColorRect" parent="Wall" unique_id=437859245]
+layout_mode = 0
+offset_left = -42.0
+offset_top = -41.0
+offset_right = 38.0
+offset_bottom = 542.0
+color = Color(0, 0, 0, 1)
+
+[node name="Wall" type="ColorRect" parent="Wall/Wall" unique_id=1967537756]
+layout_mode = 0
+offset_left = -56.0
+offset_top = 500.0
+offset_right = 731.0
+offset_bottom = 537.0
+color = Color(0, 0, 0, 1)
+
+[node name="Wall" type="ColorRect" parent="Wall/Wall/Wall" unique_id=902581786]
+layout_mode = 0
+offset_left = -42.0
+offset_top = 505.0
+offset_right = 745.0
+offset_bottom = 542.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=2115058860]
+offset_left = 570.0
+offset_top = -40.0
+offset_right = 610.0
+offset_bottom = 451.0
+color = Color(0, 0, 0, 1)

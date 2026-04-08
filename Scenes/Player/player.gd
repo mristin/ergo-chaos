@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 class_name Player
 
-var speed: float = 30.0
+var speed: float = 60.0
 var turn_speed: float = 1.0
 
 @onready var sprite_2d: Sprite2D = $Sprite2D

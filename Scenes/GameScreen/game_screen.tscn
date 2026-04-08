@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bg3rftr8sl1en"]
+
+[node name="GameScreen" type="Node2D" unique_id=15492657]
+
+[node name="SubViewportContainerA" type="SubViewportContainer" parent="." unique_id=1013689658]
+offset_right = 300.0
+offset_bottom = 600.0
+
+[node name="SubViewportA" type="SubViewport" parent="SubViewportContainerA" unique_id=817058018]
+handle_input_locally = false
+size = Vector2i(700, 1000)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainerA/SubViewportA" unique_id=1666128541]
+
+[node name="SubViewportContainerB" type="SubViewportContainer" parent="." unique_id=1967638374]
+offset_left = 700.0
+offset_right = 1400.0
+offset_bottom = 500.0
+
+[node name="SubViewportB" type="SubViewport" parent="SubViewportContainerB" unique_id=724380011]
+handle_input_locally = false
+size = Vector2i(700, 1000)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainerB/SubViewportB" unique_id=1399880968]

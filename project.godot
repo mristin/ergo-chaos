@@ -12,8 +12,14 @@ config_version=5
 
 config/name="Ergo Chaos"
 run/main_scene="uid://5cdxwrsa8hx8"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 
 [dotnet]
 
