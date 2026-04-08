@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ergo Chaos"
-run/main_scene="uid://5cdxwrsa8hx8"
+run/main_scene="uid://cc7ibd7dvaver"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
