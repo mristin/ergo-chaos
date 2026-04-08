@@ -9,6 +9,7 @@ height = 54.0
 
 [node name="Player" type="CharacterBody2D" unique_id=246400443]
 script = ExtResource("1_a3d8c")
+texture = ExtResource("1_uvnfx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=419262957]
 texture = ExtResource("1_uvnfx")

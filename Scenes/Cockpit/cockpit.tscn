@@ -26,3 +26,17 @@ needle_color = Color(0.3137255, 0, 1, 1)
 [node name="SpeedometerBRight" parent="." unique_id=1770274390 instance=ExtResource("2_fqlma")]
 position = Vector2(1080, 70)
 needle_color = Color(0.3137255, 0, 1, 1)
+
+[node name="CurrentScene" type="Container" parent="." unique_id=475556375]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 245.0
+offset_top = 17.0
+offset_right = 895.0
+offset_bottom = 617.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
