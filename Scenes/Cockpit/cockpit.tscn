@@ -29,11 +29,3 @@ needle_color = Color(0.3137255, 0, 1, 1)
 
 [node name="Screen" type="Node2D" parent="." unique_id=1668238661]
 position = Vector2(245, 10)
-
-[node name="ScreenBackground" type="ColorRect" parent="." unique_id=2024568174]
-z_index = -2
-offset_left = 245.0
-offset_top = 10.0
-offset_right = 1645.0
-offset_bottom = 1010.0
-color = Color(1, 1, 0, 1)

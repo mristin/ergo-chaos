@@ -1,17 +1,4 @@
-# body-pose-estimation-with-godot
-
-[![Continuous integration](https://github.com/mristin/body-pose-estimation-with-godot/actions/workflows/ci.yaml/badge.svg)](https://github.com/mristin/body-pose-estimation-with-godot/actions/workflows/ci.yaml)
-
-This is a simple demo code where we tried to get body pose estimation working in Godot.
-
-[![Screenshot](https://github.com/mristin/body-pose-estimation-with-godot/raw/main/screenshot.png)](https://youtu.be/2Ju0RFVwm-s)
-
-The demo already includes inertia for having stable speed in case you want to make ergo skiing games.
-There is also a rudimentary symbol recognition based on the hand pose.
-
-We used C# since we resort to ONNX runtime to run model inference.
-
-The body pose recognition code is encapsulated in [ErgoSki/](ErgoSki/) scene which you can readily copy to your project and use.
+# ergo-chaos
 
 ## Acknowledgments
 
@@ -19,7 +6,10 @@ We used [RTMO-t model].
 
 [RTMO model]: https://github.com/open-mmlab/mmpose/tree/main/projects/rtmo
 
-Speedometer image is taken from https://opengameart.org/content/speedometer-0.
+The images were taken from:
+* Speedometer: https://opengameart.org/content/speedometer-0.
+* Spaceship: https://opengameart.org/content/spaceships-1 
+* Background: https://opengameart.org/content/backgrounds-topdown-games 
 
 ## Contributing
 

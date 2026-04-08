@@ -8,10 +8,14 @@ offset_bottom = 600.0
 
 [node name="SubViewportA" type="SubViewport" parent="SubViewportContainerA" unique_id=817058018]
 handle_input_locally = false
-size = Vector2i(700, 1000)
+size = Vector2i(960, 1080)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainerA/SubViewportA" unique_id=1666128541]
+limit_left = -100
+limit_top = -100
+limit_right = 1000
+limit_bottom = 1000
 
 [node name="SubViewportContainerB" type="SubViewportContainer" parent="." unique_id=1967638374]
 offset_left = 700.0
@@ -20,7 +24,11 @@ offset_bottom = 500.0
 
 [node name="SubViewportB" type="SubViewport" parent="SubViewportContainerB" unique_id=724380011]
 handle_input_locally = false
-size = Vector2i(700, 1000)
+size = Vector2i(960, 1080)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainerB/SubViewportB" unique_id=1399880968]
+limit_left = -100
+limit_top = -100
+limit_right = 1000
+limit_bottom = 1000
