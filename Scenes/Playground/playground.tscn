@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://5cdxwrsa8hx8"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://Scenes/Player/player.tscn" id="1_oyxf0"]
+
+[node name="Playground" type="Node2D" unique_id=1517193454]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=482934435]
+offset_top = 1.0
+offset_right = 564.0
+offset_bottom = 417.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=103206660]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1017387505]
+polygon = PackedVector2Array(-6, 0, 565, -2, 567, 418, 4, 416, -1, 179, -26, 179, -20, 444, 633, 445, 619, -53, -37, -45, -28, 173, -1, 174)
+
+[node name="Player" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
+position = Vector2(279, 118)
