@@ -685,7 +685,7 @@ public partial class ErgoSki : Node2D
         string symbol
     );
 
-    private CameraFeed? _providedCameraFeed = null;
+    private CameraFeed? _cameraFeed = null;
 
     private Label? _status;
     private CameraTexture? _cameraTexture;
@@ -770,7 +770,7 @@ public partial class ErgoSki : Node2D
 
     public void SetCameraFeed(CameraFeed cameraFeed)
     {
-        _providedCameraFeed = cameraFeed;
+        _cameraFeed = cameraFeed;
     }
 
     public override void _Ready()
@@ -849,18 +849,24 @@ public partial class ErgoSki : Node2D
     private void OnSetUpTimerTimeout()
     {
         GD.Print("SetUpTimer timed out.");
-        
-        if (_providedCameraFeed == null)
+
+        // NOTE (mristin):
+        // We will resize this image later as necessary.
+        _resizedDisplayImage = Image.CreateEmpty(
+            1, 1, false, Image.Format.Rgb8
+        );
+
+        if (_cameraFeed == null)
         {
             throw new InvalidOperationException(
-                "Camera feed must be set before ErgoSki is ready. " + 
+                "Camera feed must be set before ErgoSki is ready. " +
                 "Call SetCameraFeed() first."
             );
         }
-        
+
         _cameraTexture = new CameraTexture
         {
-            CameraFeedId = _providedCameraFeed.GetId(),
+            CameraFeedId = _cameraFeed.GetId(),
             CameraIsActive = true
         };
 
@@ -869,7 +875,7 @@ public partial class ErgoSki : Node2D
         _cameraPort = GetNode<TextureRect>("Panel/CameraPort");
         _cameraPort!.Texture = _processedTexture;
 
-        _providedCameraFeed.FrameChanged += OnFrameChanged;
+        _cameraFeed.FrameChanged += OnFrameChanged;
 
         GD.Print("Starting the inference thread...");
         {
@@ -1037,7 +1043,7 @@ public partial class ErgoSki : Node2D
     }
 
     private void InferenceLoop()
-    {        
+    {
         GD.Print("Creating the inference session ...");
         {
             string path = $"res://Scenes/Cockpit/ErgoSki/model/end2end.onnx";
@@ -1072,21 +1078,18 @@ public partial class ErgoSki : Node2D
                 new[] { 1, 3, _inputHeight, _inputWidth }
             );
 
-            // NOTE (mristin):
-            // We will resize this image later as necessary.
-            _resizedDisplayImage = Image.CreateEmpty(
-                1, 1, false, Image.Format.Rgb8
-            );
-
             _resizedInputImage = Image.CreateEmpty(
                 _inputWidth, _inputHeight, false, Image.Format.Rgb8
             );
 
             GD.Print("Inference session created.");
         }
-        
-        _status!.Visible = false;
-       
+
+        // NOTE (mristin):
+        // Godot does not allow changes in the trees from the other threads, so we have
+        // to defer a call.
+        Callable.From(() => { _status!.Visible = false; }).CallDeferred();
+
         GD.Print("Inference loop started.");
         while (_inferenceRunning)
         {

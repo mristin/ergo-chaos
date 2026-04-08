@@ -24,7 +24,7 @@ func _ready() -> void:
     if _camera_feed == null:
         push_error("Camera feed must be set before call to _ready on Cockpit.")
     
-    ergo_ski.set_camera_feed(_camera_feed)
+    ergo_ski.SetCameraFeed(_camera_feed)
 
     set_game("res://Scenes/Playground/playground.tscn")
 
