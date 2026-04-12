@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dt7d1ylbwxa5i"]
+
+[ext_resource type="Script" uid="uid://cy8yljk4np1rq" path="res://Scenes/Goo/goo.gd" id="1_4lcp0"]
+[ext_resource type="Texture2D" uid="uid://bdtr0joja7ptp" path="res://Assets/Images/paint-splat-a.svg" id="2_ftpky"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4lcp0"]
+radius = 22.0
+
+[node name="Goo" type="Area2D" unique_id=1319101035]
+script = ExtResource("1_4lcp0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655145525]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ftpky")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1165158627]
+shape = SubResource("CircleShape2D_4lcp0")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

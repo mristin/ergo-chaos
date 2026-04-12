@@ -55,6 +55,9 @@ func react_to_keys(_delta: float) -> void:
     elif Input.is_key_pressed(KEY_X):
         set_right_engine(0.0)
 
+func _process(_delta: float) -> void:
+    react_to_keys(_delta)
+
 func _physics_process(delta: float) -> void:
     var engine_average = (_left_engine_power + _right_engine_power) * 0.5
     var engine_difference = _right_engine_power - _left_engine_power

@@ -10,6 +10,7 @@ The images were taken from:
 * Speedometer: https://opengameart.org/content/speedometer-0.
 * Spaceship: https://opengameart.org/content/spaceships-1 
 * Background: https://opengameart.org/content/backgrounds-topdown-games 
+* Goo: https://kenney.nl/assets/yellow-paint-pack
 
 ## Contributing
 

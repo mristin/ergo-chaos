@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://bg3rftr8sl1en"]
 
+[ext_resource type="PackedScene" uid="uid://c2hb47bvf62tn" path="res://Scenes/HUD/hud.tscn" id="1_aij3n"]
+
 [node name="GameScreen" type="Node2D" unique_id=15492657]
 
 [node name="SubViewportContainerA" type="SubViewportContainer" parent="." unique_id=1013689658]
-offset_right = 300.0
-offset_bottom = 600.0
+offset_left = 4.0
+offset_right = 964.0
+offset_bottom = 1080.0
 
 [node name="SubViewportA" type="SubViewport" parent="SubViewportContainerA" unique_id=817058018]
 handle_input_locally = false
@@ -32,3 +35,9 @@ limit_left = -100
 limit_top = -100
 limit_right = 1000
 limit_bottom = 1000
+
+[node name="Hud" parent="." unique_id=1164260724 instance=ExtResource("1_aij3n")]
+offset_left = 553.0
+offset_top = 40.0
+offset_right = 776.0
+offset_bottom = 40.0

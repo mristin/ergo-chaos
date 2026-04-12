@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://Assets/Images/spaceship-red.png" id="2_dbwwm"]
 [ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="3_uvwl6"]
 [ext_resource type="Texture2D" uid="uid://betc8tlpqjmhw" path="res://Assets/Images/background.png" id="4_uvwl6"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="5_kh02m"]
 
 [node name="Playground" type="Node2D" unique_id=1517193454]
 
@@ -58,3 +59,8 @@ z_index = -5
 position = Vector2(328, 202.5)
 scale = Vector2(2.312, 1.81)
 texture = ExtResource("4_uvwl6")
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=1072945377]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("5_kh02m")]
+position = Vector2(121, 150)

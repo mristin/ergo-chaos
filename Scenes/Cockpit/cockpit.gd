@@ -88,6 +88,30 @@ func set_game(scene_path: String) -> void:
         remote_transform.remote_path = camera.get_path()
         player.add_child(remote_transform)
     
+    # endregion
+    
+    # region Set up level state
+    
+    var level_state: LevelState = load(
+        "res://Scenes/LevelState/level_state.tscn"
+    ).instantiate()
+    
+    var goo_container = scene.get_node("GooContainer")
+    for child in goo_container.get_children():
+        var goo: Goo = child
+        goo.collected.connect(level_state.on_goo_collected)
+    
+    level_state.set_goo_count(goo_container.get_children().size())     
+    # endregion
+    
+    # region Wire up HUD
+    var hud: Hud = game_screen.get_node("Hud")
+    
+    level_state.goo_count_changed.connect(hud.on_goo_count_changed)
+    # endregion
+    
+    
+    
 func _on_player_speed_updated(player: String, hand: String, normalized_speed: float) -> void:
     match [player, hand]:
         ["A", "Left"]:
