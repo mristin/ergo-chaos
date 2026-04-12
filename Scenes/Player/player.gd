@@ -26,6 +26,7 @@ var right_engine_power: float:
 
 var battery: float = 100.0
 var max_battery: float = 100.0
+
 var movement_cost: float = 0.02  # per pixel
 
 signal battery_changed(battery: float)
@@ -48,7 +49,7 @@ func _set_battery(amount: float) -> void:
     if amount <= 0.0:
         amount = 0.0
         
-    if battery > 0.0:
+    if battery > 0.0 and amount == 0.0:
         died.emit()
     
     battery = amount

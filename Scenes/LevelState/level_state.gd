@@ -2,11 +2,12 @@ extends Node2D
 
 class_name LevelState
 
-signal level_finished()
-
 signal goo_count_changed(count: int)
+signal accomplished()
+signal failed()
 
 var _goo_count: int = 100
+var _player_count: int = 2
 
 func set_goo_count(count: int) -> void:
     _goo_count = count
@@ -16,14 +17,17 @@ func on_goo_collected() -> void:
     set_goo_count(_goo_count - 1)
     
     if _goo_count == 0:
-        level_finished.emit()
-
-signal failed()
-
-var _player_count: int = 2
+        accomplished.emit()
 
 func on_player_died() -> void:
+    assert(
+        _player_count > 0, 
+        "Unexpected player died when all of them already died."
+    )
+    
     _player_count -= 1
+        
+    print("There are only %d player(s) left." % _player_count)
     
     if _player_count == 0:
         failed.emit()

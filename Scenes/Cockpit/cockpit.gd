@@ -5,6 +5,9 @@ signal player_a_right_speed_updated(normalized_speed: float)
 signal player_b_left_speed_updated(normalized_speed: float)
 signal player_b_right_speed_updated(normalized_speed: float)
 
+# NOTE (mristin):
+# We intentionally put ergo ski and the speedometers here and not in the HUD since
+# we use the ergo ski controls also for the menus, not just for the gameplay.
 @onready var ergo_ski: Node2D = $ErgoSki
 @onready var speedometer_a_left: Node2D = $SpeedometerALeft
 @onready var speedometer_a_right: Node2D = $SpeedometerARight
@@ -18,6 +21,12 @@ var _camera_feed: CameraFeed = null
 func set_camera_feed(feed: CameraFeed) -> void:
     _camera_feed = feed
 
+
+var level_scene_paths: Array[String] = [
+    "res://Scenes/Levels/Playground/playground.tscn",
+    "res://Scenes/Levels/Playground2/playground2.tscn",
+]
+
 func _ready() -> void:
     ergo_ski.PlayerSpeedUpdated.connect(_on_player_speed_updated)
 
@@ -26,9 +35,15 @@ func _ready() -> void:
     
     ergo_ski.SetCameraFeed(_camera_feed)
 
-    set_game("res://Scenes/Playground/playground.tscn")
+    set_level(0)
 
-func set_game(scene_path: String) -> void:
+
+func set_level(level: int) -> void:
+    assert(level >= 0)
+    assert(level < level_scene_paths.size())
+
+    var scene_path = level_scene_paths[level]
+
     var scene: Node2D = load(scene_path).instantiate()
 
     # region Wire players to the control
@@ -100,7 +115,9 @@ func set_game(scene_path: String) -> void:
         var goo: Goo = child
         goo.collected.connect(level_state.on_goo_collected)
     
-    level_state.set_goo_count(goo_container.get_children().size())
+    var goo_count: int = goo_container.get_children().size()
+    
+    level_state.set_goo_count(goo_count)
     
     player_a.died.connect(level_state.on_player_died)
     player_b.died.connect(level_state.on_player_died)
@@ -108,11 +125,53 @@ func set_game(scene_path: String) -> void:
     
     # region Wire up HUD
     var hud: Hud = game_screen.get_node("Hud")
-    
+
+    hud.set_goo_count(goo_count)
     level_state.goo_count_changed.connect(hud.on_goo_count_changed)
     
     player_a.battery_changed.connect(hud.on_player_a_battery_changed)
     player_b.battery_changed.connect(hud.on_player_b_battery_changed)
+    # endregion
+    
+    # region Wire up the level transition        
+    var final_message_scene: PackedScene = load(
+        "res://Scenes/FinalMessage/final_message.tscn"
+    ) 
+    
+    level_state.failed.connect(func():
+        var final_message: FinalMessage = final_message_scene.instantiate()        
+        game_screen.add_child(final_message)
+        final_message.set_message(
+            "You failed, but you will make it the next time 💪!"
+        )
+        get_tree().paused = true
+        
+        final_message.done.connect(func():
+            get_tree().paused = false
+            set_level(level)
+        )
+    )
+    
+    level_state.accomplished.connect(func():
+        var final_message: FinalMessage = final_message_scene.instantiate()
+        game_screen.add_child(final_message)
+        get_tree().paused = true
+
+        if level < level_scene_paths.size() - 1:                        
+            final_message.set_message("Mission accomplished 🚀")
+            final_message.done.connect(func():
+                get_tree().paused = false
+                set_level(level + 1)
+            )
+        else:
+            # TODO: go to the dialogue: Do you want to play again? Yes/No
+            final_message.set_message("You cleaned everything! Bravo! 🎉 🥳 🎉")
+            final_message.done.connect(func():
+                get_tree().paused = false
+                set_level(0)
+            )            
+    )
+    
     # endregion
     
     
