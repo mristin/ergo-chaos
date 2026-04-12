@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cdhhj73m4drjv"]
 
-[ext_resource type="Script" uid="uid://byrrwul03cwsw" path="res://Scenes/Cockpit/ErgoSki/ErgoSki.cs" id="1_h88y8"]
+[ext_resource type="Script" uid="uid://byrrwul03cwsw" path="res://Scenes/ErgoMeter/ErgoSki/ErgoSki.cs" id="1_h88y8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h88y8"]
 bg_color = Color(0.96862745, 0, 0.9529412, 0)

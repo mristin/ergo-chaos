@@ -19,17 +19,17 @@ offset_bottom = 417.0
 polygon = PackedVector2Array(-6, 0, 565, -2, 567, 418, 4, 416, -1, 179, -26, 179, -20, 444, 633, 445, 619, -53, -37, -45, -28, 173, -1, 174)
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_8i7co")]
+z_index = 1
 position = Vector2(85.72685, 66.711555)
 rotation = 0.5064024
 scale = Vector2(0.99991745, 0.99991745)
-velocity = Vector2(7.275514, -13.117427)
 texture = ExtResource("2_ngl6j")
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_8i7co")]
+z_index = 1
 position = Vector2(135.11606, 66.53859)
 rotation = 0.5064024
 scale = Vector2(0.99991745, 0.99991745)
-velocity = Vector2(7.275514, -13.117427)
 texture = ExtResource("3_rtj6c")
 
 [node name="Wall" type="ColorRect" parent="." unique_id=538891616]

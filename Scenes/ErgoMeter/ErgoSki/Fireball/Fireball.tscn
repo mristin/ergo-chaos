@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dhthdj5aft7vb"]
 
-[ext_resource type="Shader" uid="uid://dy4pugovk82ox" path="res://Scenes/Cockpit/ErgoSki/Fireball/fireball.gdshader" id="1_vhtwv"]
-[ext_resource type="Script" uid="uid://dkd1dntgcxrk1" path="res://Scenes/Cockpit/ErgoSki/Fireball/Fireball.cs" id="2_2eckv"]
+[ext_resource type="Shader" uid="uid://dy4pugovk82ox" path="res://Scenes/ErgoMeter/ErgoSki/Fireball/fireball.gdshader" id="1_vhtwv"]
+[ext_resource type="Script" uid="uid://dkd1dntgcxrk1" path="res://Scenes/ErgoMeter/ErgoSki/Fireball/Fireball.cs" id="2_2eckv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_olwj8"]
 resource_local_to_scene = true

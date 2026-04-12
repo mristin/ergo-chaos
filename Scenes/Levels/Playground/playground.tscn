@@ -19,10 +19,12 @@ offset_bottom = 417.0
 polygon = PackedVector2Array(-6, 0, 565, -2, 567, 418, 4, 416, -1, 179, -26, 179, -20, 444, 633, 445, 619, -53, -37, -45, -28, 173, -1, 174)
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
+z_index = 1
 position = Vector2(57, 71)
 texture = ExtResource("2_dbwwm")
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
+z_index = 1
 position = Vector2(495, 350)
 texture = ExtResource("3_uvwl6")
 

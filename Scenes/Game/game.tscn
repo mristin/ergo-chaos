@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bdyo74ml3jpq6"]
+
+[ext_resource type="Script" uid="uid://bbcm22rodowf" path="res://Scenes/Game/game.gd" id="1_16w2f"]
+
+[node name="Game" type="Node2D" unique_id=498934255]
+script = ExtResource("1_16w2f")
+
+[node name="Screen" type="Node2D" parent="." unique_id=1668238661]
+z_index = -1
+position = Vector2(245, 10)

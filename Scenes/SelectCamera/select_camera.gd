@@ -96,7 +96,13 @@ func start(feed: CameraFeed, format_index: int) -> void:
     feed.set_format(format_index, {})
     feed.feed_is_active = true
 
-    var cockpit_scene = load("res://Scenes/Cockpit/cockpit.tscn").instantiate()
-    cockpit_scene.set_camera_feed(feed)
-    get_tree().root.add_child(cockpit_scene)
+    var ergo_meter: ErgoMeter = load(
+        "res://Scenes/ErgoMeter/ergo_meter.tscn"
+    ).instantiate()
+    ergo_meter.set_camera_feed(feed)
+
+    var game: Game = load("res://Scenes/Game/game.tscn").instantiate()
+    game.own_game_controllers([ergo_meter])
+
+    get_tree().root.add_child(game)
     queue_free()

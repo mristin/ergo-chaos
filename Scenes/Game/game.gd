@@ -1,40 +1,24 @@
 extends Node2D
 
-signal player_a_left_speed_updated(normalized_speed: float)
-signal player_a_right_speed_updated(normalized_speed: float)
-signal player_b_left_speed_updated(normalized_speed: float)
-signal player_b_right_speed_updated(normalized_speed: float)
-
-# NOTE (mristin):
-# We intentionally put ergo ski and the speedometers here and not in the HUD since
-# we use the ergo ski controls also for the menus, not just for the gameplay.
-@onready var ergo_ski: Node2D = $ErgoSki
-@onready var speedometer_a_left: Node2D = $SpeedometerALeft
-@onready var speedometer_a_right: Node2D = $SpeedometerARight
-@onready var speedometer_b_left: Node2D = $SpeedometerBLeft
-@onready var speedometer_b_right: Node2D = $SpeedometerBRight
+class_name Game
 
 @onready var screen: Node2D = $Screen
-
-var _camera_feed: CameraFeed = null
-
-func set_camera_feed(feed: CameraFeed) -> void:
-    _camera_feed = feed
-
 
 var level_scene_paths: Array[String] = [
     "res://Scenes/Levels/Playground/playground.tscn",
     "res://Scenes/Levels/Playground2/playground2.tscn",
 ]
 
+var _game_controllers: Array[GameController] = []
+
+func own_game_controllers(controllers: Array[GameController]) -> void:
+    # Take ownership of the game controllers and include them in this scene.
+    _game_controllers = controllers    
+
 func _ready() -> void:
-    ergo_ski.PlayerSpeedUpdated.connect(_on_player_speed_updated)
-
-    if _camera_feed == null:
-        push_error("Camera feed must be set before call to _ready on Cockpit.")
+    for controller in _game_controllers:
+        add_child(controller)
     
-    ergo_ski.SetCameraFeed(_camera_feed)
-
     set_level(0)
 
 
@@ -66,10 +50,11 @@ func set_level(level: int) -> void:
         push_error("PlayerB is not of type Player in scene: %s" % scene_path)
         return
 
-    player_a_left_speed_updated.connect(player_a.set_left_engine)
-    player_a_right_speed_updated.connect(player_a.set_right_engine)
-    player_b_left_speed_updated.connect(player_b.set_left_engine)
-    player_b_right_speed_updated.connect(player_b.set_right_engine)
+    for game_controller in _game_controllers:        
+        game_controller.player_a_left_speed_updated.connect(player_a.set_left_engine)
+        game_controller.player_a_right_speed_updated.connect(player_a.set_right_engine)
+        game_controller.player_b_left_speed_updated.connect(player_b.set_left_engine)
+        game_controller.player_b_right_speed_updated.connect(player_b.set_right_engine)
     # endregion
 
     # region Set up cameras
@@ -170,22 +155,24 @@ func set_level(level: int) -> void:
                 get_tree().paused = false
                 set_level(0)
             )            
-    )
-    
+    )    
     # endregion
     
+    # region Assert Player z-order correct
+    if player_a.z_index <= goo_container.z_index:
+        push_error(
+            (
+                "The z-index of player A is below the goo container " +
+                "on the level %s."
+            ) % scene_path
+        )
+        
+    if player_b.z_index <= goo_container.z_index:
+        push_error(
+            (
+                "The z-index of player B is below the goo container " +
+                "on the level %s."
+            ) % scene_path
+        )
+    # endregion
     
-func _on_player_speed_updated(player: String, hand: String, normalized_speed: float) -> void:
-    match [player, hand]:
-        ["A", "Left"]:
-            speedometer_a_left.set_needle(normalized_speed)
-            player_a_left_speed_updated.emit(normalized_speed)
-        ["A", "Right"]:
-            speedometer_a_right.set_needle(normalized_speed)
-            player_a_right_speed_updated.emit(normalized_speed)
-        ["B", "Left"]:
-            speedometer_b_left.set_needle(normalized_speed)
-            player_b_left_speed_updated.emit(normalized_speed)
-        ["B", "Right"]:
-            speedometer_b_right.set_needle(normalized_speed)
-            player_b_right_speed_updated.emit(normalized_speed)

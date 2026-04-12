@@ -20,7 +20,9 @@ public partial class Fireball : Node2D
     {
         var colorRect = GetNode<ColorRect>("ColorRect");
 
-        var fireballShader = GD.Load<Shader>("res://Scenes/Cockpit/ErgoSki/Fireball/fireball.gdshader");
+        var fireballShader = GD.Load<Shader>(
+            "res://Scenes/ErgoMeter/ErgoSki/Fireball/fireball.gdshader"
+        );
         _fireballShader = new ShaderMaterial();
         _fireballShader.Shader = fireballShader;
         _fireballShader.SetShaderParameter("time_scale", 1.0f);

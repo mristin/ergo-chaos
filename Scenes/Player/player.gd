@@ -55,26 +55,6 @@ func _set_battery(amount: float) -> void:
     battery = amount
     battery_changed.emit(amount)
 
-# NOTE (mristin):
-# We leave this function here for manual debugging of the behavior.
-# Usually, you can call it from _process.
-func react_to_keys(_delta: float) -> void:
-    if Input.is_key_pressed(KEY_Q):
-        set_left_engine(1.0)
-    elif Input.is_key_pressed(KEY_A):
-        set_left_engine(0.5)
-    elif Input.is_key_pressed(KEY_Z):
-        set_left_engine(0.0)
-
-    if Input.is_key_pressed(KEY_W):
-        set_right_engine(1.0)
-    elif Input.is_key_pressed(KEY_S):
-        set_right_engine(0.5)
-    elif Input.is_key_pressed(KEY_X):
-        set_right_engine(0.0)
-
-func _process(_delta: float) -> void:
-    react_to_keys(_delta)
 
 func _physics_process(delta: float) -> void:
     if battery > 0.0:

@@ -781,7 +781,7 @@ public partial class ErgoSki : Node2D
         _status.Text = "Setting up...";
 
         _fireballScene = GD.Load<PackedScene>(
-            $"res://Scenes/Cockpit/ErgoSki/Fireball/Fireball.tscn"
+            $"res://Scenes/ErgoMeter/ErgoSki/Fireball/Fireball.tscn"
         );
 
         var coreColor = new Color(1.0f, 0.6f, 2.0f, 1.0f);
@@ -1046,7 +1046,7 @@ public partial class ErgoSki : Node2D
     {
         GD.Print("Creating the inference session ...");
         {
-            string path = $"res://Scenes/Cockpit/ErgoSki/model/end2end.onnx";
+            string path = $"res://Scenes/ErgoMeter/ErgoSki/model/end2end.onnx";
 
             if (!FileAccess.FileExists(path))
             {

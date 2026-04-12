@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c21ytnp6qy4lm"]
+
+[ext_resource type="Script" uid="uid://dp0k6yxp56kdl" path="res://Scenes/Tests/GameHarness/game_harness.gd" id="1_4xg3h"]
+
+[node name="GameHarness" type="Node2D" unique_id=163168534]
+script = ExtResource("1_4xg3h")
+
+[node name="SelectLevel" type="OptionButton" parent="." unique_id=1822182877]
+offset_left = 283.0
+offset_top = 269.0
+offset_right = 998.0
+offset_bottom = 297.0
+
+[node name="Play" type="Button" parent="." unique_id=325809164]
+offset_left = 600.0
+offset_top = 441.0
+offset_right = 739.0
+offset_bottom = 472.0
+text = "Play"
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

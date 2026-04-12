@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4k6tu5osajqe"]
 
-[ext_resource type="Script" uid="uid://b0hbom2wqu4g0" path="res://Scenes/Cockpit/Speedometer/speedometer.gd" id="1_dn7es"]
+[ext_resource type="Script" uid="uid://b0hbom2wqu4g0" path="res://Scenes/ErgoMeter/Speedometer/speedometer.gd" id="1_dn7es"]
 [ext_resource type="Texture2D" uid="uid://bx2al5bxnff4x" path="res://Assets/Images/speedometer.png" id="2_twsmj"]
 
 [node name="Speedometer" type="Node2D" unique_id=220197317]
