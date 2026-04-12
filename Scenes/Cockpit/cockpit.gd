@@ -90,8 +90,7 @@ func set_game(scene_path: String) -> void:
     
     # endregion
     
-    # region Set up level state
-    
+    # region Set up level state    
     var level_state: LevelState = load(
         "res://Scenes/LevelState/level_state.tscn"
     ).instantiate()
@@ -101,15 +100,20 @@ func set_game(scene_path: String) -> void:
         var goo: Goo = child
         goo.collected.connect(level_state.on_goo_collected)
     
-    level_state.set_goo_count(goo_container.get_children().size())     
+    level_state.set_goo_count(goo_container.get_children().size())
+    
+    player_a.died.connect(level_state.on_player_died)
+    player_b.died.connect(level_state.on_player_died)
     # endregion
     
     # region Wire up HUD
     var hud: Hud = game_screen.get_node("Hud")
     
     level_state.goo_count_changed.connect(hud.on_goo_count_changed)
-    # endregion
     
+    player_a.battery_changed.connect(hud.on_player_a_battery_changed)
+    player_b.battery_changed.connect(hud.on_player_b_battery_changed)
+    # endregion
     
     
 func _on_player_speed_updated(player: String, hand: String, normalized_speed: float) -> void:

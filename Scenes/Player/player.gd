@@ -24,6 +24,13 @@ var right_engine_power: float:
     get:
         return _right_engine_power
 
+var battery: float = 100.0
+var max_battery: float = 100.0
+var movement_cost: float = 0.02  # per pixel
+
+signal battery_changed(battery: float)
+signal died()
+
 func _ready() -> void:
     _update_sprite_texture()
 
@@ -36,6 +43,16 @@ func set_right_engine(power: float) -> void:
 func _update_sprite_texture() -> void:
     if sprite_2d != null and texture != null:
         sprite_2d.texture = texture
+
+func _set_battery(amount: float) -> void:
+    if amount <= 0.0:
+        amount = 0.0
+        
+    if battery > 0.0:
+        died.emit()
+    
+    battery = amount
+    battery_changed.emit(amount)
 
 # NOTE (mristin):
 # We leave this function here for manual debugging of the behavior.
@@ -59,17 +76,22 @@ func _process(_delta: float) -> void:
     react_to_keys(_delta)
 
 func _physics_process(delta: float) -> void:
-    var engine_average = (_left_engine_power + _right_engine_power) * 0.5
-    var engine_difference = _right_engine_power - _left_engine_power
+    if battery > 0.0:
+        var engine_average = (_left_engine_power + _right_engine_power) * 0.5
+        var engine_difference = _right_engine_power - _left_engine_power
 
-    # The turning is based on engine difference.
-    if engine_difference != 0:
-        rotation += engine_difference * turn_speed * delta
+        # The turning is based on engine difference.
+        if engine_difference != 0:
+            rotation += engine_difference * turn_speed * delta
 
-    # The forward movement is based on average engine power.
-    if engine_average > 0:
-        velocity = Vector2.UP.rotated(rotation) * speed * engine_average
-    else:
-        velocity = Vector2.ZERO
+        # The forward movement is based on average engine power.
+        if engine_average > 0:
+            velocity = Vector2.UP.rotated(rotation) * speed * engine_average
+        else:
+            velocity = Vector2.ZERO
 
-    move_and_slide()
+        var old_position: Vector2 = position
+        move_and_slide()
+        
+        var cost = (position - old_position).length() * movement_cost
+        _set_battery(battery - cost)        

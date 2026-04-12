@@ -2,7 +2,7 @@ extends Area2D
 
 class_name Goo
 
-signal collected
+signal collected()
 
 var textures: Array[Texture2D] = [
     preload("res://Assets/Images/paint-splat-a.svg"),

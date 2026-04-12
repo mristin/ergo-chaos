@@ -17,3 +17,13 @@ func on_goo_collected() -> void:
     
     if _goo_count == 0:
         level_finished.emit()
+
+signal failed()
+
+var _player_count: int = 2
+
+func on_player_died() -> void:
+    _player_count -= 1
+    
+    if _player_count == 0:
+        failed.emit()
