@@ -8,6 +8,7 @@ extends Node2D
 @export var scene_level_paths: Array[String] = [
     "res://Scenes/Levels/Playground/playground.tscn",
     "res://Scenes/Levels/Playground2/playground2.tscn",
+    "res://Scenes/Tests/Levels/TestLaserGate/TestLaserGate.tscn",
 ];
 
 @onready var select_level: OptionButton = $SelectLevel

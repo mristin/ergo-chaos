@@ -65,4 +65,4 @@ texture = ExtResource("4_uvwl6")
 [node name="GooContainer" type="Node2D" parent="." unique_id=1072945377]
 
 [node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("5_kh02m")]
-position = Vector2(121, 150)
+position = Vector2(389, 111)

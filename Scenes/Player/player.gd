@@ -3,8 +3,13 @@ extends CharacterBody2D
 
 class_name Player
 
-var speed: float = 60.0
-var turn_speed: float = 1.0
+var _base_speed: float = 60.0
+var _base_turn_speed: float = 1.0
+var _base_movement_cost: float = 0.01  # per pixel
+
+var speed: float = _base_speed
+var turn_speed: float = _base_turn_speed
+var movement_cost: float = _base_movement_cost
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
@@ -27,7 +32,7 @@ var right_engine_power: float:
 var battery: float = 100.0
 var max_battery: float = 100.0
 
-var movement_cost: float = 0.02  # per pixel
+var _active_effects: Array[PlayerEffect] = []
 
 signal battery_changed(battery: float)
 signal died()
@@ -48,17 +53,37 @@ func _update_sprite_texture() -> void:
 func _set_battery(amount: float) -> void:
     if amount <= 0.0:
         amount = 0.0
-        
+
     if battery > 0.0 and amount == 0.0:
         died.emit()
-    
+
     battery = amount
     battery_changed.emit(amount)
 
+func add_effect(effect: PlayerEffect) -> void:
+    _active_effects.append(effect)
+    _recompute_stats()
+
+func remove_effect(effect: PlayerEffect) -> void:
+    _active_effects.erase(effect)
+    _recompute_stats()
+
+func _recompute_stats() -> void:
+    var mc := 1.0
+    var sp := 1.0
+    var ts := 1.0
+    for e in _active_effects:
+        mc *= e.movement_cost_multiplier
+        sp *= e.speed_multiplier
+        ts *= e.turn_speed_multiplier
+    movement_cost = _base_movement_cost * mc
+    speed = _base_speed * sp
+    turn_speed = _base_turn_speed * ts
 
 func _physics_process(delta: float) -> void:
-    if battery > 0.0:
+    if battery > 0.0:        
         var engine_average = (_left_engine_power + _right_engine_power) * 0.5
+        
         var engine_difference = _right_engine_power - _left_engine_power
 
         # The turning is based on engine difference.
@@ -73,6 +98,8 @@ func _physics_process(delta: float) -> void:
 
         var old_position: Vector2 = position
         move_and_slide()
-        
+
         var cost = (position - old_position).length() * movement_cost
-        _set_battery(battery - cost)        
+        for e in _active_effects:
+            cost += e.battery_drain_per_second * delta
+        _set_battery(battery - cost)
