@@ -6,9 +6,6 @@
 
 [node name="Area2D" type="Area2D" parent="." unique_id=179556661]
 script = ExtResource("1_kmymn")
-sign_count = null
-min_sign_spacing = null
-border_width = null
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1945936102]
-polygon = PackedVector2Array(163, 25, 450, 54, 521, 312, 272, 496, 364, 230, 92, 330, 98, 66)
+polygon = PackedVector2Array(163, 25, 450, 54, 521, 312, 272, 496, 143, 441, 92, 330, 98, 66)

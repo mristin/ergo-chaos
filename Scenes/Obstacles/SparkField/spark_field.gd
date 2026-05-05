@@ -21,11 +21,13 @@ const _SPARK_FILL_SHADER = preload(
         if Engine.is_editor_hint() and is_inside_tree():
             _refresh()
 
-@export var border_width: float = 5.0:
+@export var border_width: float = 10.0:
     set(v):
         border_width = v
         if Engine.is_editor_hint() and is_inside_tree():
             _refresh()
+
+const _SIGN_SIZE: float = 50.0
 
 const _DANGER_SIGNS: Array[Texture2D] = [
     preload("res://Assets/Images/danger1.png"),
@@ -103,12 +105,21 @@ func _sprinkle_signs(collision_node: Node) -> void:
         min_p = min_p.min(p)
         max_p = max_p.max(p)
 
+    min_p += Vector2(_SIGN_SIZE, _SIGN_SIZE)
+    max_p -= Vector2(_SIGN_SIZE, _SIGN_SIZE)
+
+    if min_p.x >= max_p.x or min_p.y >= max_p.y:
+        return
+
     var placed: Array[Vector2] = []
     var attempts := 0
 
     while placed.size() < sign_count and attempts < sign_count * 200:
         attempts += 1
-        var pt := Vector2(randf_range(min_p.x, max_p.x), randf_range(min_p.y, max_p.y))
+        var pt := Vector2(
+            randf_range(min_p.x, max_p.x), 
+            randf_range(min_p.y, max_p.y)
+        )
 
         if not Geometry2D.is_point_in_polygon(pt, polygon):
             continue
@@ -125,13 +136,29 @@ func _sprinkle_signs(collision_node: Node) -> void:
         var texture: Texture2D = _DANGER_SIGNS.pick_random()
         var sprite := Sprite2D.new()
         sprite.texture = texture
-        sprite.scale = Vector2.ONE * (50.0 / texture.get_height())
+        sprite.scale = Vector2.ONE * (_SIGN_SIZE / texture.get_height())
         sprite.position = pt
         sprite.rotation = randf_range(0.0, TAU)
         add_child(sprite)
 
+func _generate_uvs(points: PackedVector2Array) -> PackedVector2Array:
+    var min = points[0]
+    var max = points[0]
+
+    for p in points:
+        min = min.min(p)
+        max = max.max(p)
+
+    var size = max - min
+
+    var uvs = PackedVector2Array()
+    for p in points:
+        var uv = (p - min) / size
+        uvs.append(uv)
+
+    return uvs
+
 func _refresh_fill(collision_node: Node) -> void:
-    # TODO: check that this block will not delete the collision shape 2D!
     for child in get_children():
         if child is Polygon2D:
             child.free()
@@ -140,25 +167,20 @@ func _refresh_fill(collision_node: Node) -> void:
     if polygon.size() < 3:
         return
 
-    var min_p := polygon[0]
-    var max_p := polygon[0]
-    for p in polygon:
-        min_p = min_p.min(p)
-        max_p = max_p.max(p)
-    var span := max_p - min_p
-    if span.x < 1.0 or span.y < 1.0:
-        return
-
-    # TODO: infer correct uvs 
-    
-    var mat := ShaderMaterial.new()
-    
-    # TODO: re-generate the spark to be a simple gradient
+    var mat := ShaderMaterial.new()    
     mat.shader = _SPARK_FILL_SHADER
+
+    # NOTE (mristin):
+    # The texture is necessary so that Godot runs the shader in the first place.
+    # Without the texture, no shader will run -- this is a legacy Godot design decision.
+    var img := Image.create(2, 2, false, Image.FORMAT_RGBA8)
+    img.fill(Color.WHITE)
+    var tex := ImageTexture.create_from_image(img)
 
     var poly := Polygon2D.new()
     poly.polygon = polygon
-    poly.uv = uvs
+    poly.texture = tex
+    poly.uv = _generate_uvs(polygon)
     poly.material = mat
     poly.z_index = -1  # behind signs and border
     add_child(poly)
@@ -187,3 +209,5 @@ func _refresh_border(collision_node: Node) -> void:
     line.add_point(polygon[0])  # close the loop
 
     add_child(line)
+
+# TODO: see laser_gate.gd -- the player should suffer damage whenever he steps on the spark field. Make the damage much more pronounced than on the laser gate.
