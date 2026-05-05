@@ -3,66 +3,114 @@
 [ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://Scenes/Player/player.tscn" id="1_oyxf0"]
 [ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://Assets/Images/spaceship-red.png" id="2_dbwwm"]
 [ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="3_uvwl6"]
-[ext_resource type="Texture2D" uid="uid://betc8tlpqjmhw" path="res://Assets/Images/background.png" id="4_uvwl6"]
 [ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="5_kh02m"]
+[ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://Scenes/Levels/Base/Base.tscn" id="5_nocsb"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/laser_gate.tscn" id="6_5oxgy"]
+[ext_resource type="PackedScene" uid="uid://0iqk4rl8fsko" path="res://Scenes/Objects/RechargePad/RechargePad.tscn" id="7_lejie"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Objects/SparkField/spark_field.gd" id="8_tl5a4"]
 
 [node name="Playground" type="Node2D" unique_id=1517193454]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=482934435]
-offset_top = 1.0
-offset_right = 564.0
-offset_bottom = 417.0
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=103206660]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1017387505]
-polygon = PackedVector2Array(-6, 0, 565, -2, 567, 418, 4, 416, -1, 179, -26, 179, -20, 444, 633, 445, 619, -53, -37, -45, -28, 173, -1, 174)
+[node name="Base" parent="." unique_id=1608742923 instance=ExtResource("5_nocsb")]
+z_index = -1
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
 z_index = 1
-position = Vector2(57, 71)
+position = Vector2(80.56046, 48.936314)
+rotation = 1.6254053
+scale = Vector2(0.99999976, 0.99999976)
 texture = ExtResource("2_dbwwm")
+battery = 99.5437585067749
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
 z_index = 1
-position = Vector2(495, 350)
+position = Vector2(191.73305, 118.71015)
+rotation = 1.6239073
+scale = Vector2(0.9999999, 0.9999999)
 texture = ExtResource("3_uvwl6")
-
-[node name="Wall" type="ColorRect" parent="." unique_id=538891616]
-offset_left = -42.0
-offset_top = -41.0
-offset_right = 618.0
-offset_bottom = -1.0
-color = Color(0, 0, 0, 1)
-
-[node name="Wall2" type="ColorRect" parent="." unique_id=2115058860]
-offset_left = 570.0
-offset_top = -40.0
-offset_right = 610.0
-offset_bottom = 451.0
-color = Color(0, 0, 0, 1)
-
-[node name="Wall3" type="ColorRect" parent="." unique_id=437859245]
-offset_left = -84.0
-offset_top = -82.0
-offset_right = -4.0
-offset_bottom = 501.0
-color = Color(0, 0, 0, 1)
-
-[node name="Wall4" type="ColorRect" parent="." unique_id=1967537756]
-offset_left = -140.0
-offset_top = 418.0
-offset_right = 647.0
-offset_bottom = 455.0
-color = Color(0, 0, 0, 1)
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1859975300]
-z_index = -5
-position = Vector2(328, 202.5)
-scale = Vector2(2.312, 1.81)
-texture = ExtResource("4_uvwl6")
+battery = 99.85451140403748
 
 [node name="GooContainer" type="Node2D" parent="." unique_id=1072945377]
 
 [node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("5_kh02m")]
-position = Vector2(389, 111)
+position = Vector2(702, 109.000015)
+rotation = 1.01613
+
+[node name="Goo2" parent="GooContainer" unique_id=308754340 instance=ExtResource("5_kh02m")]
+position = Vector2(988, 174)
+rotation = 2.03226
+
+[node name="Goo3" parent="GooContainer" unique_id=1517097579 instance=ExtResource("5_kh02m")]
+position = Vector2(1651.0001, 576)
+rotation = 2.03226
+
+[node name="Goo4" parent="GooContainer" unique_id=2033937667 instance=ExtResource("5_kh02m")]
+position = Vector2(1407, 865)
+rotation = -2.2186656
+
+[node name="Goo5" parent="GooContainer" unique_id=803318407 instance=ExtResource("5_kh02m")]
+position = Vector2(720.0001, 822)
+rotation = 2.03226
+
+[node name="Goo6" parent="GooContainer" unique_id=1562349104 instance=ExtResource("5_kh02m")]
+position = Vector2(211, 575.0001)
+rotation = -2.2186656
+
+[node name="Goo7" parent="GooContainer" unique_id=1083841221 instance=ExtResource("5_kh02m")]
+position = Vector2(118.000015, 321.00003)
+rotation = 1.845854
+
+[node name="Goo8" parent="GooContainer" unique_id=1706412528 instance=ExtResource("5_kh02m")]
+position = Vector2(1371.0001, 148)
+rotation = 2.03226
+
+[node name="LaserGate" parent="." unique_id=1777469306 instance=ExtResource("6_5oxgy")]
+position = Vector2(549.99994, 133)
+rotation = 1.5650735
+green_time = 2.0
+yellow_time = 2.0
+red_time = 2.0
+width = 200.0
+
+[node name="LaserGate2" parent="." unique_id=1466223818 instance=ExtResource("6_5oxgy")]
+position = Vector2(1493, 389.00012)
+rotation = 2.7532227
+green_time = 4.0
+yellow_time = 4.0
+width = 200.0
+
+[node name="RechargePad" parent="." unique_id=124847995 instance=ExtResource("7_lejie")]
+position = Vector2(1718, 806)
+rotation = 3.138001
+
+[node name="LaserGate3" parent="." unique_id=955866623 instance=ExtResource("6_5oxgy")]
+position = Vector2(1082, 863.00006)
+rotation = 4.6847076
+green_time = 3.0
+yellow_time = 3.0
+red_time = 5.0
+width = 200.0
+
+[node name="Lake" type="Area2D" parent="." unique_id=1463147541]
+script = ExtResource("8_tl5a4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Lake" unique_id=443086060]
+polygon = PackedVector2Array(348, 525, 379, 307, 467, 260, 742, 250, 1199, 271, 1339, 330, 1458, 610, 1417, 665, 1347, 693, 1264, 724, 1165, 737, 605, 735, 488, 709, 397, 688, 351, 634)
+
+[node name="Corner" type="Area2D" parent="." unique_id=346024260]
+script = ExtResource("8_tl5a4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Corner" unique_id=1737895578]
+polygon = PackedVector2Array(1552, 32, 1572, 260, 1676, 504, 1920, 494, 1917, 11)
+
+[node name="Bottom" type="Area2D" parent="." unique_id=31438817]
+script = ExtResource("8_tl5a4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bottom" unique_id=1698273913]
+polygon = PackedVector2Array(1277, 999, 1313, 1041, 1269, 1085, 714, 1080, 60, 1025, 65, 960, 1002, 986, 1214, 992)
+
+[node name="Obstacle" type="Area2D" parent="." unique_id=1314892337]
+script = ExtResource("8_tl5a4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacle" unique_id=741555040]
+polygon = PackedVector2Array(10, 638, 178, 664, 260, 975, 10, 950)
