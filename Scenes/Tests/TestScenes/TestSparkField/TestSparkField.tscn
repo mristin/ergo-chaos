@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cps51v1ux63oh"]
 
-[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Obstacles/SparkField/spark_field.gd" id="1_kmymn"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Objects/SparkField/spark_field.gd" id="1_kmymn"]
 
 [node name="TestSparkField" type="Node2D" unique_id=430608008]
 

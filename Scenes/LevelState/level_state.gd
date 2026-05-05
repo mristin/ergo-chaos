@@ -19,15 +19,5 @@ func on_goo_collected() -> void:
     if _goo_count == 0:
         accomplished.emit()
 
-func on_player_died() -> void:
-    assert(
-        _player_count > 0, 
-        "Unexpected player died when all of them already died."
-    )
-    
-    _player_count -= 1
-        
-    print("There are only %d player(s) left." % _player_count)
-    
-    if _player_count == 0:
-        failed.emit()
+func on_player_died() -> void:    
+    failed.emit()

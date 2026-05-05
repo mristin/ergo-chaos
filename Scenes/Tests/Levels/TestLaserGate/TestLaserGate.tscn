@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://Scenes/Player/player.tscn" id="1_ua57f"]
 [ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://Assets/Images/spaceship-red.png" id="2_nbm3i"]
 [ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="3_vk4vq"]
-[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Obstacles/LaserGate/laser_gate.tscn" id="4_ba55p"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/laser_gate.tscn" id="4_ba55p"]
 [ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="5_nbm3i"]
 
 [node name="TestLaserGate" type="Node2D" unique_id=765771711]

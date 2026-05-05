@@ -6,7 +6,7 @@ extends Area2D
 @export var red_time: float = 10.0; # in seconds
 @export var width: float = 400.0  # distance between the two post centers
 
-var light_textures: Array[Texture2D] = [
+const light_textures: Array[Texture2D] = [
     preload("res://Assets/Images/green-light.png"),
     preload("res://Assets/Images/yellow-light.png"),
     preload("res://Assets/Images/red-light.png"),
@@ -97,7 +97,7 @@ func _on_body_entered(body: Node2D) -> void:
     if not (body is Player) or body in _player_effects:
         return
     var effect := PlayerEffect.new()
-    effect.battery_drain_per_second = 0.5
+    effect.battery_drain_per_second = 7.0
     body.add_effect(effect)
     _player_effects[body] = effect
 

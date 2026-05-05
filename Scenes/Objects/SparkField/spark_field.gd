@@ -2,10 +2,10 @@
 extends Area2D
 
 const _SPARK_BORDER_SHADER = preload(
-    "res://Scenes/Obstacles/SparkField/spark_border.gdshader"
+    "res://Scenes/Objects/SparkField/spark_border.gdshader"
 )
 const _SPARK_FILL_SHADER = preload(
-    "res://Scenes/Obstacles/SparkField/spark_field_fill.gdshader"
+    "res://Scenes/Objects/SparkField/spark_field_fill.gdshader"
 )
 
 @export var sign_count: int = 6:
@@ -36,6 +36,8 @@ const _DANGER_SIGNS: Array[Texture2D] = [
     preload("res://Assets/Images/danger4.svg"),
 ]
 
+var _player_effects: Dictionary = {}  # Player -> PlayerEffect
+
 func _ready() -> void:
     var collision_node := _find_collision_node()
     if collision_node == null:
@@ -47,6 +49,10 @@ func _ready() -> void:
     _refresh_fill(collision_node)
     _sprinkle_signs(collision_node)
     _refresh_border(collision_node)
+    if Engine.is_editor_hint():
+        return
+    body_entered.connect(_on_body_entered)
+    body_exited.connect(_on_body_exited)
 
 func _refresh() -> void:
     var collision_node := _find_collision_node()
@@ -210,4 +216,16 @@ func _refresh_border(collision_node: Node) -> void:
 
     add_child(line)
 
-# TODO: see laser_gate.gd -- the player should suffer damage whenever he steps on the spark field. Make the damage much more pronounced than on the laser gate.
+func _on_body_entered(body: Node2D) -> void:
+    if not (body is Player) or body in _player_effects:
+        return
+    var effect := PlayerEffect.new()
+    effect.battery_drain_per_second = 7.0
+    body.add_effect(effect)
+    _player_effects[body] = effect
+
+func _on_body_exited(body: Node2D) -> void:
+    if body not in _player_effects:
+        return
+    body.remove_effect(_player_effects[body])
+    _player_effects.erase(body)

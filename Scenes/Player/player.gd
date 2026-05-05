@@ -29,7 +29,7 @@ var right_engine_power: float:
     get:
         return _right_engine_power
 
-var battery: float = 100.0
+@export var battery: float = 100.0
 var max_battery: float = 100.0
 
 var _active_effects: Array[PlayerEffect] = []
@@ -51,8 +51,7 @@ func _update_sprite_texture() -> void:
         sprite_2d.texture = texture
 
 func _set_battery(amount: float) -> void:
-    if amount <= 0.0:
-        amount = 0.0
+    amount = clamp(amount, 0.0, max_battery)
 
     if battery > 0.0 and amount == 0.0:
         died.emit()
