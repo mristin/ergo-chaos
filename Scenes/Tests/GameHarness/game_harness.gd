@@ -7,7 +7,6 @@ extends Node2D
 
 @export var scene_level_paths: Array[String] = [
     "res://Scenes/Levels/Playground/playground.tscn",
-    "res://Scenes/Levels/Playground2/playground2.tscn",
     "res://Scenes/Tests/Levels/TestLaserGate/TestLaserGate.tscn",
     "res://Scenes/Tests/Levels/TestRechargePad/TestRechargePad.tscn",
     "res://Scenes/Tests/Levels/TestSparkField/TestSparkField.tscn",

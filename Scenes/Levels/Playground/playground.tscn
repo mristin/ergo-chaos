@@ -16,17 +16,17 @@ z_index = -1
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
 z_index = 1
-position = Vector2(80.56046, 48.936314)
+position = Vector2(290.00003, 82)
 rotation = 1.6254053
-scale = Vector2(0.99999976, 0.99999976)
+scale = Vector2(0.9999996, 0.9999996)
 texture = ExtResource("2_dbwwm")
 battery = 99.5437585067749
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
 z_index = 1
-position = Vector2(191.73305, 118.71015)
+position = Vector2(298, 142)
 rotation = 1.6239073
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(0.9999997, 0.9999997)
 texture = ExtResource("3_uvwl6")
 battery = 99.85451140403748
 
@@ -67,8 +67,8 @@ rotation = 2.03226
 [node name="LaserGate" parent="." unique_id=1777469306 instance=ExtResource("6_5oxgy")]
 position = Vector2(549.99994, 133)
 rotation = 1.5650735
-green_time = 2.0
-yellow_time = 2.0
+green_time = 3.0
+yellow_time = 3.0
 red_time = 2.0
 width = 200.0
 
@@ -113,4 +113,4 @@ polygon = PackedVector2Array(1277, 999, 1313, 1041, 1269, 1085, 714, 1080, 60, 1
 script = ExtResource("8_tl5a4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacle" unique_id=741555040]
-polygon = PackedVector2Array(10, 638, 178, 664, 260, 975, 10, 950)
+polygon = PackedVector2Array(10, 638, 178, 664, 254, 961, 10, 950)

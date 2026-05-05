@@ -29,8 +29,8 @@ size = Vector2(14, 1107)
 [node name="Background" type="Sprite2D" parent="." unique_id=347540391]
 z_index = -1
 material = SubResource("ShaderMaterial_lhq2q")
-position = Vector2(952, 501.24997)
-scale = Vector2(5.3120003, 3.3590004)
+position = Vector2(891.5, 525.5)
+scale = Vector2(5.1660004, 3.294)
 texture = ExtResource("2_k2dbs")
 
 [node name="Floor" type="TextureRect" parent="." unique_id=1462502393]
@@ -42,10 +42,10 @@ stretch_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=358986775]
 z_index = -2
-offset_left = -372.0
-offset_top = -390.0
-offset_right = 2253.0
-offset_bottom = 1387.0
+offset_left = -421.0
+offset_top = -301.0
+offset_right = 2147.0
+offset_bottom = 1347.0
 color = Color(0, 0, 0, 1)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=822924907]
