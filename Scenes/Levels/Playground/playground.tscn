@@ -18,7 +18,7 @@ z_index = -1
 z_index = 1
 position = Vector2(290.00003, 82)
 rotation = 1.6254053
-scale = Vector2(0.9999996, 0.9999996)
+scale = Vector2(0.9999995, 0.9999995)
 texture = ExtResource("2_dbwwm")
 battery = 99.5437585067749
 
@@ -26,7 +26,7 @@ battery = 99.5437585067749
 z_index = 1
 position = Vector2(298, 142)
 rotation = 1.6239073
-scale = Vector2(0.9999997, 0.9999997)
+scale = Vector2(0.99999964, 0.99999964)
 texture = ExtResource("3_uvwl6")
 battery = 99.85451140403748
 
