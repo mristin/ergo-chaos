@@ -99,16 +99,18 @@ func _physics_process(delta: float) -> void:
         move_and_slide()
 
         var cost = (position - old_position).length() * movement_cost
-        var extra_drain := 0.0
         for e in _active_effects:
             cost += e.battery_drain_per_second * delta
-            extra_drain += e.battery_drain_per_second
         _set_battery(battery - cost)
 
-        if extra_drain > 0.0:
-            var t = 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.02)
-            sprite_2d.modulate = Color(0.3 + 0.7 * t, 0.3 + 0.7 * t, 0.3 + 0.7 * t, 1.0)
-        else:
-            sprite_2d.modulate = Color(1.0, 1.0, 1.0, 1.0)
+    # region Flicker if drain    
+    var extra_drain := 0.0
+    for e in _active_effects:
+        extra_drain += e.battery_drain_per_second
+    
+    if extra_drain > 0.0:
+        var t = 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.02)
+        sprite_2d.modulate = Color(0.3 + 0.7 * t, 0.3 + 0.7 * t, 0.3 + 0.7 * t, 1.0)
     else:
         sprite_2d.modulate = Color(1.0, 1.0, 1.0, 1.0)
+    # endregion
