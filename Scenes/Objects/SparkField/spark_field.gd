@@ -220,7 +220,7 @@ func _on_body_entered(body: Node2D) -> void:
     if not (body is Player) or body in _player_effects:
         return
     var effect := PlayerEffect.new()
-    effect.battery_drain_per_second = 7.0
+    effect.battery_drain_per_second = 3.0
     body.add_effect(effect)
     _player_effects[body] = effect
 

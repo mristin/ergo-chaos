@@ -2,7 +2,7 @@
 extends Node2D
 
 const _FIREBALL_SHADER: Shader = preload("res://Scenes/Objects/RotatingFireballs/fireball.gdshader")
-const BATTERY_DRAIN_PER_SECOND: float = 7.0
+const BATTERY_DRAIN_PER_SECOND: float = 5.0
 
 const _DANGER_SIGNS: Array[Texture2D] = [
     preload("res://Assets/Images/danger1.png"),
