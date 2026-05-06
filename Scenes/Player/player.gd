@@ -80,9 +80,9 @@ func _recompute_stats() -> void:
     turn_speed = _base_turn_speed * ts
 
 func _physics_process(delta: float) -> void:
-    if battery > 0.0:        
+    if battery > 0.0:
         var engine_average = (_left_engine_power + _right_engine_power) * 0.5
-        
+
         var engine_difference = _right_engine_power - _left_engine_power
 
         # The turning is based on engine difference.
@@ -99,6 +99,16 @@ func _physics_process(delta: float) -> void:
         move_and_slide()
 
         var cost = (position - old_position).length() * movement_cost
+        var extra_drain := 0.0
         for e in _active_effects:
             cost += e.battery_drain_per_second * delta
+            extra_drain += e.battery_drain_per_second
         _set_battery(battery - cost)
+
+        if extra_drain > 0.0:
+            var t = 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.02)
+            sprite_2d.modulate = Color(0.3 + 0.7 * t, 0.3 + 0.7 * t, 0.3 + 0.7 * t, 1.0)
+        else:
+            sprite_2d.modulate = Color(1.0, 1.0, 1.0, 1.0)
+    else:
+        sprite_2d.modulate = Color(1.0, 1.0, 1.0, 1.0)
