@@ -4,7 +4,8 @@ class_name Game
 
 @onready var screen: Node2D = $Screen
 
-const _level_scene_paths: Array[String] = [
+# Public so harness and other callers can override before _ready runs.
+var level_scene_paths: Array[String] = [
     "res://Scenes/Levels/Playground/playground.tscn",
 ]
 
@@ -23,9 +24,9 @@ func _ready() -> void:
 
 func set_level(level: int) -> void:
     assert(level >= 0)
-    assert(level < _level_scene_paths.size())
+    assert(level < level_scene_paths.size())
 
-    var scene_path = _level_scene_paths[level]
+    var scene_path = level_scene_paths[level]
 
     var scene: Node2D = load(scene_path).instantiate()
 
@@ -141,7 +142,7 @@ func set_level(level: int) -> void:
         game_screen.add_child(final_message)
         get_tree().paused = true
 
-        if level < _level_scene_paths.size() - 1:                        
+        if level < level_scene_paths.size() - 1:                        
             final_message.set_message("Mission accomplished 🚀")
             final_message.done.connect(func():
                 get_tree().paused = false

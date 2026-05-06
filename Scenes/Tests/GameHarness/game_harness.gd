@@ -9,6 +9,7 @@ extends Node2D
     "res://Scenes/Levels/Playground/playground.tscn",
     "res://Scenes/Tests/Levels/TestLaserGate/TestLaserGate.tscn",
     "res://Scenes/Tests/Levels/TestRechargePad/TestRechargePad.tscn",
+    "res://Scenes/Tests/Levels/TestRotatingFireballs/TestRotatingFireballs.tscn",
     "res://Scenes/Tests/Levels/TestSparkField/TestSparkField.tscn",
 ];
 

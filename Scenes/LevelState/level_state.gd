@@ -7,7 +7,6 @@ signal accomplished()
 signal failed()
 
 var _goo_count: int = 100
-var _player_count: int = 2
 
 func set_goo_count(count: int) -> void:
     _goo_count = count
