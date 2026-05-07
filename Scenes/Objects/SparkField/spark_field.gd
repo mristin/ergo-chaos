@@ -8,7 +8,7 @@ const _SPARK_FILL_SHADER = preload(
     "res://Scenes/Objects/SparkField/spark_field_fill.gdshader"
 )
 
-@export var sign_count: int = 6:
+@export var sign_count: int = 3:
     set(v):
         sign_count = v
         if Engine.is_editor_hint() and is_inside_tree():
@@ -21,7 +21,7 @@ const _SPARK_FILL_SHADER = preload(
         if Engine.is_editor_hint() and is_inside_tree():
             _refresh()
 
-@export var border_width: float = 10.0:
+@export var border_width: float = 20.0:
     set(v):
         border_width = v
         if Engine.is_editor_hint() and is_inside_tree():
@@ -105,14 +105,19 @@ func _sprinkle_signs(collision_node: Node) -> void:
         push_error("SparkField: could not derive a polygon from the collision shape")
         return
 
+    # Erode the polygon by the half-diagonal of the sign square so that a
+    # rotated sign placed at any point inside the eroded region is fully
+    # contained within the field, regardless of rotation angle.
+    var half_diagonal := _SIGN_SIZE * sqrt(2.0) / 2.0
+    var eroded := Geometry2D.offset_polygon(polygon, -half_diagonal)
+    if eroded.is_empty():
+        return
+
     var min_p := polygon[0]
     var max_p := polygon[0]
     for p in polygon:
         min_p = min_p.min(p)
         max_p = max_p.max(p)
-
-    min_p += Vector2(_SIGN_SIZE, _SIGN_SIZE)
-    max_p -= Vector2(_SIGN_SIZE, _SIGN_SIZE)
 
     if min_p.x >= max_p.x or min_p.y >= max_p.y:
         return
@@ -123,11 +128,16 @@ func _sprinkle_signs(collision_node: Node) -> void:
     while placed.size() < sign_count and attempts < sign_count * 200:
         attempts += 1
         var pt := Vector2(
-            randf_range(min_p.x, max_p.x), 
+            randf_range(min_p.x, max_p.x),
             randf_range(min_p.y, max_p.y)
         )
 
-        if not Geometry2D.is_point_in_polygon(pt, polygon):
+        var inside := false
+        for sub_polygon in eroded:
+            if Geometry2D.is_point_in_polygon(pt, sub_polygon):
+                inside = true
+                break
+        if not inside:
             continue
 
         var too_close := false
@@ -173,7 +183,7 @@ func _refresh_fill(collision_node: Node) -> void:
     if polygon.size() < 3:
         return
 
-    var mat := ShaderMaterial.new()    
+    var mat := ShaderMaterial.new()
     mat.shader = _SPARK_FILL_SHADER
 
     # NOTE (mristin):
@@ -208,6 +218,9 @@ func _refresh_border(collision_node: Node) -> void:
     line.width = border_width
     line.default_color = Color.WHITE
     line.texture_mode = Line2D.LINE_TEXTURE_STRETCH
+    line.joint_mode = Line2D.LINE_JOINT_ROUND
+    line.begin_cap_mode = Line2D.LINE_CAP_ROUND
+    line.end_cap_mode = Line2D.LINE_CAP_ROUND
     line.z_index = 1
 
     for p in polygon:

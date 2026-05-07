@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec4 background_color : source_color = vec4(0.01, 0.015, 0.04, 1.0);
+uniform vec4 background_color : source_color = vec4(0.01, 0.015, 0.04, 0.0);
 uniform vec4 glow_color : source_color = vec4(0.25, 0.75, 1.0, 1.0);
 uniform vec4 core_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
@@ -9,11 +9,15 @@ uniform float thickness = 0.01;
 uniform float glow = 0.06;
 uniform float jaggedness = 0.22;
 uniform float flash_rate = 0.5;
-uniform int arc_count = 8;
+uniform int arc_count = 15;
 
 uniform float edge_fade = 0.12;
 uniform float branch_strength = 0.75;
 uniform float branch_length = 0.28;
+// Organic dissolve at UV edges — hides the hard polygon silhouette
+uniform float dissolve_width : hint_range(0.0, 0.4) = 0.1;
+uniform float dissolve_scale : hint_range(1.0, 20.0) = 2.0;
+uniform float dissolve_speed : hint_range(0.0, 5.0) = 1.0;
 
 float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -32,6 +36,17 @@ float noise(vec2 p) {
     return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
 
+float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.5;
+    for (int i = 0; i < 3; i++) {
+        v += a * noise(p);
+        p = p * 2.1 + vec2(5.1, 3.7);
+        a *= 0.5;
+    }
+    return v;
+}
+
 float line_segment(vec2 p, vec2 a, vec2 b, float w) {
     vec2 pa = p - a;
     vec2 ba = b - a;
@@ -42,6 +57,18 @@ float line_segment(vec2 p, vec2 a, vec2 b, float w) {
 float edge_mask(vec2 uv) {
     float d = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
     return smoothstep(0.0, edge_fade, d);
+}
+
+// Organic alpha at UV boundaries: dissolves the polygon edge with animated noise
+// so the hard geometric silhouette is hidden.
+float organic_alpha(vec2 uv) {
+    float d = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
+    vec2 nc = vec2(uv.x * dissolve_scale + TIME * dissolve_speed * 0.2,
+                   uv.y * dissolve_scale + TIME * dissolve_speed * 0.3);
+    float n = fbm(nc);               // 0..1
+    // Boundary oscillates; deep interior is always 1, edge always 0
+    float fade = dissolve_width * (0.4 + n * 0.8);
+    return smoothstep(0.0, max(0.005, fade), d);
 }
 
 float lightning_arc(vec2 uv, float id) {
@@ -110,5 +137,10 @@ void fragment() {
     color += glow_color.rgb * energy * flicker;
     color += core_color.rgb * pow(energy, 2.2) * flicker;
 
-    COLOR = vec4(color, background_color.a);
+    // Organic dissolve at UV boundaries hides the hard polygon silhouette.
+    // Alpha is energy-driven so the background is transparent; background_color.a
+    // can be raised in the inspector for a subtle dark tint if desired.
+    float organic = organic_alpha(uv);
+    float alpha = max(clamp(energy * flicker, 0.0, 1.0), background_color.a) * organic;
+    COLOR = vec4(color, alpha);
 }

@@ -25,6 +25,7 @@ position = Vector2(121, 150)
 
 [node name="SparkField" type="Area2D" parent="." unique_id=482990885]
 script = ExtResource("5_r2abe")
+sign_count = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField" unique_id=1456846375]
 polygon = PackedVector2Array(368, 140, 404, 80, 492, 58, 623, 89, 602, 194, 532, 336, 489, 250, 352, 319, 366, 200, 403, 221, 397, 160, 356, 162, 356, 162)
