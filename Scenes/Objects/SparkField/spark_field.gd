@@ -21,7 +21,7 @@ const _SPARK_FILL_SHADER = preload(
         if Engine.is_editor_hint() and is_inside_tree():
             _refresh()
 
-@export var border_width: float = 20.0:
+@export var border_width: float = 40.0:
     set(v):
         border_width = v
         if Engine.is_editor_hint() and is_inside_tree():
@@ -155,21 +155,22 @@ func _sprinkle_signs(collision_node: Node) -> void:
         sprite.scale = Vector2.ONE * (_SIGN_SIZE / texture.get_height())
         sprite.position = pt
         sprite.rotation = randf_range(0.0, TAU)
+        sprite.z_index = 1
         add_child(sprite)
 
 func _generate_uvs(points: PackedVector2Array) -> PackedVector2Array:
-    var min = points[0]
-    var max = points[0]
+    var min_point = points[0]
+    var max_point = points[0]
 
     for p in points:
-        min = min.min(p)
-        max = max.max(p)
+        min_point = min_point.min(p)
+        max_point = max_point.max(p)
 
-    var size = max - min
+    var size = max_point - min_point
 
     var uvs = PackedVector2Array()
     for p in points:
-        var uv = (p - min) / size
+        var uv = (p - min_point) / size
         uvs.append(uv)
 
     return uvs
@@ -198,7 +199,7 @@ func _refresh_fill(collision_node: Node) -> void:
     poly.texture = tex
     poly.uv = _generate_uvs(polygon)
     poly.material = mat
-    poly.z_index = -1  # behind signs and border
+    poly.z_index = 0
     add_child(poly)
 
 func _refresh_border(collision_node: Node) -> void:
@@ -221,7 +222,7 @@ func _refresh_border(collision_node: Node) -> void:
     line.joint_mode = Line2D.LINE_JOINT_ROUND
     line.begin_cap_mode = Line2D.LINE_CAP_ROUND
     line.end_cap_mode = Line2D.LINE_CAP_ROUND
-    line.z_index = 1
+    line.z_index = 2
 
     for p in polygon:
         line.add_point(p)

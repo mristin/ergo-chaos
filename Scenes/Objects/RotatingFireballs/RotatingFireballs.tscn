@@ -4,3 +4,4 @@
 
 [node name="RotatingFireballs" type="Node2D" unique_id=103192084]
 script = ExtResource("1_m57l6")
+fireball_height = 70.0

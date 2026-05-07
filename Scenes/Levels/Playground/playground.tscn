@@ -18,7 +18,7 @@ z_index = -1
 z_index = 1
 position = Vector2(290.00003, 82)
 rotation = 1.6254053
-scale = Vector2(0.9999994, 0.9999994)
+scale = Vector2(0.9999993, 0.9999993)
 texture = ExtResource("2_dbwwm")
 battery = 99.5437585067749
 
@@ -26,7 +26,7 @@ battery = 99.5437585067749
 z_index = 1
 position = Vector2(298, 142)
 rotation = 1.6239073
-scale = Vector2(0.9999995, 0.9999995)
+scale = Vector2(0.9999994, 0.9999994)
 texture = ExtResource("3_uvwl6")
 battery = 99.85451140403748
 
@@ -93,28 +93,24 @@ width = 200.0
 
 [node name="Lake" type="Area2D" parent="." unique_id=1463147541]
 script = ExtResource("8_tl5a4")
-border_width = 40.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Lake" unique_id=443086060]
 polygon = PackedVector2Array(348, 525, 379, 307, 467, 260, 742, 250, 1199, 271, 1339, 330, 1458, 610, 1417, 665, 1347, 693, 1264, 724, 1165, 737, 605, 735, 488, 709, 397, 688, 351, 634)
 
 [node name="Corner" type="Area2D" parent="." unique_id=346024260]
 script = ExtResource("8_tl5a4")
-border_width = 40.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Corner" unique_id=1737895578]
 polygon = PackedVector2Array(1552, 32, 1572, 260, 1676, 504, 1920, 494, 1917, 11)
 
 [node name="Bottom" type="Area2D" parent="." unique_id=31438817]
 script = ExtResource("8_tl5a4")
-border_width = 40.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bottom" unique_id=1698273913]
 polygon = PackedVector2Array(1277, 999, 1313, 1041, 1269, 1085, 714, 1080, 60, 1025, 65, 960, 1002, 986, 1214, 992)
 
 [node name="Obstacle" type="Area2D" parent="." unique_id=1314892337]
 script = ExtResource("8_tl5a4")
-border_width = 40.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacle" unique_id=741555040]
 polygon = PackedVector2Array(10, 638, 178, 664, 254, 961, 10, 950)

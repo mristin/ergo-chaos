@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://8uhfvbin5h3m"]
+
+[ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://Scenes/Levels/Base/Base.tscn" id="1_4p2e5"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="2_gx0rs"]
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://Scenes/Player/player.tscn" id="2_pxw0m"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://Assets/Images/spaceship-red.png" id="3_wintr"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="4_qlvrv"]
+[ext_resource type="PackedScene" uid="uid://0iqk4rl8fsko" path="res://Scenes/Objects/RechargePad/RechargePad.tscn" id="5_nfxud"]
+[ext_resource type="Texture2D" uid="uid://c7m5aeq1qpuoo" path="res://Assets/Images/thick-wall-texture-small.png" id="5_pxw0m"]
+[ext_resource type="Script" uid="uid://b5vven30617q7" path="res://Scenes/Objects/Wall/wall.gd" id="5_wintr"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/laser_gate.tscn" id="7_qlvrv"]
+[ext_resource type="PackedScene" uid="uid://cq4o34w38ko7v" path="res://Scenes/Objects/RotatingFireballs/RotatingFireballs.tscn" id="9_lrqua"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Objects/SparkField/spark_field.gd" id="10_gx0rs"]
+
+[node name="Roundabout" type="Node2D" unique_id=878126345]
+
+[node name="Base" parent="." unique_id=1608742923 instance=ExtResource("1_4p2e5")]
+z_index = -1
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=1603648562]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("2_gx0rs")]
+position = Vector2(322, 119.000015)
+rotation = 1.01613
+
+[node name="Goo2" parent="GooContainer" unique_id=1080260235 instance=ExtResource("2_gx0rs")]
+position = Vector2(456.99997, 334)
+rotation = 2.03226
+
+[node name="Goo3" parent="GooContainer" unique_id=1531902685 instance=ExtResource("2_gx0rs")]
+position = Vector2(1142, 511)
+rotation = -2.2186656
+
+[node name="Goo4" parent="GooContainer" unique_id=297402429 instance=ExtResource("2_gx0rs")]
+position = Vector2(1515.0001, 273)
+rotation = 1.845854
+
+[node name="Goo5" parent="GooContainer" unique_id=325516145 instance=ExtResource("2_gx0rs")]
+position = Vector2(1800.9999, 182.00024)
+rotation = -2.5914774
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Goo6" parent="GooContainer" unique_id=1135214059 instance=ExtResource("2_gx0rs")]
+position = Vector2(1287.0001, 998.99994)
+rotation = 1.1002305
+scale = Vector2(0.9999998, 0.9999998)
+
+[node name="Goo7" parent="GooContainer" unique_id=336556035 instance=ExtResource("2_gx0rs")]
+position = Vector2(612, 985)
+rotation = 2.200461
+scale = Vector2(0.9999996, 0.9999996)
+
+[node name="StaticWall" type="StaticBody2D" parent="." unique_id=1973523796]
+script = ExtResource("5_wintr")
+border_width = 5.0
+border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall" unique_id=1211278881]
+texture_repeat = 2
+position = Vector2(99.099976, 185.6)
+texture = ExtResource("5_pxw0m")
+texture_rotation = 0.41015238
+polygon = PackedVector2Array(620, 363, 829.9, 632.4, 828.9, 475.4, 742.9, 362.4)
+
+[node name="Line2D" type="Line2D" parent="StaticWall" unique_id=1231786335]
+position = Vector2(100, 183)
+points = PackedVector2Array(620, 363, 829.9, 632.4, 828.9, 475.4, 742.9, 362.4)
+closed = true
+width = 5.0
+default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="StaticWall2" type="StaticBody2D" parent="." unique_id=1005996621]
+script = ExtResource("5_wintr")
+border_width = 5.0
+border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall2" unique_id=1977387217]
+texture_repeat = 2
+position = Vector2(99.099976, 185.6)
+texture = ExtResource("5_pxw0m")
+texture_rotation = 0.41015238
+polygon = PackedVector2Array(606.9, 151.4, 1072.9, 44.399994, 973.9, 158.4, 758.9, 152.4)
+
+[node name="Line2D" type="Line2D" parent="StaticWall2" unique_id=441246022]
+z_index = 1
+position = Vector2(99.099976, 185.6)
+points = PackedVector2Array(606.9, 151.4, 1072.9, 44.399994, 973.9, 158.4, 758.9, 152.4)
+closed = true
+width = 5.0
+default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="StaticWall3" type="StaticBody2D" parent="." unique_id=1665445491]
+script = ExtResource("5_wintr")
+border_width = 5.0
+border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall3" unique_id=955588191]
+texture_repeat = 2
+position = Vector2(99.099976, 185.6)
+texture = ExtResource("5_pxw0m")
+texture_rotation = 0.41015238
+polygon = PackedVector2Array(1135.9, 297.4, 1047.9, 476.4, 1050.9, 630.4, 1238.9, 188.4)
+
+[node name="Line2D" type="Line2D" parent="StaticWall3" unique_id=1908081793]
+z_index = 1
+position = Vector2(99.099976, 185.6)
+points = PackedVector2Array(1135.9, 297.4, 1047.9, 476.4, 1050.9, 630.4, 1238.9, 188.4)
+closed = true
+width = 5.0
+default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="LaserGate" parent="." unique_id=1777469306 instance=ExtResource("7_qlvrv")]
+position = Vector2(799.9999, 443.99997)
+rotation = 1.5650735
+scale = Vector2(0.9999999, 0.9999999)
+green_time = 4.0
+yellow_time = 3.0
+red_time = 2.0
+width = 150.0
+
+[node name="LaserGate2" parent="." unique_id=1123937722 instance=ExtResource("7_qlvrv")]
+position = Vector2(1188, 367.99997)
+rotation = 3.873146
+scale = Vector2(0.9999999, 0.9999999)
+green_time = 3.0
+yellow_time = 4.0
+red_time = 2.0
+width = 150.0
+
+[node name="LaserGate3" parent="." unique_id=613896438 instance=ExtResource("7_qlvrv")]
+position = Vector2(1039, 724.99994)
+rotation = 0.0050451756
+scale = Vector2(0.9999998, 0.9999998)
+green_time = 5.0
+yellow_time = 2.0
+red_time = 2.0
+width = 150.0
+
+[node name="RechargePad" parent="." unique_id=124847995 instance=ExtResource("5_nfxud")]
+position = Vector2(1018, 496)
+rotation = 3.138001
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("2_pxw0m")]
+z_index = 1
+position = Vector2(1828.0002, 80.000015)
+rotation = -1.568683
+scale = Vector2(0.9999991, 0.9999991)
+texture = ExtResource("3_wintr")
+battery = 99.34745540618897
+
+[node name="PlayerB" parent="." unique_id=2017035402 instance=ExtResource("2_pxw0m")]
+z_index = 1
+position = Vector2(177.99995, 92.24139)
+rotation = 1.6239073
+scale = Vector2(0.99999917, 0.99999917)
+texture = ExtResource("4_qlvrv")
+battery = 99.64949400901796
+
+[node name="RotatingFireballs" parent="." unique_id=103192084 instance=ExtResource("9_lrqua")]
+position = Vector2(468, 393)
+radius = 180.0
+rotation_speed = 10.0
+
+[node name="RotatingFireballs2" parent="." unique_id=402278784 instance=ExtResource("9_lrqua")]
+position = Vector2(1492, 214)
+radius = 180.0
+rotation_speed = 10.0
+
+[node name="RotatingFireballs3" parent="." unique_id=1012173283 instance=ExtResource("9_lrqua")]
+position = Vector2(1046, 956)
+fireball_count = 3
+radius = 100.0
+rotation_speed = 10.0
+
+[node name="SparkField" type="Area2D" parent="." unique_id=407655710]
+script = ExtResource("10_gx0rs")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField" unique_id=331098948]
+polygon = PackedVector2Array(363, 1074, 20, 1074, 20, 144, 228, 287)
+
+[node name="SparkField2" type="Area2D" parent="." unique_id=584416740]
+script = ExtResource("10_gx0rs")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField2" unique_id=905896124]
+polygon = PackedVector2Array(746, 612, 293, 618, 346, 919, 492, 906, 673, 882, 915, 836)
+
+[node name="SparkingField3" type="Area2D" parent="." unique_id=602335830]
+script = ExtResource("10_gx0rs")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkingField3" unique_id=1226808426]
+polygon = PackedVector2Array(717, 315, 489, 24, 1322, 24, 1236, 204)
+
+[node name="SparkingField4" type="Area2D" parent="." unique_id=1554218931]
+script = ExtResource("10_gx0rs")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkingField4" unique_id=1739981689]
+polygon = PackedVector2Array(1613, 1073, 1164, 821, 1329, 429, 1909, 373, 1914, 1073)
