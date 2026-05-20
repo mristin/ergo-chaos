@@ -50,77 +50,6 @@ position = Vector2(612, 985)
 rotation = 2.200461
 scale = Vector2(0.9999996, 0.9999996)
 
-[node name="StaticWall" type="StaticBody2D" parent="." unique_id=1973523796]
-script = ExtResource("5_wintr")
-border_width = 5.0
-border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticWall" unique_id=1211278881]
-texture_repeat = 2
-position = Vector2(99.099976, 185.6)
-texture = ExtResource("5_pxw0m")
-texture_rotation = 0.41015238
-polygon = PackedVector2Array(620, 363, 829.9, 632.4, 828.9, 475.4, 742.9, 362.4)
-
-[node name="Line2D" type="Line2D" parent="StaticWall" unique_id=1231786335]
-position = Vector2(100, 183)
-points = PackedVector2Array(620, 363, 829.9, 632.4, 828.9, 475.4, 742.9, 362.4)
-closed = true
-width = 5.0
-default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-antialiased = true
-
-[node name="StaticWall2" type="StaticBody2D" parent="." unique_id=1005996621]
-script = ExtResource("5_wintr")
-border_width = 5.0
-border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticWall2" unique_id=1977387217]
-texture_repeat = 2
-position = Vector2(99.099976, 185.6)
-texture = ExtResource("5_pxw0m")
-texture_rotation = 0.41015238
-polygon = PackedVector2Array(606.9, 151.4, 1072.9, 44.399994, 973.9, 158.4, 758.9, 152.4)
-
-[node name="Line2D" type="Line2D" parent="StaticWall2" unique_id=441246022]
-z_index = 1
-position = Vector2(99.099976, 185.6)
-points = PackedVector2Array(606.9, 151.4, 1072.9, 44.399994, 973.9, 158.4, 758.9, 152.4)
-closed = true
-width = 5.0
-default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-antialiased = true
-
-[node name="StaticWall3" type="StaticBody2D" parent="." unique_id=1665445491]
-script = ExtResource("5_wintr")
-border_width = 5.0
-border_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticWall3" unique_id=955588191]
-texture_repeat = 2
-position = Vector2(99.099976, 185.6)
-texture = ExtResource("5_pxw0m")
-texture_rotation = 0.41015238
-polygon = PackedVector2Array(1135.9, 297.4, 1047.9, 476.4, 1050.9, 630.4, 1238.9, 188.4)
-
-[node name="Line2D" type="Line2D" parent="StaticWall3" unique_id=1908081793]
-z_index = 1
-position = Vector2(99.099976, 185.6)
-points = PackedVector2Array(1135.9, 297.4, 1047.9, 476.4, 1050.9, 630.4, 1238.9, 188.4)
-closed = true
-width = 5.0
-default_color = Color(0.74509805, 0.74509805, 0.74509805, 1)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-antialiased = true
-
 [node name="LaserGate" parent="." unique_id=1777469306 instance=ExtResource("7_qlvrv")]
 position = Vector2(799.9999, 443.99997)
 rotation = 1.5650735
@@ -158,13 +87,13 @@ position = Vector2(1828.0002, 80.000015)
 rotation = -1.568683
 scale = Vector2(0.9999991, 0.9999991)
 texture = ExtResource("3_wintr")
-battery = 99.34745540618897
+battery = 99.34745540618896
 
 [node name="PlayerB" parent="." unique_id=2017035402 instance=ExtResource("2_pxw0m")]
 z_index = 1
 position = Vector2(177.99995, 92.24139)
 rotation = 1.6239073
-scale = Vector2(0.99999917, 0.99999917)
+scale = Vector2(0.9999991, 0.9999991)
 texture = ExtResource("4_qlvrv")
 battery = 99.64949400901796
 
@@ -207,3 +136,11 @@ script = ExtResource("10_gx0rs")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkingField4" unique_id=1739981689]
 polygon = PackedVector2Array(1613, 1073, 1164, 821, 1329, 429, 1909, 373, 1914, 1073)
+
+[node name="Wall" type="StaticBody2D" parent="." unique_id=319218041]
+script = ExtResource("5_wintr")
+
+[node name="Polygon2D" type="Polygon2D" parent="Wall" unique_id=1420381477]
+texture_repeat = 2
+texture = ExtResource("5_pxw0m")
+polygon = PackedVector2Array(726, 317, 1152, 232, 1163, 241, 1060, 348, 724, 336)

@@ -9,6 +9,7 @@ extends StaticBody2D
 var line: Line2D
 
 func _ready():
+    print("Setting up the line.")
     setup_line()
 
     if not Engine.is_editor_hint():
@@ -43,6 +44,8 @@ func update_line():
     line.antialiased = true
 
 func create_collision():
+    print("Creating collision polygon 2D...")
     var collision := CollisionPolygon2D.new()
     collision.polygon = poly.polygon
     add_child(collision)
+    print("Collision created.")

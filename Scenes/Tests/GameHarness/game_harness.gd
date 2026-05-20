@@ -6,11 +6,13 @@ extends Node2D
 ## all the time.
 
 @export var scene_level_paths: Array[String] = [
-    "res://Scenes/Levels/Playground/playground.tscn",
+    "res://Scenes/Levels/Playground/Playground.tscn",
+    "res://Scenes/Levels/Roundabout/Roundabout.tscn",
     "res://Scenes/Tests/Levels/TestLaserGate/TestLaserGate.tscn",
     "res://Scenes/Tests/Levels/TestRechargePad/TestRechargePad.tscn",
     "res://Scenes/Tests/Levels/TestRotatingFireballs/TestRotatingFireballs.tscn",
     "res://Scenes/Tests/Levels/TestSparkField/TestSparkField.tscn",
+    "res://Scenes/Tests/Levels/TestStaticWall/TestStaticWall.tscn",
 ];
 
 @onready var select_level: OptionButton = $SelectLevel
