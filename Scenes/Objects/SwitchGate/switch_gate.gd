@@ -1,22 +1,20 @@
 @tool
 extends Area2D
 
-@export var green_time: float = 1.0; # in seconds
-@export var yellow_time: float = 1.0; # in seconds
-@export var red_time: float = 10.0; # in seconds
-@export var width: float = 400.0  # distance between the two post centers
+@export var width: float = 400.0
 
-enum State { GREEN, YELLOW, RED }
-
-var _state: State = State.GREEN
-var _elapsed: float = 0.0
+const _PAD_X_INSET: float = 48.0
+const _PAD_Y_OFFSET: float = 154.0
 
 @onready var _lightning: ColorRect = $HitShape/Lightning
 @onready var _hit_shape: CollisionShape2D = $HitShape
 @onready var _left_post: LaserPost = $LeftPost
 @onready var _right_post: LaserPost = $RightPost
+@onready var _front_pad = $FrontPad
+@onready var _back_pad = $BackPad
 
-var _player_effects: Dictionary = {}  # Player -> PlayerEffect
+var _players_on_pads: int = 0
+var _player_effects: Dictionary = {}
 
 func _sync_lightning_to_hit_shape() -> void:
     var rect := _hit_shape.shape as RectangleShape2D
@@ -33,11 +31,17 @@ func _sync_width() -> void:
     if rect != null:
         rect.size.x = max(0.0, width - 36.0)
     _sync_lightning_to_hit_shape()
+    _front_pad.position = Vector2(-half + _PAD_X_INSET, -_PAD_Y_OFFSET)
+    _back_pad.position = Vector2(half - _PAD_X_INSET, _PAD_Y_OFFSET)
 
 func _ready() -> void:
     _sync_width()
     if Engine.is_editor_hint():
         return
+    _front_pad.on_enter.connect(_on_pad_enter)
+    _front_pad.on_leave.connect(_on_pad_leave)
+    _back_pad.on_enter.connect(_on_pad_enter)
+    _back_pad.on_leave.connect(_on_pad_leave)
     body_entered.connect(_on_body_entered)
     body_exited.connect(_on_body_exited)
     _apply_state()
@@ -46,49 +50,28 @@ func _process(_delta: float) -> void:
     if Engine.is_editor_hint():
         _sync_width()
 
-func _physics_process(delta: float) -> void:
-    if Engine.is_editor_hint():
-        return
-    _elapsed += delta
-    var duration := _state_duration(_state)
-    if _elapsed >= duration:
-        _elapsed -= duration
-        _state = _next_state(_state)
-        _apply_state()
-
-func _state_duration(s: State) -> float:
-    match s:
-        State.GREEN: return green_time
-        State.YELLOW: return yellow_time
-        State.RED: return red_time
-    push_error("Unexpected state: %d" % s)
-    return 0.0
-
-func _next_state(s: State) -> State:
-    match s:
-        State.GREEN: return State.YELLOW
-        State.YELLOW: return State.RED
-        State.RED: return State.GREEN
-    push_error("Unexpected state: %d" % s)
-    return State.GREEN
-
 func _apply_state() -> void:
-    match _state:
-        State.GREEN:
-            _left_post.set_green()
-            _right_post.set_green()
-        State.YELLOW:
-            _left_post.set_yellow()
-            _right_post.set_yellow()
-        State.RED:
-            _left_post.set_red()
-            _right_post.set_red()
-    $HitShape.disabled = (_state != State.RED)
-    _lightning.visible = (_state == State.RED)
-    if _state != State.RED:
+    var gate_open := _players_on_pads > 0
+    _hit_shape.disabled = gate_open
+    _lightning.visible = not gate_open
+    if gate_open:
+        _left_post.set_green()
+        _right_post.set_green()
+    else:
+        _left_post.set_red()
+        _right_post.set_red()
+    if gate_open:
         for body in _player_effects:
             body.remove_effect(_player_effects[body])
         _player_effects.clear()
+
+func _on_pad_enter() -> void:
+    _players_on_pads += 1
+    _apply_state()
+
+func _on_pad_leave() -> void:
+    _players_on_pads = maxi(_players_on_pads - 1, 0)
+    _apply_state()
 
 func _on_body_entered(body: Node2D) -> void:
     if not (body is Player) or body in _player_effects:

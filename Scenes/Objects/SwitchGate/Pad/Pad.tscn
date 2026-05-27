@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c5bu2u4tnf4gj"]
+
+[ext_resource type="Script" uid="uid://t4k152cotblw" path="res://Scenes/Objects/SwitchGate/Pad/pad.gd" id="1_pnoej"]
+[ext_resource type="Texture2D" uid="uid://bjhhysqtt1vrj" path="res://Assets/Images/pad.svg" id="2_aijyj"]
+[ext_resource type="Texture2D" uid="uid://ub2suk28il6p" path="res://Assets/Images/red-light.png" id="2_pnoej"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aijyj"]
+size = Vector2(82, 82)
+
+[node name="Pad" type="Area2D" unique_id=439570862]
+script = ExtResource("1_pnoej")
+
+[node name="Pad" type="Sprite2D" parent="." unique_id=2099962725]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_aijyj")
+
+[node name="Light1" type="Sprite2D" parent="." unique_id=1709688975]
+position = Vector2(-42, -43)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_pnoej")
+
+[node name="Light2" type="Sprite2D" parent="." unique_id=1673548783]
+position = Vector2(43, -43)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_pnoej")
+
+[node name="Light3" type="Sprite2D" parent="." unique_id=751207740]
+position = Vector2(42.86, 43.14)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_pnoej")
+
+[node name="Light4" type="Sprite2D" parent="." unique_id=440856969]
+position = Vector2(-42.2828, 43.002796)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_pnoej")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1621707555]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_aijyj")
