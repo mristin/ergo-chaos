@@ -39,6 +39,8 @@ color = Color(1, 0, 1, 1)
 
 [node name="FrontPad" parent="." unique_id=439570862 instance=ExtResource("5_7bpii")]
 position = Vector2(-152, -154)
+scale = Vector2(0.8, 0.8)
 
 [node name="BackPad" parent="." unique_id=1798022406 instance=ExtResource("5_7bpii")]
 position = Vector2(152, 154)
+scale = Vector2(0.8, 0.8)
