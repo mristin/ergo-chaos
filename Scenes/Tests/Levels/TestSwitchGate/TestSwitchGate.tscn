@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://t4jjjqbhp88i"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://Scenes/Player/player.tscn" id="1_vk11v"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://Assets/Images/spaceship-red.png" id="2_sugax"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="3_xlwjg"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="4_altit"]
+[ext_resource type="PackedScene" uid="uid://dwehmmtm6vnk3" path="res://Scenes/Objects/SwitchGate/SwitchGate.tscn" id="5_7rs6n"]
+
+[node name="TestSwitchGate" type="Node2D" unique_id=2001644668]
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("1_vk11v")]
+z_index = 1
+position = Vector2(370, -11)
+texture = ExtResource("2_sugax")
+
+[node name="PlayerB" parent="." unique_id=267904681 instance=ExtResource("1_vk11v")]
+z_index = 1
+position = Vector2(586, 395)
+texture = ExtResource("3_xlwjg")
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=1958641415]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("4_altit")]
+position = Vector2(121, 150)
+
+[node name="SwitchGate" parent="." unique_id=178656290 instance=ExtResource("5_7rs6n")]
+position = Vector2(423, 136)

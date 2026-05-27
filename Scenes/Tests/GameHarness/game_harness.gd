@@ -13,6 +13,7 @@ extends Node2D
     "res://Scenes/Tests/Levels/TestRotatingFireballs/TestRotatingFireballs.tscn",
     "res://Scenes/Tests/Levels/TestSparkField/TestSparkField.tscn",
     "res://Scenes/Tests/Levels/TestStaticWall/TestStaticWall.tscn",
+    "res://Scenes/Tests/Levels/TestSwitchGate/TestSwitchGate.tscn",
 ];
 
 @onready var select_level: OptionButton = $SelectLevel

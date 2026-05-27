@@ -52,18 +52,30 @@ func _process(_delta: float) -> void:
 
 func _apply_state() -> void:
     var gate_open := _players_on_pads > 0
-    _hit_shape.disabled = gate_open
+    
+    # NOTE (mristin):
+    # Changing monitoring state during a physics callback (body_entered/exited) crashes;
+    # set_deferred defers the shape toggle until after the physics step.
+    _hit_shape.set_deferred("disabled", gate_open)
+    
     _lightning.visible = not gate_open
+    
     if gate_open:
         _left_post.set_green()
         _right_post.set_green()
     else:
         _left_post.set_red()
         _right_post.set_red()
+    
     if gate_open:
         for body in _player_effects:
             body.remove_effect(_player_effects[body])
         _player_effects.clear()
+    else:
+        # NOTE (mristin):
+        # The body_entered may not re-fire for players already inside when the shape
+        # is re-enabled, so scan manually after the deferred enable settles.
+        call_deferred("_zap_overlapping_players")
 
 func _on_pad_enter() -> void:
     _players_on_pads += 1
@@ -76,6 +88,7 @@ func _on_pad_leave() -> void:
 func _on_body_entered(body: Node2D) -> void:
     if not (body is Player) or body in _player_effects:
         return
+        
     var effect := PlayerEffect.new()
     effect.battery_drain_per_second = 7.0
     body.add_effect(effect)
@@ -84,5 +97,10 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
     if body not in _player_effects:
         return
+
     body.remove_effect(_player_effects[body])
     _player_effects.erase(body)
+
+func _zap_overlapping_players() -> void:
+    for body in get_overlapping_bodies():
+        _on_body_entered(body)
