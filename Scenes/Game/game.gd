@@ -6,8 +6,7 @@ class_name Game
 
 # Public so harness and other callers can override before _ready runs.
 var level_scene_paths: Array[String] = [
-    # TODO: uncomment
-    #"res://Scenes/Levels/Playground/Playground.tscn",
+    "res://Scenes/Levels/Playground/Playground.tscn",
     "res://Scenes/Levels/Roundabout/Roundabout.tscn",
 ]
 
