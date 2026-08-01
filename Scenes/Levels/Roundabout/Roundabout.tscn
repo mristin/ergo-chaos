@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://0iqk4rl8fsko" path="res://Scenes/Objects/RechargePad/RechargePad.tscn" id="5_nfxud"]
 [ext_resource type="Texture2D" uid="uid://c7m5aeq1qpuoo" path="res://Assets/Images/thick-wall-texture-small.png" id="5_pxw0m"]
 [ext_resource type="Script" uid="uid://b5vven30617q7" path="res://Scenes/Objects/Wall/wall.gd" id="5_wintr"]
-[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/laser_gate.tscn" id="7_qlvrv"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/LaserGate.tscn" id="7_qlvrv"]
 [ext_resource type="PackedScene" uid="uid://cq4o34w38ko7v" path="res://Scenes/Objects/RotatingFireballs/RotatingFireballs.tscn" id="9_lrqua"]
 [ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Objects/SparkField/spark_field.gd" id="10_gx0rs"]
 
@@ -93,7 +93,7 @@ battery = 99.34745540618896
 z_index = 1
 position = Vector2(177.99995, 92.24139)
 rotation = 1.6239073
-scale = Vector2(0.99999905, 0.99999905)
+scale = Vector2(0.999999, 0.999999)
 texture = ExtResource("4_qlvrv")
 battery = 99.64949400901796
 
@@ -162,6 +162,15 @@ texture_repeat = 2
 texture = ExtResource("5_pxw0m")
 polygon = PackedVector2Array(1148, 802, 1148, 649, 1326, 388)
 
+[node name="Line2D" type="Line2D" parent="Wall2" unique_id=2070506219]
+points = PackedVector2Array(1148, 802, 1148, 649, 1326, 388)
+closed = true
+default_color = Color(0.6627451, 0.6627451, 0.6627451, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
 [node name="Wall3" type="StaticBody2D" parent="." unique_id=653713581]
 script = ExtResource("5_wintr")
 
@@ -169,3 +178,12 @@ script = ExtResource("5_wintr")
 texture_repeat = 2
 texture = ExtResource("5_pxw0m")
 polygon = PackedVector2Array(724, 559, 882, 555, 929, 643, 929, 829)
+
+[node name="Line2D" type="Line2D" parent="Wall3" unique_id=20015735]
+points = PackedVector2Array(724, 559, 882, 555, 929, 643, 929, 829)
+closed = true
+default_color = Color(0.6627451, 0.6627451, 0.6627451, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true

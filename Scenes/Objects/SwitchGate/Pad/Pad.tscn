@@ -39,6 +39,6 @@ texture = ExtResource("2_pnoej")
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_aijyj")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=9705333]
+[node name="Symbol" type="Sprite2D" parent="." unique_id=9705333]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_poie3")

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://Assets/Images/spaceship-blue.png" id="3_uvwl6"]
 [ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://Scenes/Goo/goo.tscn" id="5_kh02m"]
 [ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://Scenes/Levels/Base/Base.tscn" id="5_nocsb"]
-[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/laser_gate.tscn" id="6_5oxgy"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://Scenes/Objects/LaserGate/LaserGate.tscn" id="6_5oxgy"]
 [ext_resource type="PackedScene" uid="uid://0iqk4rl8fsko" path="res://Scenes/Objects/RechargePad/RechargePad.tscn" id="7_lejie"]
 [ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://Scenes/Objects/SparkField/spark_field.gd" id="8_tl5a4"]
 
@@ -18,7 +18,7 @@ z_index = -1
 z_index = 1
 position = Vector2(290.00003, 82)
 rotation = 1.6254053
-scale = Vector2(0.9999993, 0.9999993)
+scale = Vector2(0.9999992, 0.9999992)
 texture = ExtResource("2_dbwwm")
 battery = 99.5437585067749
 
@@ -26,7 +26,7 @@ battery = 99.5437585067749
 z_index = 1
 position = Vector2(298, 142)
 rotation = 1.6239073
-scale = Vector2(0.9999994, 0.9999994)
+scale = Vector2(0.99999934, 0.99999934)
 texture = ExtResource("3_uvwl6")
 battery = 99.85451140403748
 
