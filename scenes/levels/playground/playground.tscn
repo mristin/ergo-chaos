@@ -20,7 +20,6 @@ position = Vector2(248.99991, 236.99998)
 rotation = 1.6254053
 scale = Vector2(0.99999887, 0.99999887)
 texture = ExtResource("2_dbwwm")
-battery = 5.0
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
 z_index = 1
