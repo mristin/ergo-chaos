@@ -67,6 +67,9 @@ func remove_effect(effect: PlayerEffect) -> void:
     _active_effects.erase(effect)
     _recompute_stats()
 
+func drain_battery(amount: float) -> void:
+    _set_battery(battery - amount)
+
 func _recompute_stats() -> void:
     var mc := 1.0
     var sp := 1.0
