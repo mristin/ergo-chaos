@@ -2,6 +2,9 @@ extends Node2D
 
 class_name Game
 
+const _GAME_FINISHED_IMAGE: Texture2D = preload("res://assets/images/game_finished.png")
+const _MISSION_FAILED_IMAGE: Texture2D = preload("res://assets/images/mission_failed.png")
+
 @onready var screen: Node2D = $Screen
 
 # Public so harness and other callers can override before _ready runs.
@@ -129,11 +132,10 @@ func set_level(level: int) -> void:
     ) 
     
     level_state.failed.connect(func():
-        var final_message: FinalMessage = final_message_scene.instantiate()        
+        var final_message: FinalMessage = final_message_scene.instantiate()
         game_screen.add_child(final_message)
-        final_message.set_message(
-            "You failed, but you will make it the next time 💪!"
-        )
+        final_message.set_image(_MISSION_FAILED_IMAGE)
+        final_message.set_countdown_seconds(10)
         get_tree().paused = true
         
         final_message.done.connect(func():
@@ -154,8 +156,8 @@ func set_level(level: int) -> void:
                 set_level(level + 1)
             )
         else:
-            # TODO: go to the dialogue: Do you want to play again? Yes/No
-            final_message.set_message("You cleaned everything! Bravo! 🎉 🥳 🎉")
+            final_message.set_image(_GAME_FINISHED_IMAGE)
+            final_message.set_countdown_seconds(20)
             final_message.done.connect(func():
                 get_tree().paused = false
                 set_level(0)

@@ -16,17 +16,17 @@ z_index = -1
 
 [node name="PlayerA" parent="." unique_id=1280301678 instance=ExtResource("1_oyxf0")]
 z_index = 1
-position = Vector2(290.00003, 82)
+position = Vector2(248.99991, 236.99998)
 rotation = 1.6254053
-scale = Vector2(0.9999992, 0.9999992)
+scale = Vector2(0.99999887, 0.99999887)
 texture = ExtResource("2_dbwwm")
-battery = 99.5437585067749
+battery = 5.0
 
 [node name="PlayerB" parent="." unique_id=246400443 instance=ExtResource("1_oyxf0")]
 z_index = 1
 position = Vector2(298, 142)
 rotation = 1.6239073
-scale = Vector2(0.99999934, 0.99999934)
+scale = Vector2(0.9999992, 0.9999992)
 texture = ExtResource("3_uvwl6")
 battery = 99.85451140403748
 
