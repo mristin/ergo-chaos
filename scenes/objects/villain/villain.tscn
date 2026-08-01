@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://hncrg0kbfttn9"]
+[gd_scene format=3 uid="uid://drwvuxm1umxwi"]
 
 [ext_resource type="Script" uid="uid://wwca1p0u6owky" path="res://scenes/objects/villain/villain.gd" id="1_v1lla1n"]
 [ext_resource type="Texture2D" uid="uid://h1h30yackixg" path="res://assets/images/villain.png" id="2_v1lla1n"]

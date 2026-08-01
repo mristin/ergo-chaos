@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://evq0bojgpueo"]
+
+[ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="3_red"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="4_blue"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="5_goo"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="6_spark"]
+[ext_resource type="PackedScene" uid="uid://drwvuxm1umxwi" path="res://scenes/objects/villain/villain.tscn" id="7_villain"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(130, 250)
+
+[sub_resource type="RectangleShape2D" id="Rect_2"]
+size = Vector2(510, 130)
+
+[sub_resource type="RectangleShape2D" id="Rect_3"]
+size = Vector2(390, 400)
+
+[sub_resource type="RectangleShape2D" id="Rect_4"]
+size = Vector2(1260, 160)
+
+[sub_resource type="RectangleShape2D" id="Rect_5"]
+size = Vector2(510, 120)
+
+[sub_resource type="RectangleShape2D" id="Rect_6"]
+size = Vector2(390, 400)
+
+[sub_resource type="RectangleShape2D" id="Rect_7"]
+size = Vector2(510, 120)
+
+[sub_resource type="RectangleShape2D" id="Rect_8"]
+size = Vector2(1260, 160)
+
+[sub_resource type="RectangleShape2D" id="Rect_9"]
+size = Vector2(130, 250)
+
+[sub_resource type="RectangleShape2D" id="Rect_10"]
+size = Vector2(510, 130)
+
+[node name="Chase" type="Node2D" unique_id=526395754]
+
+[node name="Base" parent="." unique_id=1246228549 instance=ExtResource("1_base")]
+z_index = -1
+
+[node name="PlayerA" parent="." unique_id=1563894383 instance=ExtResource("2_player")]
+z_index = 1
+position = Vector2(348, 91)
+texture = ExtResource("3_red")
+
+[node name="PlayerB" parent="." unique_id=448624426 instance=ExtResource("2_player")]
+z_index = 1
+position = Vector2(1499, 936)
+texture = ExtResource("4_blue")
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=99052942]
+
+[node name="Goo" parent="GooContainer" unique_id=1640903593 instance=ExtResource("5_goo")]
+position = Vector2(500, 150)
+
+[node name="Goo2" parent="GooContainer" unique_id=1951831906 instance=ExtResource("5_goo")]
+position = Vector2(900, 150)
+
+[node name="Goo3" parent="GooContainer" unique_id=654294670 instance=ExtResource("5_goo")]
+position = Vector2(1300, 150)
+
+[node name="Goo4" parent="GooContainer" unique_id=524800274 instance=ExtResource("5_goo")]
+position = Vector2(1400, 300)
+
+[node name="Goo5" parent="GooContainer" unique_id=1845244543 instance=ExtResource("5_goo")]
+position = Vector2(1400, 450)
+
+[node name="Goo6" parent="GooContainer" unique_id=2049740406 instance=ExtResource("5_goo")]
+position = Vector2(1200, 550)
+
+[node name="Goo7" parent="GooContainer" unique_id=1015171429 instance=ExtResource("5_goo")]
+position = Vector2(965, 550)
+
+[node name="Goo8" parent="GooContainer" unique_id=1253141372 instance=ExtResource("5_goo")]
+position = Vector2(750, 550)
+
+[node name="Goo9" parent="GooContainer" unique_id=572317944 instance=ExtResource("5_goo")]
+position = Vector2(530, 650)
+
+[node name="Goo10" parent="GooContainer" unique_id=1010632866 instance=ExtResource("5_goo")]
+position = Vector2(530, 850)
+
+[node name="Goo11" parent="GooContainer" unique_id=1358093164 instance=ExtResource("5_goo")]
+position = Vector2(900, 950)
+
+[node name="Goo12" parent="GooContainer" unique_id=352578031 instance=ExtResource("5_goo")]
+position = Vector2(1400, 950)
+
+[node name="SparkField1" type="Area2D" parent="." unique_id=1955963303]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField1" unique_id=239774586]
+position = Vector2(85, 145)
+shape = SubResource("Rect_1")
+
+[node name="SparkField2" type="Area2D" parent="." unique_id=1662648090]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField2" unique_id=379580608]
+position = Vector2(1655, 85)
+shape = SubResource("Rect_2")
+
+[node name="SparkField3" type="Area2D" parent="." unique_id=2006139379]
+script = ExtResource("6_spark")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField3" unique_id=1413645409]
+position = Vector2(1715, 350)
+shape = SubResource("Rect_3")
+
+[node name="SparkField4" type="Area2D" parent="." unique_id=1863696755]
+script = ExtResource("6_spark")
+sign_count = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField4" unique_id=255196378]
+position = Vector2(650, 350)
+shape = SubResource("Rect_4")
+
+[node name="SparkField5" type="Area2D" parent="." unique_id=49737276]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField5" unique_id=675314963]
+position = Vector2(275, 490)
+shape = SubResource("Rect_5")
+
+[node name="SparkField6" type="Area2D" parent="." unique_id=140154511]
+script = ExtResource("6_spark")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField6" unique_id=1749172735]
+position = Vector2(215, 750)
+shape = SubResource("Rect_6")
+
+[node name="SparkField7" type="Area2D" parent="." unique_id=1251619325]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField7" unique_id=1715772723]
+position = Vector2(1655, 610)
+shape = SubResource("Rect_7")
+
+[node name="SparkField8" type="Area2D" parent="." unique_id=2088318197]
+script = ExtResource("6_spark")
+sign_count = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField8" unique_id=1905342442]
+position = Vector2(1280, 750)
+shape = SubResource("Rect_8")
+
+[node name="SparkField9" type="Area2D" parent="." unique_id=499187842]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField9" unique_id=1000534829]
+position = Vector2(1845, 955)
+shape = SubResource("Rect_9")
+
+[node name="SparkField10" type="Area2D" parent="." unique_id=1392578295]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SparkField10" unique_id=207208697]
+position = Vector2(275, 1015)
+shape = SubResource("Rect_10")
+
+[node name="VillainA" parent="." unique_id=1008288067 instance=ExtResource("7_villain")]
+position = Vector2(243, 202)
+target_preference = 1
+
+[node name="VillainB" parent="." unique_id=908025284 instance=ExtResource("7_villain")]
+position = Vector2(1697, 981)
+target_preference = 2

@@ -20,6 +20,12 @@ class_name Villain
 @export var hit_battery_drain: float = 15.0
 @export var stun_seconds: float = 3.5
 
+enum TargetPreference { CLOSEST, PLAYER_A, PLAYER_B }
+## Which player this villain hunts. CLOSEST (default) always goes after
+## whichever player is nearer; PLAYER_A/PLAYER_B pin it to a specific player
+## regardless of distance, for levels that want one villain per player.
+@export var target_preference: TargetPreference = TargetPreference.CLOSEST
+
 const _RED_TINT := Color(0.85, 0.16, 0.16)
 const _BLUE_TINT := Color(0.16, 0.45, 0.85)
 const _RED_TEXTURE: Texture2D = preload("res://assets/images/spaceship_red.png")
@@ -71,6 +77,12 @@ func _turn_away() -> void:
 func _closer_player() -> Player:
     var a_valid := is_instance_valid(_player_a)
     var b_valid := is_instance_valid(_player_b)
+
+    if target_preference == TargetPreference.PLAYER_A and a_valid:
+        return _player_a
+    if target_preference == TargetPreference.PLAYER_B and b_valid:
+        return _player_b
+
     if a_valid and not b_valid:
         return _player_a
     if b_valid and not a_valid:
