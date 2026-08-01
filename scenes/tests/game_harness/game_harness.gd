@@ -10,6 +10,7 @@ extends Node2D
     "res://scenes/levels/roundabout/roundabout.tscn",
     "res://scenes/tests/levels/test_laser_gate/test_laser_gate.tscn",
     "res://scenes/tests/levels/test_recharge_pad/test_recharge_pad.tscn",
+    "res://scenes/tests/levels/test_robot/test_robot.tscn",
     "res://scenes/tests/levels/test_rotating_fireballs/test_rotating_fireballs.tscn",
     "res://scenes/tests/levels/test_spark_field/test_spark_field.tscn",
     "res://scenes/tests/levels/test_static_wall/test_static_wall.tscn",

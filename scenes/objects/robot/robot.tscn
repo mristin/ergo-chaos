@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://6br2t2glbvmg"]
+
+[ext_resource type="Script" uid="uid://cdev6t1fb0vmm" path="res://scenes/objects/robot/robot.gd" id="1_r0b0t"]
+[ext_resource type="Texture2D" uid="uid://dfoataphbk5wb" path="res://assets/images/robot.png" id="2_r0b0t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r0b0t"]
+radius = 35.0
+height = 80.0
+
+[node name="Robot" type="CharacterBody2D" unique_id=1659051391]
+script = ExtResource("1_r0b0t")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=690658112]
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("2_r0b0t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1835915733]
+shape = SubResource("CapsuleShape2D_r0b0t")
+
+[node name="LookAhead" type="RayCast2D" parent="." unique_id=1731216162]
+target_position = Vector2(0, -90)
+collide_with_areas = true

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfoataphbk5wb"
-path="res://.godot/imported/robot_red.png-5b6c2796f260530328cf9268c3eb815f.ctex"
+path="res://.godot/imported/robot.png-87ecb765f20a8777e50b7e7a33a2bd0a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/robot_red.png"
-dest_files=["res://.godot/imported/robot_red.png-5b6c2796f260530328cf9268c3eb815f.ctex"]
+source_file="res://assets/images/robot.png"
+dest_files=["res://.godot/imported/robot.png-87ecb765f20a8777e50b7e7a33a2bd0a.ctex"]
 
 [params]
 
