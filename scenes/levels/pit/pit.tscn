@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://bm8knx0pe33ps"]
+
+[ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="3_red"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="4_blue"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="5_goo"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="6_spark"]
+[ext_resource type="PackedScene" uid="uid://6br2t2glbvmg" path="res://scenes/objects/robot/robot.tscn" id="7_robot"]
+
+[node name="Pit" type="Node2D" unique_id=2045843707]
+
+[node name="Base" parent="." unique_id=1601732025 instance=ExtResource("1_base")]
+z_index = -1
+
+[node name="PlayerA" parent="." unique_id=2026240399 instance=ExtResource("2_player")]
+z_index = 1
+position = Vector2(917, 550)
+texture = ExtResource("3_red")
+
+[node name="PlayerB" parent="." unique_id=1456644282 instance=ExtResource("2_player")]
+z_index = 1
+position = Vector2(1032, 563)
+texture = ExtResource("4_blue")
+battery = 99.99116807043552
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=159165632]
+
+[node name="Goo" parent="GooContainer" unique_id=2105275725 instance=ExtResource("5_goo")]
+position = Vector2(1242, 665)
+
+[node name="Goo2" parent="GooContainer" unique_id=1796258241 instance=ExtResource("5_goo")]
+position = Vector2(1080, 827)
+
+[node name="Goo3" parent="GooContainer" unique_id=943270683 instance=ExtResource("5_goo")]
+position = Vector2(850, 827)
+
+[node name="Goo4" parent="GooContainer" unique_id=1290984471 instance=ExtResource("5_goo")]
+position = Vector2(688, 665)
+
+[node name="Goo5" parent="GooContainer" unique_id=519045923 instance=ExtResource("5_goo")]
+position = Vector2(688, 435)
+
+[node name="Goo6" parent="GooContainer" unique_id=83843265 instance=ExtResource("5_goo")]
+position = Vector2(850, 273)
+
+[node name="Goo7" parent="GooContainer" unique_id=650393719 instance=ExtResource("5_goo")]
+position = Vector2(1080, 273)
+
+[node name="Goo8" parent="GooContainer" unique_id=1744560448 instance=ExtResource("5_goo")]
+position = Vector2(1242, 435)
+
+[node name="SparkRing0" type="Area2D" parent="." unique_id=1538472628]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing0" unique_id=1510014430]
+polygon = PackedVector2Array(1485, 550, 1415, 810, 1311, 750, 1365, 550)
+
+[node name="SparkRing1" type="Area2D" parent="." unique_id=1679192091]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing1" unique_id=897360090]
+polygon = PackedVector2Array(1415, 810, 1225, 1000, 1165, 896, 1311, 750)
+
+[node name="SparkRing2" type="Area2D" parent="." unique_id=569619034]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing2" unique_id=1162552246]
+polygon = PackedVector2Array(1225, 1000, 965, 1070, 965, 950, 1165, 896)
+
+[node name="SparkRing3" type="Area2D" parent="." unique_id=1542539088]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing3" unique_id=1945706680]
+polygon = PackedVector2Array(965, 1070, 705, 1000, 765, 896, 965, 950)
+
+[node name="SparkRing4" type="Area2D" parent="." unique_id=579502655]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing4" unique_id=1080722150]
+polygon = PackedVector2Array(705, 1000, 515, 810, 619, 750, 765, 896)
+
+[node name="SparkRing5" type="Area2D" parent="." unique_id=575680941]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing5" unique_id=408064102]
+polygon = PackedVector2Array(515, 810, 445, 550, 565, 550, 619, 750)
+
+[node name="SparkRing6" type="Area2D" parent="." unique_id=1027695412]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing6" unique_id=88746636]
+polygon = PackedVector2Array(445, 550, 515, 290, 619, 350, 565, 550)
+
+[node name="SparkRing7" type="Area2D" parent="." unique_id=2146426098]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing7" unique_id=345376020]
+polygon = PackedVector2Array(515, 290, 705, 100, 765, 204, 619, 350)
+
+[node name="SparkRing8" type="Area2D" parent="." unique_id=1000398385]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing8" unique_id=2096638797]
+polygon = PackedVector2Array(705, 100, 965, 30, 965, 150, 765, 204)
+
+[node name="SparkRing9" type="Area2D" parent="." unique_id=779821138]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing9" unique_id=2028615136]
+polygon = PackedVector2Array(965, 30, 1225, 100, 1165, 204, 965, 150)
+
+[node name="SparkRing10" type="Area2D" parent="." unique_id=834017414]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing10" unique_id=1328973717]
+polygon = PackedVector2Array(1225, 100, 1415, 290, 1311, 350, 1165, 204)
+
+[node name="SparkRing11" type="Area2D" parent="." unique_id=480687577]
+script = ExtResource("6_spark")
+sign_count = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkRing11" unique_id=979963723]
+polygon = PackedVector2Array(1415, 290, 1485, 550, 1365, 550, 1311, 350)
+
+[node name="RobotA" parent="." unique_id=2093977942 instance=ExtResource("7_robot")]
+position = Vector2(992, 345)
+speed = 110.0
+turn_speed = 3.5
+push_speed = 200.0
+min_wander_seconds = 0.4
+max_wander_seconds = 1.2
+
+[node name="RobotB" parent="." unique_id=1882633030 instance=ExtResource("7_robot")]
+position = Vector2(1149, 681)
+speed = 110.0
+turn_speed = 3.5
+push_speed = 200.0
+min_wander_seconds = 0.4
+max_wander_seconds = 1.2
+
+[node name="RobotC" parent="." unique_id=1175631343 instance=ExtResource("7_robot")]
+position = Vector2(787, 679)
+speed = 110.0
+turn_speed = 3.5
+push_speed = 200.0
+min_wander_seconds = 0.4
+max_wander_seconds = 1.2
