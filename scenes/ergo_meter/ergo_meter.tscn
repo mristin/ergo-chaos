@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cy63e1qq0drcr"]
+
+[ext_resource type="Script" uid="uid://dslm5q66fo04f" path="res://scenes/ergo_meter/ergo_meter.gd" id="1_7o873"]
+[ext_resource type="PackedScene" uid="uid://cdhhj73m4drjv" path="res://scenes/ergo_meter/ergo_ski/ergo_ski.tscn" id="2_kx5y2"]
+[ext_resource type="PackedScene" uid="uid://4k6tu5osajqe" path="res://scenes/ergo_meter/speedometer/speedometer.tscn" id="3_75ism"]
+
+[node name="ErgoMeter" type="Node2D" unique_id=850261036]
+script = ExtResource("1_7o873")
+
+[node name="ErgoSki" parent="." unique_id=1182247016 instance=ExtResource("2_kx5y2")]
+position = Vector2(40, 928)
+scale = Vector2(0.5, 0.5)
+
+[node name="SpeedometerALeft" parent="." unique_id=220197317 instance=ExtResource("3_75ism")]
+position = Vector2(70, 60)
+needle_color = Color(0.7826623, 0.41656843, 0.33205238, 1)
+
+[node name="SpeedometerARight" parent="." unique_id=1266729664 instance=ExtResource("3_75ism")]
+position = Vector2(184, 60)
+needle_color = Color(0.7826623, 0.41656843, 0.33205238, 1)
+
+[node name="SpeedometerBLeft" parent="." unique_id=282782402 instance=ExtResource("3_75ism")]
+position = Vector2(1712, 60)
+needle_color = Color(0.3137255, 0, 1, 1)
+
+[node name="SpeedometerBRight" parent="." unique_id=744176663 instance=ExtResource("3_75ism")]
+position = Vector2(1838, 60)
+needle_color = Color(0.3137255, 0, 1, 1)

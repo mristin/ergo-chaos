@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bdnx4wvn27aaf"]
+
+[ext_resource type="PackedScene" uid="uid://b8ie08d5hb35m" path="res://scenes/levels/base/base.tscn" id="1_v365k"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="2_n0ath"]
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="3_xt1yx"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="4_mi032"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="5_ovwrb"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="6_vvdch"]
+[ext_resource type="PackedScene" uid="uid://dwehmmtm6vnk3" path="res://scenes/objects/switch_gate/switch_gate.tscn" id="7_n0ath"]
+
+[node name="Switcher" type="Node2D" unique_id=401326769]
+
+[node name="Base" parent="." unique_id=1608742923 instance=ExtResource("1_v365k")]
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=921010421]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("2_n0ath")]
+position = Vector2(742, 475)
+rotation = 1.01613
+
+[node name="Goo2" parent="GooContainer" unique_id=680491683 instance=ExtResource("2_n0ath")]
+position = Vector2(747, 619)
+rotation = 2.03226
+
+[node name="Goo3" parent="GooContainer" unique_id=550828842 instance=ExtResource("2_n0ath")]
+position = Vector2(899, 752.00006)
+rotation = -2.2186656
+
+[node name="Goo4" parent="GooContainer" unique_id=608323780 instance=ExtResource("2_n0ath")]
+position = Vector2(910.99994, 587)
+rotation = 1.845854
+
+[node name="Goo5" parent="GooContainer" unique_id=1723296583 instance=ExtResource("2_n0ath")]
+position = Vector2(1025, 488.9999)
+rotation = -2.5914774
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Goo6" parent="GooContainer" unique_id=303311749 instance=ExtResource("2_n0ath")]
+position = Vector2(1287.0001, 998.99994)
+rotation = 1.1002305
+scale = Vector2(0.9999998, 0.9999998)
+
+[node name="Goo7" parent="GooContainer" unique_id=576699828 instance=ExtResource("2_n0ath")]
+position = Vector2(612, 985)
+rotation = 2.200461
+scale = Vector2(0.9999996, 0.9999996)
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("3_xt1yx")]
+z_index = 1
+position = Vector2(166.00002, 213.99998)
+rotation = -1.568683
+scale = Vector2(0.9999991, 0.9999991)
+texture = ExtResource("4_mi032")
+battery = 99.34745540618896
+
+[node name="PlayerB" parent="." unique_id=332826820 instance=ExtResource("3_xt1yx")]
+z_index = 1
+position = Vector2(159.98502, 108.55832)
+rotation = 1.6239073
+scale = Vector2(0.9999989, 0.9999989)
+texture = ExtResource("5_ovwrb")
+battery = 99.24161455526949
+
+[node name="Tunnel" type="Area2D" parent="." unique_id=890838817]
+script = ExtResource("6_vvdch")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Tunnel" unique_id=1901446944]
+position = Vector2(92, 385)
+polygon = PackedVector2Array(191, -20, 1038, 4, 1200, 136, 1196, 270, 1014, 400, 370, 445, -23, 428, -56, 202, -68, -17)
+
+[node name="SwitchGate" parent="." unique_id=178656290 instance=ExtResource("7_n0ath")]
+position = Vector2(1321.0001, 242.00003)
+rotation = -1.1433322
+width = 300.0
+
+[node name="SwitchGate2" parent="." unique_id=1756491736 instance=ExtResource("7_n0ath")]
+position = Vector2(1526, 800.00006)
+rotation = 0.36137652
+
+[node name="CornerBlocker" type="Area2D" parent="." unique_id=1248886620]
+script = ExtResource("6_vvdch")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CornerBlocker" unique_id=517691433]
+polygon = PackedVector2Array(1799, 810, 1903, 857, 1903, 1061, 1718, 1055)

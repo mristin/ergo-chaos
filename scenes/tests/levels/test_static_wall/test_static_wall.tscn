@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://crwrcgtxs2wq4"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="1_b2jaa"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="2_0twq7"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="3_ijops"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="4_eq6ma"]
+[ext_resource type="Script" uid="uid://b5vven30617q7" path="res://scenes/objects/wall/wall.gd" id="5_0twq7"]
+
+[node name="TestStaticWall" type="Node2D" unique_id=582619308]
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("1_b2jaa")]
+z_index = 1
+position = Vector2(266, 395)
+texture = ExtResource("2_0twq7")
+battery = 99.7328205025196
+
+[node name="PlayerB" parent="." unique_id=1446868665 instance=ExtResource("1_b2jaa")]
+z_index = 1
+position = Vector2(451.93137, 175)
+texture = ExtResource("3_ijops")
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=1206965730]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("4_eq6ma")]
+position = Vector2(121, 150)
+
+[node name="StaticWall" type="StaticBody2D" parent="." unique_id=542727574]
+script = ExtResource("5_0twq7")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall" unique_id=1031205981]
+polygon = PackedVector2Array(188, 225, 437, 234, 418, 361, 140, 335)

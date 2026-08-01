@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cq4o34w38ko7v"]
+
+[ext_resource type="Script" uid="uid://cu4d76cfowr2y" path="res://scenes/objects/rotating_fireballs/rotating_fireballs.gd" id="1_m57l6"]
+
+[node name="RotatingFireballs" type="Node2D" unique_id=103192084]
+script = ExtResource("1_m57l6")
+fireball_height = 70.0

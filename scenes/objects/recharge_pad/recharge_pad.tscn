@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://0iqk4rl8fsko"]
+
+[ext_resource type="Script" uid="uid://dg80dkr6ur53v" path="res://scenes/objects/recharge_pad/recharge_pad.gd" id="1_i6klj"]
+[ext_resource type="Texture2D" uid="uid://pvugqxs3ii4u" path="res://assets/images/recharge_pad.svg" id="2_5787x"]
+[ext_resource type="Texture2D" uid="uid://ub2suk28il6p" path="res://assets/images/red_light.png" id="3_2v78h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6klj"]
+size = Vector2(82, 82)
+
+[node name="RechargePad" type="Area2D" unique_id=124847995]
+script = ExtResource("1_i6klj")
+metadata/_edit_vertical_guides_ = [-49.0, 50.0]
+metadata/_edit_horizontal_guides_ = [-50.0, 50.0]
+
+[node name="Pad" type="Sprite2D" parent="." unique_id=943527626]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_5787x")
+
+[node name="Light1" type="Sprite2D" parent="." unique_id=931176587]
+position = Vector2(-42, -43)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_2v78h")
+
+[node name="Light2" type="Sprite2D" parent="." unique_id=1588111794]
+position = Vector2(43, -43)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_2v78h")
+
+[node name="Light3" type="Sprite2D" parent="." unique_id=1759096203]
+position = Vector2(42.86, 43.14)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_2v78h")
+
+[node name="Light4" type="Sprite2D" parent="." unique_id=679734748]
+position = Vector2(-42.2828, 43.002796)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_2v78h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=156269144]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_i6klj")

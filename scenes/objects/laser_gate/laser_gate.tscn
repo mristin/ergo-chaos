@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b4bcbhchr4y2s"]
+
+[ext_resource type="Script" uid="uid://c1tg1gr0ewriv" path="res://scenes/objects/laser_gate/laser_gate.gd" id="1_t561y"]
+[ext_resource type="PackedScene" uid="uid://cu20ttrmme4hw" path="res://scenes/objects/laser_post/laser_post.tscn" id="2_o2yfv"]
+[ext_resource type="Texture2D" uid="uid://bpwtc62pmg6kb" path="res://assets/images/yellow_light.png" id="3_0hnsq"]
+[ext_resource type="Shader" uid="uid://lyxl0jrsmgdu" path="res://scenes/objects/laser_gate/lightning.gdshader" id="3_wxebx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3gsc"]
+size = Vector2(364, 132)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3gsc"]
+shader = ExtResource("3_wxebx")
+
+[node name="LaserGate" type="Area2D" unique_id=1777469306]
+script = ExtResource("1_t561y")
+
+[node name="LeftPost" parent="." unique_id=1523567297 instance=ExtResource("2_o2yfv")]
+position = Vector2(-200, 0)
+scale = Vector2(0.3, 0.3)
+
+[node name="RightPost" parent="." unique_id=940233452 instance=ExtResource("2_o2yfv")]
+position = Vector2(200, 0)
+scale = Vector2(0.3, 0.3)
+flip_h = true
+
+[node name="HitShape" type="CollisionShape2D" parent="." unique_id=1182346718]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_m3gsc")
+
+[node name="Lightning" type="ColorRect" parent="HitShape" unique_id=2100000001]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_m3gsc")
+offset_left = -182.0
+offset_top = -66.0
+offset_right = 182.0
+offset_bottom = 66.0
+color = Color(1, 0, 1, 1)
+
+[node name="LeftLight" type="Sprite2D" parent="." unique_id=1497808439]
+position = Vector2(-200, 3.0192385)
+scale = Vector2(0.01859224, 0.0176157)
+texture = ExtResource("3_0hnsq")
+
+[node name="RightLight" type="Sprite2D" parent="." unique_id=923763305]
+position = Vector2(200, 3.0000005)
+scale = Vector2(0.019, 0.019)
+texture = ExtResource("3_0hnsq")

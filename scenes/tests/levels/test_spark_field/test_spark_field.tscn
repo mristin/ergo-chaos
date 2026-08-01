@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cjsb1cqxe50x1"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="1_jkvya"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="2_juk23"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="3_brvix"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="4_6p70s"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="5_r2abe"]
+
+[node name="TestSparkField" type="Node2D" unique_id=632791047]
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(350.04126, 71)
+texture = ExtResource("2_juk23")
+
+[node name="PlayerB" parent="." unique_id=439152586 instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(451.93137, 175)
+texture = ExtResource("3_brvix")
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=944738303]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("4_6p70s")]
+position = Vector2(121, 150)
+
+[node name="SparkField" type="Area2D" parent="." unique_id=482990885]
+script = ExtResource("5_r2abe")
+sign_count = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField" unique_id=1456846375]
+polygon = PackedVector2Array(368, 140, 404, 80, 492, 58, 623, 89, 602, 194, 532, 336, 489, 250, 352, 319, 366, 200, 403, 221, 397, 160, 356, 162, 356, 162)
