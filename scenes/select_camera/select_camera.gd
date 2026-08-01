@@ -1,6 +1,7 @@
 extends Control
 
 @onready var status: Label = $Status
+@onready var splash: TextureRect = $Splash
 
 var compatible_feeds: Array[FeedRecord] = []
 
@@ -20,45 +21,48 @@ func _input(event):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     CameraServer.monitoring_feeds = true;
-    await get_tree().create_timer(2.0).timeout
-    
-    
+    await get_tree().create_timer(7.0).timeout
+
     print(
-        "We have waited long enough for the camera server to start. " + 
+        "We have waited long enough for the camera server to start. " +
         "Now let's see how many camera feeds we have."
     )
-    
-    if CameraServer.get_feed_count() == 0:
+
+    var no_feeds := CameraServer.get_feed_count() == 0
+    var camera_option: OptionButton = $SelectionPart/CameraOption
+    compatible_feeds.clear()
+
+    if not no_feeds:
+        # Filter feeds to only include those with 640x480 YUYV format
+        for i in range(CameraServer.get_feed_count()):
+            var feed = CameraServer.get_feed(i)
+            var formats = feed.get_formats()
+
+            for format_idx in range(formats.size()):
+                var format = formats[format_idx] as Dictionary
+                var width = format.get("width", 0) as int
+                var height = format.get("height", 0) as int
+                var pixel_format = format.get("format", "") as String
+
+                if width == 640 and height == 480 and pixel_format.begins_with("YUYV"):
+                    print("Found compatible feed: ", feed.get_name(), " with format: ", format)
+                    var feed_record = FeedRecord.new(feed, format_idx)
+                    compatible_feeds.append(feed_record)
+                    break
+
+    splash.visible = false
+    status.visible = true
+
+    # Handle different scenarios based on number of compatible feeds
+    if no_feeds:
         status.text = (
-            "Unfortunately, there are no camera feeds. Please attach your camera " + 
+            "Unfortunately, there are no camera feeds. Please attach your camera " +
             "and start the game again.\n\nPress any key to quit."
         )
         await any_key_pressed
         get_tree().quit()
-    
-    $SelectionPart.visible = true;
+        return
 
-    var camera_option: OptionButton = $SelectionPart/CameraOption
-    compatible_feeds.clear()
-
-    # Filter feeds to only include those with 640x480 YUYV format
-    for i in range(CameraServer.get_feed_count()):
-        var feed = CameraServer.get_feed(i)
-        var formats = feed.get_formats()
-
-        for format_idx in range(formats.size()):
-            var format = formats[format_idx] as Dictionary
-            var width = format.get("width", 0) as int
-            var height = format.get("height", 0) as int
-            var pixel_format = format.get("format", "") as String
-
-            if width == 640 and height == 480 and pixel_format.begins_with("YUYV"):
-                print("Found compatible feed: ", feed.get_name(), " with format: ", format)
-                var feed_record = FeedRecord.new(feed, format_idx)
-                compatible_feeds.append(feed_record)
-                break
-
-    # Handle different scenarios based on number of compatible feeds
     if compatible_feeds.is_empty():
         status.text = (
             "Unfortunately, we need the camera feed to support 640x480 YUYV format, " +
@@ -77,6 +81,7 @@ func _ready() -> void:
 
     else:
         # Multiple feeds available - populate the option button
+        $SelectionPart.visible = true;
         status.text = "Please select the camera feed:"
 
         for feed_record in compatible_feeds:
