@@ -14,15 +14,6 @@ corner_radius_bottom_left = 10
 process_mode = 3
 script = ExtResource("1_t87b6")
 
-[node name="Message" type="Label" parent="." unique_id=48149369]
-z_index = 2
-offset_left = 100.0
-offset_top = 84.0
-offset_right = 1820.0
-offset_bottom = 154.0
-theme_override_colors/font_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
-theme_override_font_sizes/font_size = 60
-
 [node name="Image" type="TextureRect" parent="." unique_id=1042783641]
 visible = false
 z_index = 1

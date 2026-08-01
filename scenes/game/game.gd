@@ -4,6 +4,7 @@ class_name Game
 
 const _GAME_FINISHED_IMAGE: Texture2D = preload("res://assets/images/game_finished.png")
 const _MISSION_FAILED_IMAGE: Texture2D = preload("res://assets/images/mission_failed.png")
+const _MISSION_ACCOMPLISHED_IMAGE: Texture2D = preload("res://assets/images/mission_accomplished.png")
 
 @onready var screen: Node2D = $Screen
 
@@ -149,8 +150,8 @@ func set_level(level: int) -> void:
         game_screen.add_child(final_message)
         get_tree().paused = true
 
-        if level < level_scene_paths.size() - 1:                        
-            final_message.set_message("Mission accomplished 🚀")
+        if level < level_scene_paths.size() - 1:
+            final_message.set_image(_MISSION_ACCOMPLISHED_IMAGE)
             final_message.done.connect(func():
                 get_tree().paused = false
                 set_level(level + 1)

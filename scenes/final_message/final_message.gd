@@ -9,12 +9,8 @@ var _counter: int = 10
 
 signal done()
 
-@onready var message: Label = $Message
 @onready var image: TextureRect = $Image
 
-
-func set_message(text: String) -> void:
-    message.text = text
 
 func set_image(texture: Texture2D) -> void:
     image.texture = texture
