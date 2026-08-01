@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://kp7kpr8g11hk"]
+
+[ext_resource type="Script" uid="uid://cxs0ankxxmy3w" path="res://scenes/quit_prompt/quit_prompt.gd" id="1_quitprompt"]
+
+[node name="QuitPrompt" type="CanvasLayer" unique_id=1092078453]
+script = ExtResource("1_quitprompt")
+
+[node name="Label" type="Label" parent="." unique_id=467021295]
+offset_top = 980.0
+offset_right = 1920.0
+offset_bottom = 1060.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "Press ESC again to quit the game."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=961515531]
+wait_time = 3.0
+one_shot = true
