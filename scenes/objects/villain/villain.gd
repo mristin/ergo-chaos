@@ -11,8 +11,8 @@ class_name Villain
 ## resumes. Its sprite is tinted to match the color of whichever player it is
 ## currently chasing.
 
-@export var speed: float = 60.0
-@export var turn_speed: float = 3.0  # radians per second, chassis turn rate
+@export var speed: float = 30.0
+@export var turn_speed: float = 2.0  # radians per second, chassis turn rate
 @export var look_ahead_distance: float = 90.0
 @export var jitter_degrees: float = 15.0
 @export var min_jitter_seconds: float = 0.5

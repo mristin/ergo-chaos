@@ -15,23 +15,23 @@
 [node name="GooContainer" type="Node2D" parent="." unique_id=921010421]
 
 [node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("2_n0ath")]
-position = Vector2(742, 475)
+position = Vector2(461, 281.00003)
 rotation = 1.01613
 
 [node name="Goo2" parent="GooContainer" unique_id=680491683 instance=ExtResource("2_n0ath")]
-position = Vector2(747, 619)
+position = Vector2(584, 160)
 rotation = 2.03226
 
 [node name="Goo3" parent="GooContainer" unique_id=550828842 instance=ExtResource("2_n0ath")]
-position = Vector2(899, 752.00006)
+position = Vector2(147.00006, 961.00006)
 rotation = -2.2186656
 
 [node name="Goo4" parent="GooContainer" unique_id=608323780 instance=ExtResource("2_n0ath")]
-position = Vector2(910.99994, 587)
+position = Vector2(1029, 134.99994)
 rotation = 1.845854
 
 [node name="Goo5" parent="GooContainer" unique_id=1723296583 instance=ExtResource("2_n0ath")]
-position = Vector2(1025, 488.9999)
+position = Vector2(1750, 405)
 rotation = -2.5914774
 scale = Vector2(0.99999994, 0.99999994)
 
@@ -57,9 +57,9 @@ battery = 99.34745540618896
 z_index = 1
 position = Vector2(159.98502, 108.55832)
 rotation = 1.6239073
-scale = Vector2(0.9999989, 0.9999989)
+scale = Vector2(0.99999887, 0.99999887)
 texture = ExtResource("5_ovwrb")
-battery = 99.24161455526949
+battery = 99.24161455526948
 
 [node name="Tunnel" type="Area2D" parent="." unique_id=890838817]
 script = ExtResource("6_vvdch")

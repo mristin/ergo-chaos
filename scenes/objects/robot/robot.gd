@@ -7,7 +7,7 @@ class_name Robot
 ## current facing, steering away from anything a forward-looking raycast hits
 ## that is not a Player, and shoving the player aside on contact.
 
-@export var speed: float = 70.0
+@export var speed: float = 30.0
 @export var turn_speed: float = 2.0  # radians per second, chassis turn rate
 @export var push_speed: float = 140.0
 @export var look_ahead_distance: float = 90.0

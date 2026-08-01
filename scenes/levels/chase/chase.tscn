@@ -46,11 +46,14 @@ z_index = -1
 [node name="PlayerA" parent="." unique_id=1563894383 instance=ExtResource("2_player")]
 z_index = 1
 position = Vector2(348, 91)
+rotation = 1.3849158
+scale = Vector2(0.9999999, 0.9999999)
 texture = ExtResource("3_red")
 
 [node name="PlayerB" parent="." unique_id=448624426 instance=ExtResource("2_player")]
 z_index = 1
 position = Vector2(1499, 936)
+rotation = -1.5558686
 texture = ExtResource("4_blue")
 
 [node name="GooContainer" type="Node2D" parent="." unique_id=99052942]
