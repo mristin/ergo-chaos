@@ -17,6 +17,7 @@ extends Node2D
     "res://scenes/tests/levels/test_spark_field/test_spark_field.tscn",
     "res://scenes/tests/levels/test_static_wall/test_static_wall.tscn",
     "res://scenes/tests/levels/test_switch_gate/test_switch_gate.tscn",
+    "res://scenes/tests/levels/test_unicorn/test_unicorn.tscn",
     "res://scenes/tests/levels/test_villain/test_villain.tscn",
 ];
 

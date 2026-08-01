@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://a3n64lbjaa4h"]
+
+[ext_resource type="Script" uid="uid://glns7w5sx0wx" path="res://scenes/objects/unicorn/unicorn.gd" id="1_unicrn"]
+[ext_resource type="Texture2D" uid="uid://b7ajhac73py3e" path="res://assets/images/unicorn.png" id="2_unicrn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_unicrn"]
+radius = 26.0
+height = 80.0
+
+[node name="Unicorn" type="CharacterBody2D"]
+script = ExtResource("1_unicrn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_unicrn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_unicrn")
+
+[node name="LookAhead" type="RayCast2D" parent="."]
+target_position = Vector2(0, -90)
+collide_with_areas = true
