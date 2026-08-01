@@ -8,6 +8,7 @@ class_name Game
 var level_scene_paths: Array[String] = [
     "res://Scenes/Levels/Playground/Playground.tscn",
     "res://Scenes/Levels/Roundabout/Roundabout.tscn",
+    "res://Scenes/Levels/Switcher/Switcher.tscn",
 ]
 
 var _game_controllers: Array[GameController] = []
