@@ -10,6 +10,7 @@ extends Node2D
     "res://scenes/levels/roundabout/roundabout.tscn",
     "res://scenes/levels/pit/pit.tscn",
     "res://scenes/levels/chase/chase.tscn",
+    "res://scenes/levels/stable/stable.tscn",
     "res://scenes/tests/levels/test_laser_gate/test_laser_gate.tscn",
     "res://scenes/tests/levels/test_recharge_pad/test_recharge_pad.tscn",
     "res://scenes/tests/levels/test_robot/test_robot.tscn",

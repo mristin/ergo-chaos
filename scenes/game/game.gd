@@ -11,6 +11,7 @@ var level_scene_paths: Array[String] = [
     "res://scenes/levels/switcher/switcher.tscn",
     "res://scenes/levels/pit/pit.tscn",
     "res://scenes/levels/chase/chase.tscn",
+    "res://scenes/levels/stable/stable.tscn",
 ]
 
 var _game_controllers: Array[GameController] = []

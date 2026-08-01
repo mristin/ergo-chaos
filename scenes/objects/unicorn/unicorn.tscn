@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://a3n64lbjaa4h"]
+[gd_scene format=3 uid="uid://3n64lbjaa4h"]
 
 [ext_resource type="Script" uid="uid://glns7w5sx0wx" path="res://scenes/objects/unicorn/unicorn.gd" id="1_unicrn"]
 [ext_resource type="Texture2D" uid="uid://b7ajhac73py3e" path="res://assets/images/unicorn.png" id="2_unicrn"]
