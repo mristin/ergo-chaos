@@ -21,7 +21,7 @@ const _SPARK_FILL_SHADER = preload(
         if Engine.is_editor_hint() and is_inside_tree():
             _refresh()
 
-@export var border_width: float = 40.0:
+@export var border_width: float = 64.0:
     set(v):
         border_width = v
         if Engine.is_editor_hint() and is_inside_tree():
@@ -37,6 +37,15 @@ const _DANGER_SIGNS: Array[Texture2D] = [
 ]
 
 var _player_effects: Dictionary = {}  # Player -> PlayerEffect
+
+static var _white: ImageTexture
+
+static func _white_texture() -> ImageTexture:
+    if _white == null:
+        var image := Image.create_empty(1, 1, false, Image.FORMAT_RGBA8)
+        image.fill(Color.WHITE)
+        _white = ImageTexture.create_from_image(image)
+    return _white
 
 func _ready() -> void:
     var collision_node := _find_collision_node()
@@ -218,15 +227,20 @@ func _refresh_border(collision_node: Node) -> void:
     line.material = mat
     line.width = border_width
     line.default_color = Color.WHITE
+    # NOTE: The shader needs the UVs along the line, which Line2D generates
+    # reliably only with a texture; a 1x1 white one suffices.
+    line.texture = _white_texture()
     line.texture_mode = Line2D.LINE_TEXTURE_STRETCH
-    line.joint_mode = Line2D.LINE_JOINT_ROUND
-    line.begin_cap_mode = Line2D.LINE_CAP_ROUND
-    line.end_cap_mode = Line2D.LINE_CAP_ROUND
+    # NOTE: The round joints spread the UVs radially, so the bright core of the
+    # shader would shoot out of the corners as spikes; the sharp joints keep the
+    # UVs across the line. A closed line needs no caps.
+    line.joint_mode = Line2D.LINE_JOINT_SHARP
+    line.sharp_limit = 3.0
+    line.closed = true
     line.z_index = 2
 
     for p in polygon:
         line.add_point(p)
-    line.add_point(polygon[0])  # close the loop
 
     add_child(line)
 

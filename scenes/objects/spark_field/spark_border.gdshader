@@ -1,13 +1,19 @@
 // Applied to a Line2D that traces the collision shape outline.
 // UV.x = 0..1 along the line (LINE_TEXTURE_STRETCH), UV.y = 0..1 across the width.
 //
-// Set border_width to ~40 px and LINE_JOINT_ROUND for best results.
+// Set border_width to ~64 px, LINE_JOINT_SHARP and closed = true for best results.
+//
+// The border always glows: a bright core line and a wide soft halo, breathing
+// slowly, so that the players see the edge of the field from a distance. The
+// fiery tendrils and the sparks travelling along the outline come on top.
 shader_type canvas_item;
 render_mode blend_add;
 
 uniform float spark_speed  : hint_range(0.1, 5.0) = 1.8;
 uniform float line_glow    : hint_range(0.0, 1.0) = 0.25;
 uniform float ambient_glow : hint_range(0.0, 1.0) = 0.18;  // constant baseline so border is always visible
+uniform float core_glow    : hint_range(0.0, 2.0) = 1.0;   // the always-lit core line
+uniform float halo_glow    : hint_range(0.0, 2.0) = 0.7;   // the always-lit soft halo
 // Organic-edge controls
 uniform float edge_scale : hint_range(1.0, 40.0) = 12.0;  // noise spatial frequency along line
 uniform float edge_speed : hint_range(0.0, 5.0)  = 1.5;   // animation speed of the boundary
@@ -104,7 +110,18 @@ void fragment() {
     // Blue outer glow, white-blue inner core — both clipped by the organic mask
     vec3 col = vec3(0.05, 0.40, 1.00) * total
              + vec3(0.80, 0.90, 1.00) * core;
-
     float alpha = clamp(total + core, 0.0, 1.0) * organic;
-    COLOR = vec4(col, alpha);
+
+    // The always-lit part, not clipped by the mask: a bright core line with a
+    // slow breath and a running shimmer, and a wide soft halo around it.
+    float breath = 0.85 + 0.15 * sin(t * 2.2);
+    float shimmer = 0.8 + 0.2 * noise1d(uv.x * 40.0 - t * 6.0);
+    float core_line = smoothstep(0.22, 0.0, dist) * core_glow * breath * shimmer;
+    float halo = exp(-dist * 2.6) * (1.0 - smoothstep(0.75, 1.0, dist)) * halo_glow * breath;
+
+    vec3 steady = vec3(0.75, 0.92, 1.0) * core_line + vec3(0.15, 0.55, 1.0) * halo;
+    float steady_alpha = clamp(core_line + halo, 0.0, 1.0);
+
+    // Additive blending scales by the alpha, so combine the colours accordingly.
+    COLOR = vec4(col * alpha + steady * steady_alpha, 1.0);
 }
