@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dqdxwfx8dke58"]
+
+[ext_resource type="Script" uid="uid://cocaj7ms6benj" path="res://scenes/keyboard_controller/keyboard_controller.gd" id="1_q4g6b"]
+
+[node name="KeyboardController" type="Node2D" unique_id=505707576]
+script = ExtResource("1_q4g6b")

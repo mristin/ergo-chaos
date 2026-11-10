@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bafsi232rvva7"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="1_jkvya"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="2_juk23"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="3_brvix"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="4_6p70s"]
+[ext_resource type="Script" uid="uid://b5vven30617q7" path="res://scenes/objects/wall/wall.gd" id="5_wall1"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="6_spark"]
+[ext_resource type="PackedScene" uid="uid://3n64lbjaa4h" path="res://scenes/objects/unicorn/unicorn.tscn" id="7_unicrn"]
+
+[node name="TestUnicorn" type="Node2D" unique_id=1170515514]
+
+[node name="PlayerA" parent="." unique_id=238058039 instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(476, 361)
+texture = ExtResource("2_juk23")
+battery = 70.0
+
+[node name="PlayerB" parent="." unique_id=1431606991 instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(700, 500)
+texture = ExtResource("3_brvix")
+battery = 70.0
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=670122524]
+
+[node name="Goo" parent="GooContainer" unique_id=702201615 instance=ExtResource("4_6p70s")]
+position = Vector2(650, 500)
+
+[node name="Goo2" parent="GooContainer" unique_id=1731187469 instance=ExtResource("4_6p70s")]
+position = Vector2(400, 300)
+
+[node name="StaticWall" type="StaticBody2D" parent="." unique_id=1149821023]
+script = ExtResource("5_wall1")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall" unique_id=1130286069]
+polygon = PackedVector2Array(88, 375, 337, 384, 318, 511, 40, 485)
+
+[node name="Line2D" type="Line2D" parent="StaticWall" unique_id=267037472]
+points = PackedVector2Array(88, 375, 337, 384, 318, 511, 40, 485)
+closed = true
+default_color = Color(0.6627451, 0.6627451, 0.6627451, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="SparkField" type="Area2D" parent="." unique_id=1928046076]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField" unique_id=2049102133]
+polygon = PackedVector2Array(368, 140, 404, 80, 492, 58, 623, 89, 602, 194, 532, 336, 489, 250, 352, 319, 366, 200, 403, 221, 397, 160, 356, 162, 356, 162)
+
+[node name="Unicorn" parent="." unique_id=1596951640 instance=ExtResource("7_unicrn")]
+position = Vector2(488, 456)

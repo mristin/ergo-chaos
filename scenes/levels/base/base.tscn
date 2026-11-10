@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://b8ie08d5hb35m"]
+
+[ext_resource type="Script" path="res://scenes/levels/base/base.gd" id="0_base"]
+[ext_resource type="Shader" path="res://scenes/levels/common/deep_space.gdshader" id="1_space"]
+[ext_resource type="Shader" path="res://scenes/levels/playground/hangar_floor.gdshader" id="2_floor"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_space"]
+shader = ExtResource("1_space")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
+shader = ExtResource("2_floor")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlsqn"]
+size = Vector2(1937, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k2dbs"]
+size = Vector2(17, 1107)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vfhjw"]
+size = Vector2(1958, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhq2q"]
+size = Vector2(14, 1107)
+
+[node name="Base" type="Node2D" unique_id=1608742923]
+script = ExtResource("0_base")
+
+[node name="Space" type="Node2D" parent="." unique_id=358986775]
+z_index = -2
+material = SubResource("ShaderMaterial_space")
+
+[node name="Top" type="ColorRect" parent="Space"]
+use_parent_material = true
+offset_left = -1000.0
+offset_top = -900.0
+offset_right = 2931.0
+offset_bottom = 0.0
+mouse_filter = 2
+
+[node name="Bottom" type="ColorRect" parent="Space"]
+use_parent_material = true
+offset_left = -1000.0
+offset_top = 1092.0
+offset_right = 2931.0
+offset_bottom = 1992.0
+mouse_filter = 2
+
+[node name="Left" type="ColorRect" parent="Space"]
+use_parent_material = true
+offset_left = -1000.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 1092.0
+mouse_filter = 2
+
+[node name="Right" type="ColorRect" parent="Space"]
+use_parent_material = true
+offset_left = 1931.0
+offset_top = 0.0
+offset_right = 2931.0
+offset_bottom = 1092.0
+mouse_filter = 2
+
+[node name="Floor" type="ColorRect" parent="." unique_id=1462502393]
+material = SubResource("ShaderMaterial_floor")
+offset_right = 1931.0
+offset_bottom = 1092.0
+mouse_filter = 2
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=822924907]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=529515602]
+position = Vector2(958.5, 0)
+shape = SubResource("RectangleShape2D_wlsqn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1237918373]
+position = Vector2(-1.5, 543.5)
+shape = SubResource("RectangleShape2D_k2dbs")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1704750090]
+position = Vector2(966, 1093)
+shape = SubResource("RectangleShape2D_vfhjw")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=611588670]
+position = Vector2(1933, 545.5)
+shape = SubResource("RectangleShape2D_lhq2q")

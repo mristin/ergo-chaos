@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://c7i4bt1df3avg"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="1_jkvya"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="2_juk23"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="3_brvix"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="4_6p70s"]
+[ext_resource type="Script" uid="uid://b5vven30617q7" path="res://scenes/objects/wall/wall.gd" id="5_wall1"]
+[ext_resource type="Script" uid="uid://dojoubqf0y1l8" path="res://scenes/objects/spark_field/spark_field.gd" id="6_spark"]
+[ext_resource type="PackedScene" uid="uid://6br2t2glbvmg" path="res://scenes/objects/robot/robot.tscn" id="7_robot"]
+
+[node name="TestRobot" type="Node2D"]
+
+[node name="PlayerA" parent="." instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(120, 60)
+texture = ExtResource("2_juk23")
+
+[node name="PlayerB" parent="." instance=ExtResource("1_jkvya")]
+z_index = 1
+position = Vector2(220, 60)
+texture = ExtResource("3_brvix")
+
+[node name="GooContainer" type="Node2D" parent="."]
+
+[node name="Goo" parent="GooContainer" instance=ExtResource("4_6p70s")]
+position = Vector2(650, 500)
+
+[node name="StaticWall" type="StaticBody2D" parent="."]
+script = ExtResource("5_wall1")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticWall"]
+polygon = PackedVector2Array(88, 375, 337, 384, 318, 511, 40, 485)
+
+[node name="SparkField" type="Area2D" parent="."]
+script = ExtResource("6_spark")
+sign_count = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SparkField"]
+polygon = PackedVector2Array(368, 140, 404, 80, 492, 58, 623, 89, 602, 194, 532, 336, 489, 250, 352, 319, 366, 200, 403, 221, 397, 160, 356, 162, 356, 162)
+
+[node name="RobotA" parent="." instance=ExtResource("7_robot")]
+position = Vector2(250, 250)
+
+[node name="RobotB" parent="." instance=ExtResource("7_robot")]
+position = Vector2(550, 420)

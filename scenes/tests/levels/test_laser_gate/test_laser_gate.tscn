@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cbmvyj201a600"]
+
+[ext_resource type="PackedScene" uid="uid://ctt3l1ljy78ff" path="res://scenes/player/player.tscn" id="1_ua57f"]
+[ext_resource type="Texture2D" uid="uid://b2ilj8o6tki62" path="res://assets/images/spaceship_red.png" id="2_nbm3i"]
+[ext_resource type="Texture2D" uid="uid://1e7os58r2hty" path="res://assets/images/spaceship_blue.png" id="3_vk4vq"]
+[ext_resource type="PackedScene" uid="uid://b4bcbhchr4y2s" path="res://scenes/objects/laser_gate/laser_gate.tscn" id="4_ba55p"]
+[ext_resource type="PackedScene" uid="uid://dt7d1ylbwxa5i" path="res://scenes/goo/goo.tscn" id="5_nbm3i"]
+
+[node name="TestLaserGate" type="Node2D" unique_id=765771711]
+
+[node name="PlayerA" parent="." unique_id=246400443 instance=ExtResource("1_ua57f")]
+z_index = 1
+position = Vector2(350.04126, 71)
+texture = ExtResource("2_nbm3i")
+
+[node name="PlayerB" parent="." unique_id=183584022 instance=ExtResource("1_ua57f")]
+z_index = 1
+position = Vector2(451.93137, 175)
+texture = ExtResource("3_vk4vq")
+
+[node name="LaserGate" parent="." unique_id=1777469306 instance=ExtResource("4_ba55p")]
+position = Vector2(399, 178)
+green_time = 3.0
+yellow_time = 3.0
+width = 200.0
+
+[node name="GooContainer" type="Node2D" parent="." unique_id=77916401]
+
+[node name="Goo" parent="GooContainer" unique_id=1319101035 instance=ExtResource("5_nbm3i")]
+position = Vector2(121, 150)

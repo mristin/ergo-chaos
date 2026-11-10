@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://qi2jhvif2avc"]
+
+[ext_resource type="Script" uid="uid://u5d0hy6mnopv" path="res://scenes/objects/villain/hit_explosion.gd" id="1_expl"]
+[ext_resource type="Shader" uid="uid://lmc8lg600e78" path="res://scenes/objects/villain/hit_explosion.gdshader" id="2_expl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_expl"]
+shader = ExtResource("2_expl")
+shader_parameter/progress = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_expl"]
+size = Vector2(150, 150)
+
+[node name="HitExplosion" type="Node2D"]
+z_index = 2
+script = ExtResource("1_expl")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+material = SubResource("ShaderMaterial_expl")
+mesh = SubResource("QuadMesh_expl")
