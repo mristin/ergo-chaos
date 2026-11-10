@@ -70,8 +70,13 @@ The webcam images are processed locally, in memory, and are never saved or sent 
 
 ## Download
 
-There are no release packages yet.
-Until then, build and export the game yourself; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Download the game for Linux, Windows or macOS from the [releases].
+Unzip the package and start the game.
+
+[releases]: https://github.com/mristin/ergo-chaos/releases
+
+The macOS package runs on Apple Silicon.
+On Intel Macs, the hand tracking does not work, since ONNX Runtime provides no library for them.
 
 You need a webcam which supports 640x480 in the YUYV format.
 If you have more than one such camera, the game asks you which one to use.

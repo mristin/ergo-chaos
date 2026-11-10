@@ -8,7 +8,7 @@ The hand tracking (`scenes/ergo_meter/ergo_ski/`) was adapted in parts from [bod
 The game includes, or is built with, the following third-party components.
 Each keeps its own license.
 
-> **TODO:** Unlike Head Invaders and Bird Dog, the release packages do not carry the license texts in a directory `licenses/` yet.
+Every release package carries our [LICENSE](LICENSE), this file and, in the directory `licenses/`, the license texts of Godot Engine (from [licenses/godot](licenses/godot)), ONNX Runtime (from its NuGet package) and the hand detection model (from [scenes/ergo_meter/ergo_ski/model/yolox/LICENSE](scenes/ergo_meter/ergo_ski/model/yolox/LICENSE)); see `.github/workflows/publish.yaml`.
 
 ## Distributed with the game
 
@@ -18,7 +18,7 @@ Each keeps its own license.
 * License: MIT
 * Copyright (c) 2014-present Godot Engine contributors; Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
 * Source: https://godotengine.org
-* License text: https://godotengine.org/license
+* License text: [licenses/godot/LICENSE.txt](licenses/godot/LICENSE.txt), with the notices of its own third-party components in [licenses/godot/COPYRIGHT.txt](licenses/godot/COPYRIGHT.txt) (both of Godot 4.6.2)
 
 Godot Engine itself includes third-party components under their own licenses, e.g., FreeType, the fonts and the image libraries.
 Their notices are listed at https://godotengine.org/license and in the file `COPYRIGHT.txt` of the Godot source code.

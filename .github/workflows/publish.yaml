@@ -1,0 +1,173 @@
+name: Publish
+
+# NOTE (mristin):
+# We package the game for Linux, Windows and macOS when a release is published,
+# and attach the packages to the release.
+#
+# You can also start the workflow by hand. Without a tag, it only tries out the
+# packaging and uploads the packages as the artifacts of the workflow run. With
+# the tag of an existing release, it also attaches the packages to that release,
+# e.g., to a release which was published before this workflow existed. Note that
+# the packages are then built from the branch the workflow runs on, not from the
+# tag.
+#
+# We use only the GitHub's own actions and the preinstalled gh command-line tool.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag of an existing release to attach the packages to (leave empty to only try out the packaging)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+env:
+  GODOT_VERSION: 4.6.2
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          lfs: true
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Cache Godot and its export templates
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/godot
+          key: godot-${{ env.GODOT_VERSION }}-mono-linux-x86_64-with-templates
+
+      - name: Download Godot and its export templates
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+
+          curl --fail --location --silent --show-error --output godot.zip \
+            "${base}/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip"
+          unzip -q godot.zip -d "${{ runner.temp }}/godot"
+          rm godot.zip
+
+          # NOTE (mristin):
+          # The .tpz is a zip archive with all the templates in templates/.
+          curl --fail --location --silent --show-error --output templates.tpz \
+            "${base}/Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz"
+          unzip -q templates.tpz -d "${{ runner.temp }}/godot"
+          rm templates.tpz
+
+      - name: Install Godot and its export templates
+        run: |
+          echo "GODOT=${{ runner.temp }}/godot/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64" >> "$GITHUB_ENV"
+
+          templates_dir="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono"
+          mkdir -p "$templates_dir"
+          cp -r "${{ runner.temp }}/godot/templates/." "$templates_dir/"
+
+      - name: Determine the version and the release
+        # NOTE (mristin):
+        # Do not call the variable VERSION! MSBuild picks up the environment
+        # variables as properties (case-insensitively), so VERSION would override
+        # the project version, and dotnet restore fails on tags such as 1.0.0rc1
+        # that are not valid NuGet versions.
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "PACKAGE_VERSION=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
+            echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
+          elif [ -n "${INPUT_TAG}" ]; then
+            echo "PACKAGE_VERSION=${INPUT_TAG}" >> "$GITHUB_ENV"
+            echo "RELEASE_TAG=${INPUT_TAG}" >> "$GITHUB_ENV"
+          else
+            echo "PACKAGE_VERSION=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+            echo "RELEASE_TAG=" >> "$GITHUB_ENV"
+          fi
+
+      - name: Restore and import
+        run: |
+          dotnet restore 'Ergo Chaos.csproj'
+          "$GODOT" --headless --path . --import
+
+      - name: Export
+        run: |
+          mkdir -p build/linux build/windows build/macos
+
+          # NOTE (mristin):
+          # Godot builds the C# part for each platform itself (dotnet publish),
+          # including the native libraries of ONNX Runtime. If that fails, Godot
+          # still exits with zero and writes a package without the C# part, so
+          # we check its output for errors ourselves.
+          export_release() {
+            "$GODOT" --headless --path . --export-release "$1" "$2" 2>&1 | tee "build/export-$1.log"
+            if grep -E "^(ERROR|SCRIPT ERROR)" "build/export-$1.log" | grep -v -E "leaked|still in use|Pages in use|Unreferenced static"; then
+              echo "The export for $1 reported errors." >&2
+              exit 1
+            fi
+          }
+
+          export_release "Linux" build/linux/ergo-chaos.x86_64
+          export_release "Windows" build/windows/ergo-chaos.exe
+          export_release "macOS" build/macos/ergo-chaos.zip
+          rm build/export-*.log
+
+          test -f build/linux/ergo-chaos.x86_64
+          test -f build/windows/ergo-chaos.exe
+          test -f build/macos/ergo-chaos.zip
+
+          ls -R build | head -100
+
+      - name: Collect the licenses
+        run: |
+          # NOTE (mristin):
+          # Every package carries our license, the third-party notices and
+          # the license texts of all the components we distribute.
+          mkdir -p notices/licenses/godot notices/licenses/onnxruntime notices/licenses/models
+          cp LICENSE THIRD_PARTY.md notices/
+          cp licenses/godot/LICENSE.txt licenses/godot/COPYRIGHT.txt notices/licenses/godot/
+          cp scenes/ergo_meter/ergo_ski/model/yolox/LICENSE notices/licenses/models/yolox-LICENSE
+          ort_dir="$(find ~/.nuget/packages/microsoft.ml.onnxruntime -mindepth 1 -maxdepth 1 -type d | sort | tail -n 1)"
+          cp "${ort_dir}/LICENSE" "${ort_dir}/ThirdPartyNotices.txt" notices/licenses/onnxruntime/
+          find notices -type f
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp -r notices/. build/linux/
+          cp -r notices/. build/windows/
+          (cd build/linux && zip -q -r "../../dist/ergo-chaos-${PACKAGE_VERSION}-linux-x86_64.zip" .)
+          (cd build/windows && zip -q -r "../../dist/ergo-chaos-${PACKAGE_VERSION}-windows-x86_64.zip" .)
+
+          # NOTE (mristin):
+          # Godot packs the macOS app as a zip already. Godot builds a universal
+          # app, but ONNX Runtime ships its native library only for Apple Silicon,
+          # so the hand tracking does not work on Intel Macs.
+          cp build/macos/ergo-chaos.zip "dist/ergo-chaos-${PACKAGE_VERSION}-macos-apple-silicon.zip"
+          (cd notices && zip -q -r "../dist/ergo-chaos-${PACKAGE_VERSION}-macos-apple-silicon.zip" .)
+
+          ls -l dist
+
+      - name: Upload the packages as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ergo-chaos-${{ env.PACKAGE_VERSION }}
+          path: dist/*
+
+      - name: Attach the packages to the release
+        if: env.RELEASE_TAG != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${RELEASE_TAG}" dist/* --clobber --repo "${{ github.repository }}"
