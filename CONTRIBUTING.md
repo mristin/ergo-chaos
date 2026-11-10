@@ -138,8 +138,8 @@ GitHub Actions restores the packages, checks the formatting of the C# code (`dot
 
 ## Exporting the game
 
-The export presets live in `export_presets.cfg`; there are presets for Linux and macOS.
-They include the ONNX model explicitly (`include_filter="*.onnx"`), since Godot does not export it as a resource otherwise.
+The export presets live in `export_presets.cfg`; there are presets for Linux, Windows and macOS.
+They include the ONNX model explicitly (`include_filter="*.onnx"`), since Godot does not export it as a resource otherwise, and they exclude the build outputs (`build/`, `dist/`, `notices/`) and the test scenes.
 
 Install the .NET export templates of Godot 4.6.2 (in the editor: Editor, Manage Export Templates), and run, e.g.:
 
@@ -148,7 +148,18 @@ mkdir -p build/linux
 $GODOT --headless --path . --export-release "Linux" build/linux/ergo-chaos.x86_64
 ```
 
+Godot builds the C# part for each platform itself (`dotnet publish`), including the native libraries of ONNX Runtime.
+Mind that Godot exits with zero even if that build fails, and then writes a package without the C# part; check its output for `ERROR`.
+
 The macOS app is universal, but ONNX Runtime provides its native library only for Apple Silicon, so the hand tracking does not work on Intel Macs.
+
+### Releases
+
+When you publish a release on GitHub, the workflow `.github/workflows/publish.yaml` exports the game for Linux, Windows and macOS, adds our license, [THIRD_PARTY.md](THIRD_PARTY.md) and the license texts of the distributed components, and attaches the packages to the release.
+
+You can also start the workflow by hand (Actions, Publish, Run workflow).
+Without a tag, it only tries out the packaging and uploads the packages as the artifacts of the run.
+With the tag of an existing release, e.g., `v1.0.0`, it also attaches the packages to that release; they are then built from the branch the workflow runs on, not from the tag.
 
 When you add a third-party component, list it in [THIRD_PARTY.md](THIRD_PARTY.md).
 
