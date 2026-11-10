@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://c2hb47bvf62tn"]
+
+[ext_resource type="Script" uid="uid://b2qbasfopu2yp" path="res://scenes/hud/hud.gd" id="1_5aai8"]
+[ext_resource type="Texture2D" uid="uid://dwjq6gar158re" path="res://assets/images/paint_splat_c.svg" id="1_33i1w"]
+[ext_resource type="Shader" path="res://scenes/hud/goo_tank.gdshader" id="2_tank"]
+[ext_resource type="Shader" path="res://scenes/goo/goo.gdshader" id="3_goo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tank"]
+shader = ExtResource("2_tank")
+shader_parameter/size = Vector2(260, 120)
+shader_parameter/corner_radius = 34.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_icon"]
+shader = ExtResource("3_goo")
+shader_parameter/opacity = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33i1w"]
+bg_color = Color(1, 0.19437584, 0.14415261, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_battery_bg"]
+bg_color = Color(0.04, 0.05, 0.1, 0.72)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.35)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5aai8"]
+bg_color = Color(0, 0.21568628, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="Hud" type="Control" unique_id=1164260724]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5aai8")
+
+[node name="GooTank" type="ColorRect" parent="." unique_id=1399122951]
+material = SubResource("ShaderMaterial_tank")
+layout_mode = 0
+offset_left = 330.0
+offset_top = 0.0
+offset_right = 590.0
+offset_bottom = 120.0
+mouse_filter = 2
+
+[node name="GooIcon" type="Sprite2D" parent="." unique_id=1136590438]
+material = SubResource("ShaderMaterial_icon")
+position = Vector2(392, 60)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("1_33i1w")
+
+[node name="GooCount" type="Label" parent="." unique_id=1399122950]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 4.0
+offset_right = 580.0
+offset_bottom = 116.0
+pivot_offset = Vector2(70, 56)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.25, 0.12, 0, 1)
+theme_override_constants/outline_size = 18
+theme_override_font_sizes/font_size = 88
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerABattery" type="ProgressBar" parent="." unique_id=1949395338]
+layout_mode = 0
+offset_top = 0.0
+offset_right = 320.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.05, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 64
+theme_override_styles/background = SubResource("StyleBoxFlat_battery_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_33i1w")
+value = 50.0
+rounded = true
+
+[node name="PlayerBBattery" type="ProgressBar" parent="." unique_id=2146132444]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 0.0
+offset_right = 920.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.05, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 64
+theme_override_styles/background = SubResource("StyleBoxFlat_battery_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5aai8")
+value = 50.0

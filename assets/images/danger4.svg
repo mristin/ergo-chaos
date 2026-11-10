@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="896"
+   height="830"
+   viewBox="0 0 896 830"
+   version="1.1"
+   id="svg54"
+   sodipodi:docname="danger4.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview56"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.74707031"
+     inkscape:cx="447.74902"
+     inkscape:cy="442.39477"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg54" />
+  <title
+     id="title2">Abstract electric hazard sign variant</title>
+  <defs
+     id="defs18">
+    <linearGradient
+       id="gradY"
+       x1="141.43365"
+       y1="152.72179"
+       x2="141.43365"
+       y2="875.6049"
+       gradientTransform="matrix(1.0181452,0,0,0.98217815,-64,-70)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#FFD84D"
+         id="stop4" />
+      <stop
+         offset="100%"
+         stop-color="#E6B800"
+         id="stop6" />
+    </linearGradient>
+    <filter
+       id="glow"
+       x="-0.13666872"
+       y="-0.05"
+       width="1.2743836"
+       height="1.0969886">
+      <feGaussianBlur
+         stdDeviation="10"
+         result="b"
+         id="feGaussianBlur9" />
+      <feMerge
+         id="feMerge15">
+        <feMergeNode
+           in="b"
+           id="feMergeNode11" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode13" />
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer triangle -->
+  <path
+     d="M 448,0 896,830 H 0 Z"
+     fill="#111111"
+     id="path20" />
+  <!-- Inner face -->
+  <path
+     d="M 448,80 816,790 H 80 Z"
+     fill="url(#gradY)"
+     id="path22"
+     style="fill:url(#gradY)" />
+  <!-- Border line -->
+  <path
+     d="M 448,150 736,730 H 160 Z"
+     fill="none"
+     stroke="#111111"
+     stroke-width="28"
+     stroke-linejoin="round"
+     id="path24" />
+  <!-- Central zigzag bolt -->
+  <path
+     d="M 496,190 366,470 h 90 L 406,730 576,400 h -90 l 60,-210 z"
+     fill="#111111"
+     id="path26" />
+  <!-- Inner highlight cut -->
+  <path
+     d="m 481,290 -65,160 h 60 l -35,180 90,-180 h -50 l 30,-160 z"
+     fill="#ffd84d"
+     id="path28" />
+  <!-- Radiating hazard rays -->
+  <g
+     stroke="#111111"
+     stroke-width="20"
+     stroke-linecap="round"
+     id="g42"
+     transform="translate(-64,-70)">
+    <path
+       d="M 200,520 H 350"
+       id="path30" />
+    <path
+       d="M 824,520 H 674"
+       id="path32" />
+    <path
+       d="m 360,320 100,60"
+       id="path34" />
+    <path
+       d="M 664,320 564,380"
+       id="path36" />
+    <path
+       d="M 360,740 460,680"
+       id="path38" />
+    <path
+       d="M 664,740 564,680"
+       id="path40" />
+  </g>
+  <!-- Small sparks -->
+  <g
+     fill="#111111"
+     id="g50"
+     transform="translate(-64,-70)">
+    <circle
+       cx="300"
+       cy="600"
+       r="10"
+       id="circle44" />
+    <circle
+       cx="724"
+       cy="600"
+       r="10"
+       id="circle46" />
+    <circle
+       cx="512"
+       cy="850"
+       r="12"
+       id="circle48" />
+  </g>
+  <!-- Glow accent -->
+  <path
+     d="M 496,190 366,470 h 90 L 406,730 576,400 h -90 l 60,-210 z"
+     fill="none"
+     stroke="#fff3a0"
+     stroke-width="6"
+     opacity="0.7"
+     filter="url(#glow)"
+     id="path52" />
+  <metadata
+     id="metadata165">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Abstract electric hazard sign variant</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cu20ttrmme4hw"]
+
+[ext_resource type="Texture2D" uid="uid://xk7sv1g60lyc" path="res://assets/images/laser_gate.png" id="1_4rdtk"]
+[ext_resource type="Script" uid="uid://pwl6p65kluyb" path="res://scenes/objects/laser_post/laser_post.gd" id="2_iw2eh"]
+[ext_resource type="Texture2D" uid="uid://bpwtc62pmg6kb" path="res://assets/images/yellow_light.png" id="3_iw2eh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp6os"]
+size = Vector2(45, 162)
+
+[node name="LaserPost" type="Sprite2D" unique_id=1523567297]
+texture = ExtResource("1_4rdtk")
+script = ExtResource("2_iw2eh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1747541698]
+position = Vector2(666.6666, 0)
+scale = Vector2(3.3333333, 3.3333333)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1901223763]
+position = Vector2(-198.5, 1)
+shape = SubResource("RectangleShape2D_hp6os")
+
+[node name="Light" type="Sprite2D" parent="." unique_id=1381549267]
+position = Vector2(0, 8)
+scale = Vector2(0.07496056, 0.073949024)
+texture = ExtResource("3_iw2eh")
