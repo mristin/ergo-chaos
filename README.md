@@ -75,10 +75,12 @@ Unzip the package and start the game.
 
 [releases]: https://github.com/mristin/ergo-chaos/releases
 
-The macOS package runs on Apple Silicon.
-On Intel Macs, the hand tracking does not work, since ONNX Runtime provides no library for them.
+The macOS package runs on Apple Silicon and on Intel Macs, from macOS 11 on.
+On macOS, allow the game to use the camera when it asks.
+On Windows, allow the apps to access the camera in the privacy settings.
 
-You need a webcam which supports 640x480 in the YUYV format.
+On Linux and Windows, you need a webcam which supports 640x480 in the YUYV format (Windows calls it YUY2).
+On macOS, the game takes the camera in its default format.
 If you have more than one such camera, the game asks you which one to use.
 Without one, it explains the problem and quits on any key.
 

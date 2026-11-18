@@ -4,11 +4,12 @@ Ergo Chaos is licensed under the Apache License 2.0; see [LICENSE](LICENSE).
 This covers the code, the shaders, the scenes and everything the game draws in code, e.g., the procedural backgrounds of the levels, the fireballs, the sparks and the rainbow stars.
 
 The hand tracking (`scenes/ergo_meter/ergo_ski/`) was adapted in parts from [body-pose-estimation-with-godot](https://github.com/mristin/body-pose-estimation-with-godot) (same author).
+The camera access on Windows and macOS (`scenes/select_camera/camera_access.gd`, `YcbcrConverter.cs`) was adapted from bird-dog (same author).
 
 The game includes, or is built with, the following third-party components.
 Each keeps its own license.
 
-Every release package carries our [LICENSE](LICENSE), this file and, in the directory `licenses/`, the license texts of Godot Engine (from [licenses/godot](licenses/godot)), ONNX Runtime (from its NuGet package) and the hand detection model (from [scenes/ergo_meter/ergo_ski/model/yolox/LICENSE](scenes/ergo_meter/ergo_ski/model/yolox/LICENSE)); see `.github/workflows/publish.yaml`.
+Every release package carries our [LICENSE](LICENSE), this file and, in the directory `licenses/`, the license texts of Godot Engine (from [licenses/godot](licenses/godot)), ONNX Runtime (from its NuGet package) and the hand detection model (from [scenes/ergo_meter/ergo_ski/model/yolox/LICENSE](scenes/ergo_meter/ergo_ski/model/yolox/LICENSE)); the Windows package also the license text of CameraServerExtension; see `.github/workflows/publish.yaml`.
 
 ## Distributed with the game
 
@@ -31,15 +32,25 @@ Their notices are listed at https://godotengine.org/license and in the file `COP
 * Third-party notices: https://github.com/dotnet/runtime/blob/main/THIRD-PARTY-NOTICES.TXT
 
 The .NET build of Godot bundles the .NET runtime with the exported game.
-ONNX Runtime pulls in the packages `System.Memory` 4.5.5 and `System.Numerics.Tensors` 9.0.0 (both MIT, Copyright (c) .NET Foundation and Contributors).
+ONNX Runtime pulls in the package `System.Memory` 4.5.5 (MIT, Copyright (c) .NET Foundation and Contributors).
 
 ### ONNX Runtime
 
-* Packages: `Microsoft.ML.OnnxRuntime` 1.24.4 and `Microsoft.ML.OnnxRuntime.Managed` 1.24.4
+* Packages: `Microsoft.ML.OnnxRuntime` 1.19.2 and `Microsoft.ML.OnnxRuntime.Managed` 1.19.2
 * License: MIT
 * Copyright (c) Microsoft Corporation
 * Source: https://github.com/microsoft/onnxruntime
 * License text and third-party notices: `LICENSE` and `ThirdPartyNotices.txt` in the NuGet packages
+
+### CameraServerExtension (only in the Windows package)
+
+* Version: 2026.03.27 (the prebuilt Windows x86_64 library of the release)
+* License: MIT
+* Copyright (c) 2024-present Jason Kuo
+* Source: https://github.com/j20001970/godot-cameraserver-extension
+* License text: [addons/CameraServerExtension/LICENSE](addons/CameraServerExtension/LICENSE)
+
+Godot 4.6 implements no camera on Windows; the extension provides it there, with Media Foundation.
 
 ### YOLOX-Body-Head-Hand (hand and head detection)
 

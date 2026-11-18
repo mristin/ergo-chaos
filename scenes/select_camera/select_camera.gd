@@ -5,8 +5,14 @@ extends Control
 
 var compatible_feeds: Array[FeedRecord] = []
 
+## The format index of a feed which lists no formats; the feed then runs in its
+## default format. Godot lists the formats only on Linux, and the extension on
+## Windows; on macOS, the list is empty.
+const DEFAULT_FORMAT := -1
+
 class FeedRecord:
     var feed: CameraFeed
+    ## The index of the format, or DEFAULT_FORMAT if the feed lists no formats.
     var format_index: int
 
     func _init(camera_feed: CameraFeed, fmt_index: int):
@@ -20,7 +26,7 @@ func _input(event):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    CameraServer.monitoring_feeds = true;
+    CameraAccess.start()
     await get_tree().create_timer(7.0).timeout
 
     print(
@@ -35,8 +41,14 @@ func _ready() -> void:
     if not no_feeds:
         # Filter feeds to only include those with 640x480 YUYV format
         for i in range(CameraServer.get_feed_count()):
-            var feed = CameraServer.get_feed(i)
-            var formats = feed.get_formats()
+            var feed := CameraServer.get_feed(i)
+            var formats := CameraAccess.get_formats(feed)
+            print("Camera feed: ", feed.get_name(), " with formats: ", formats)
+
+            if formats.is_empty():
+                print("Found a feed without a list of formats, using its default format: ", feed.get_name())
+                compatible_feeds.append(FeedRecord.new(feed, DEFAULT_FORMAT))
+                continue
 
             for format_idx in range(formats.size()):
                 var format = formats[format_idx] as Dictionary
@@ -44,7 +56,12 @@ func _ready() -> void:
                 var height = format.get("height", 0) as int
                 var pixel_format = format.get("format", "") as String
 
-                if width == 640 and height == 480 and pixel_format.begins_with("YUYV"):
+                # NOTE (mristin):
+                # V4L2 on Linux calls the format YUYV, Media Foundation on Windows YUY2.
+                if (
+                    width == 640 and height == 480
+                    and (pixel_format.begins_with("YUYV") or pixel_format.begins_with("YUY2"))
+                ):
                     print("Found compatible feed: ", feed.get_name(), " with format: ", format)
                     var feed_record = FeedRecord.new(feed, format_idx)
                     compatible_feeds.append(feed_record)
@@ -59,13 +76,18 @@ func _ready() -> void:
             "Unfortunately, there are no camera feeds. Please attach your camera " +
             "and start the game again.\n\nPress any key to quit."
         )
+        if CameraAccess.problem != "":
+            status.text = (
+                "Unfortunately, there are no camera feeds. " + CameraAccess.problem +
+                "\n\nPress any key to quit."
+            )
         await any_key_pressed
         get_tree().quit()
         return
 
     if compatible_feeds.is_empty():
         status.text = (
-            "Unfortunately, we need the camera feed to support 640x480 YUYV format, " +
+            "Unfortunately, we need the camera feed to support 640x480 YUYV (YUY2) format, " +
             "but none of them support it.\n\nPress any key to quit."
         )
         await any_key_pressed
@@ -98,7 +120,9 @@ func _on_start_button_pressed() -> void:
 
 func start(feed: CameraFeed, format_index: int) -> void:
     print("Setting feed format and activating feed: ", feed.get_name())
-    feed.set_format(format_index, {})
+    if format_index != DEFAULT_FORMAT:
+        if not CameraAccess.set_format(feed, format_index):
+            push_warning("Could not set the format #%d of the feed %s." % [format_index, feed.get_name()])
     feed.feed_is_active = true
 
     var ergo_meter: ErgoMeter = load(

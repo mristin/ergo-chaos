@@ -1,0 +1,24 @@
+; NOTE (mristin):
+; CameraServerExtension 2026.03.27 by j20001970 (MIT, see LICENSE), from
+; https://github.com/j20001970/godot-cameraserver-extension/releases/tag/2026.03.27
+; (the prebuilt Windows x86_64 library of the release, as in bird-dog).
+;
+; Godot 4.6 implements no camera on Windows, so we use the extension there,
+; and only there. Godot can not skip an extension on the other platforms
+; (it reports an error if a platform has no library), so the directory is
+; hidden from Godot (.gdignore), and the camera selection loads the extension
+; itself, only on Windows (see scenes/select_camera/camera_access.gd). The
+; packaging copies this file and the library next to the executable of the
+; Windows package (see CONTRIBUTING.md, "Exporting the game").
+;
+; Drop the extension once Godot supports the camera on Windows itself
+; (https://github.com/godotengine/godot/pull/108538).
+
+[configuration]
+
+entry_symbol = "camera_library_init"
+compatibility_minimum = "4.4"
+
+[libraries]
+
+windows.x86_64 = "libcameraserver-extension.windows.dll"

@@ -519,6 +519,16 @@ public partial class ErgoSki : Node2D
 
     private Label? _status;
     private CameraTexture? _cameraTexture;
+
+    // NOTE (mristin):
+    // The cameras on macOS deliver two planes, Y and CbCr, and the camera
+    // texture then holds only the Y plane. We read the CbCr plane through a
+    // second texture, convert both to RGB ourselves (as bird-dog does), and
+    // show the converted picture.
+    private CameraTexture? _cbcrTexture;
+    private ImageTexture? _ycbcrPreview;
+    private const int _maxYcbcrWidth = 640;
+
     // NOTE (mristin):
     // The inference thread asks for a frame and waits for it. The main thread
     // copies a camera frame only when asked, so that we never copy frames which
@@ -767,20 +777,67 @@ public partial class ErgoSki : Node2D
 
     private void OnFrameChanged()
     {
-        if (!_frameRequested)
+        // NOTE (mristin):
+        // The datatype of a feed is known only once it delivers frames, so we
+        // check it on every frame.
+        bool twoPlanes = _cameraFeed!.GetDatatype() == CameraFeed.FeedDataType.YcbcrSep;
+        if (twoPlanes && _cbcrTexture == null)
+        {
+            GD.Print("The camera delivers two planes (Y and CbCr); we convert them to RGB.");
+            _cbcrTexture = new CameraTexture
+            {
+                CameraFeedId = _cameraFeed.GetId(),
+                WhichFeed = CameraServer.FeedImage.CbcrImage,
+                CameraIsActive = true
+            };
+        }
+
+        if (!_frameRequested && !twoPlanes)
         {
             return;
         }
 
-        Image? image = _cameraTexture!.GetImage();
-        if (image == null || image.IsEmpty())
+        Image? image;
+        if (twoPlanes)
         {
-            return;
-        }
+            // NOTE (mristin):
+            // A two-plane feed has no RGB texture, so we convert it on every
+            // frame, as the preview needs it, too.
+            Image? luma = _cameraTexture!.GetImage();
+            Image? chroma = _cbcrTexture!.GetImage();
+            if (luma == null || luma.IsEmpty() || chroma == null || chroma.IsEmpty())
+            {
+                return;
+            }
 
-        if (image.GetFormat() != Image.Format.Rgb8)
+            image = YcbcrToRgb(luma, chroma);
+            if (_ycbcrPreview == null || _ycbcrPreview.GetSize() != image.GetSize())
+            {
+                _ycbcrPreview = ImageTexture.CreateFromImage(image);
+                _cameraPort!.Texture = _ycbcrPreview;
+            }
+            else
+            {
+                _ycbcrPreview.Update(image);
+            }
+
+            if (!_frameRequested)
+            {
+                return;
+            }
+        }
+        else
         {
-            image.Convert(Image.Format.Rgb8);
+            image = _cameraTexture!.GetImage();
+            if (image == null || image.IsEmpty())
+            {
+                return;
+            }
+
+            if (image.GetFormat() != Image.Format.Rgb8)
+            {
+                image.Convert(Image.Format.Rgb8);
+            }
         }
 
         lock (_latestFrameLock)
@@ -791,6 +848,28 @@ public partial class ErgoSki : Node2D
 
         _frameRequested = false;
         _frameReady.Set();
+    }
+
+    /// <summary>Convert a Y plane and a CbCr plane of the camera to an RGB8 image.</summary>
+    private static Image YcbcrToRgb(Image luma, Image chroma)
+    {
+        if (luma.GetFormat() != Image.Format.R8)
+        {
+            luma.Convert(Image.Format.R8);
+        }
+
+        if (chroma.GetFormat() != Image.Format.Rg8)
+        {
+            chroma.Convert(Image.Format.Rg8);
+        }
+
+        var (rgb, width, height) = ErgoSkiing.Impl.YcbcrConverter.ToRgb(
+            luma.GetData(), luma.GetWidth(), luma.GetHeight(),
+            chroma.GetData(), chroma.GetWidth(), chroma.GetHeight(),
+            _maxYcbcrWidth
+        );
+
+        return Image.CreateFromData(width, height, false, Image.Format.Rgb8, rgb);
     }
 
     private void InferenceLoop()

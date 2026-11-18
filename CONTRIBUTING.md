@@ -26,7 +26,8 @@ The game is made with [Godot] 4.6 (.NET), written in GDScript and C#:
   Flying drains the battery by the distance; a `PlayerEffect` changes the speed, the turning or the battery drain while the ship is in a danger zone or on a recharge pad.
 * The `game` scene (`scenes/game/`) only orchestrates: it holds the order of the levels (`level_scene_paths`: playground, roundabout, switcher, pit, chase, stable), wires the controllers to the players, sets up the split screen (`scenes/game_screen/`) with one camera per player, and shows the final messages (`scenes/final_message/`).
   The rules live in `level_state` (`scenes/level_state/`): the level is accomplished when all the goo is collected, and failed as soon as one ship's battery runs empty.
-* The game starts at the camera selection (`scenes/select_camera/`), which looks for the cameras supporting 640x480 YUYV, and then hands the chosen camera to `ErgoMeter` and starts the game.
+* The game starts at the camera selection (`scenes/select_camera/`), which looks for the cameras supporting 640x480 YUYV (or YUY2, as Windows calls it; a camera which lists no formats, as on macOS, runs in its default format), and then hands the chosen camera to `ErgoMeter` and starts the game.
+  `CameraAccess` (`scenes/select_camera/camera_access.gd`) starts the camera server and loads the camera extension on Windows (see "The camera on Windows and macOS" below).
 * The levels live in `scenes/levels/`, each in its own folder, and inherit from `scenes/levels/base/base.tscn` (the arena with its walls).
   Every level must have the nodes `PlayerA`, `PlayerB` and `GooContainer`; keep the players above the goo (`z_index`).
   The objects of the levels (laser gates, switch gates, recharge pads, spark fields, rotating fireballs, robots, villains and unicorns) live in `scenes/objects/`.
@@ -89,7 +90,7 @@ dotnet build "Ergo Chaos.sln"
 ## Running the game
 
 Open the project in the Godot editor (Import, then select `project.godot`), and press F5.
-The game needs a webcam which supports 640x480 in the YUYV format.
+The game needs a webcam which supports 640x480 in the YUYV format (YUY2 on Windows); on macOS, it takes the camera in its default format.
 It waits a few seconds on the splash screen for the cameras to show up; if there are several suitable cameras, it asks which one to use, and without one, it explains the problem and quits on any key.
 
 Press Escape twice to quit.
@@ -144,14 +145,38 @@ They include the ONNX model explicitly (`include_filter="*.onnx"`), since Godot 
 Install the .NET export templates of Godot 4.6.2 (in the editor: Editor, Manage Export Templates), and run, e.g.:
 
 ```
-mkdir -p build/linux
+mkdir -p build/linux build/windows build/macos
+touch build/.gdignore
 $GODOT --headless --path . --export-release "Linux" build/linux/ergo-chaos.x86_64
+$GODOT --headless --path . --export-release "Windows" build/windows/ergo-chaos.exe
+$GODOT --headless --path . --export-release "macOS" build/macos/ergo-chaos.zip
+
+cp addons/CameraServerExtension/CameraServerExtension.gdextension \
+  addons/CameraServerExtension/libcameraserver-extension.windows.dll \
+  build/windows/
+mkdir -p build/windows/licenses/camera-server-extension
+cp addons/CameraServerExtension/LICENSE build/windows/licenses/camera-server-extension/
 ```
+
+The `.gdignore` in `build/` hides the packages from Godot, which would otherwise try to load the camera extension of the Windows package, and fail, on the other platforms.
 
 Godot builds the C# part for each platform itself (`dotnet publish`), including the native libraries of ONNX Runtime.
 Mind that Godot exits with zero even if that build fails, and then writes a package without the C# part; check its output for `ERROR`.
 
-The macOS app is universal, but ONNX Runtime provides its native library only for Apple Silicon, so the hand tracking does not work on Intel Macs.
+The macOS app is universal.
+We stay with ONNX Runtime 1.19 (see `Ergo Chaos.csproj`), the last version whose macOS libraries run on macOS 11; from 1.20 on, they need macOS 13.3, and from 1.24 on, there is none for the Intel Macs.
+
+### The camera on Windows and macOS
+
+* **Windows:** Godot 4.6 implements no camera on Windows, so we use [CameraServerExtension] there, and only there, from `addons/CameraServerExtension/` (the prebuilt Windows x86_64 library of its release 2026.03.27, as in bird-dog).
+  Godot reports an error on every platform which an extension lists no library for, so the directory is hidden from Godot (`.gdignore`); `CameraAccess` loads the extension itself on Windows, from the directory of the executable, or from the project in the editor.
+  Hence the packaging copies `CameraServerExtension.gdextension` and `libcameraserver-extension.windows.dll` next to the executable (see above).
+  The formats of the extension's feeds are reached only by name (`feed.call("get_formats")`), and Windows calls YUYV "YUY2".
+  Drop the extension once Godot supports the camera on Windows itself (https://github.com/godotengine/godot/pull/108538).
+* **macOS:** Godot lists no formats of the cameras, so the camera runs in its default format.
+  The camera delivers two planes (Y and CbCr); `ErgoSki` reads both and converts them to RGB itself (`YcbcrConverter`), for the hand detector and for the camera picture.
+
+[CameraServerExtension]: https://github.com/j20001970/godot-cameraserver-extension
 
 ### Releases
 
